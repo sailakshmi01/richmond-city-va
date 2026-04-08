@@ -2,6 +2,9 @@
 Greater Richmond, VA — Automated Motivated Seller Lead Scraper
 Covers: Richmond City, Henrico, Chesterfield, Hanover, Goochland
 Virginia OCIS portal: https://eapps.courts.state.va.us/ocis/landRecordSearch
+
+Strategy: one search per court (date-range only, no doc-type filter),
+filter records locally — 5 searches total instead of 100+.
 """
 
 import asyncio
@@ -35,16 +38,22 @@ OUTPUT_FILES = [
 VIRGINIA_OCIS_BASE = "https://eapps.courts.state.va.us/ocis"
 VA_OCIS_API        = "https://eapps.courts.state.va.us/api"
 
+# Per-search timeouts (seconds)
+PAGE_LOAD_TIMEOUT   = 30_000   # 30s
+NETWORK_TIMEOUT     = 15_000   # 15s
+ELEMENT_TIMEOUT     = 5_000    # 5s
+PER_COURT_TIMEOUT   = 120      # 2 min hard cap per court
+
 # ---------------------------------------------------------------------------
-# Target jurisdictions — all 5 Greater Richmond area courts
+# Target jurisdictions
 # ---------------------------------------------------------------------------
 
 COURTS = [
-    {"id": "760", "name": "Richmond City",    "city": "Richmond",       "state": "VA"},
-    {"id": "087", "name": "Henrico County",   "city": "Henrico",        "state": "VA"},
-    {"id": "041", "name": "Chesterfield County", "city": "Chesterfield","state": "VA"},
-    {"id": "085", "name": "Hanover County",   "city": "Hanover",        "state": "VA"},
-    {"id": "075", "name": "Goochland County", "city": "Goochland",      "state": "VA"},
+    {"id": "760", "name": "Richmond City",       "city": "Richmond",      "state": "VA"},
+    {"id": "087", "name": "Henrico County",       "city": "Henrico",       "state": "VA"},
+    {"id": "041", "name": "Chesterfield County",  "city": "Chesterfield",  "state": "VA"},
+    {"id": "085", "name": "Hanover County",       "city": "Hanover",       "state": "VA"},
+    {"id": "075", "name": "Goochland County",     "city": "Goochland",     "state": "VA"},
 ]
 
 # ---------------------------------------------------------------------------
@@ -52,40 +61,31 @@ COURTS = [
 # ---------------------------------------------------------------------------
 
 DOC_TYPE_MAP = {
-    # Lis Pendens / Foreclosure
-    "LP":       ("LP",       "Lis Pendens"),
-    "LIS":      ("LP",       "Lis Pendens"),
-    "LPS":      ("LP",       "Lis Pendens"),
-    "NOFC":     ("NOFC",     "Notice of Foreclosure"),
-    "NOTS":     ("NOFC",     "Notice of Foreclosure"),
-    # Tax Deed
-    "TAXDEED":  ("TAXDEED",  "Tax Deed"),
-    "TD":       ("TAXDEED",  "Tax Deed"),
-    # Judgment
-    "JUD":      ("JUD",      "Judgment"),
-    "CCJ":      ("JUD",      "Certified Judgment"),
-    "DRJUD":    ("JUD",      "Domestic Judgment"),
-    "FJ":       ("JUD",      "Judgment"),
-    "DJ":       ("JUD",      "Judgment"),
-    # Tax / IRS / Federal Liens
-    "LNCORPTX": ("LNCORPTX", "Corp Tax Lien"),
-    "LNIRS":    ("LNIRS",    "IRS Lien"),
-    "LNFED":    ("LNFED",    "Federal Lien"),
-    # Liens
-    "LN":       ("LN",       "Lien"),
-    "LNMECH":   ("LNMECH",   "Mechanic Lien"),
-    "LNHOA":    ("LNHOA",    "HOA Lien"),
-    # Medicaid
-    "MEDLN":    ("MEDLN",    "Medicaid Lien"),
-    # Probate
-    "PRO":      ("PRO",      "Probate Document"),
-    "WILL":     ("PRO",      "Probate Document"),
-    "ADMIN":    ("PRO",      "Probate Document"),
-    # Notice of Commencement
-    "NOC":      ("NOC",      "Notice of Commencement"),
-    # Release Lis Pendens
-    "RELLP":    ("RELLP",    "Release Lis Pendens"),
-    "RLP":      ("RELLP",    "Release Lis Pendens"),
+    "LP":        ("LP",        "Lis Pendens"),
+    "LIS":       ("LP",        "Lis Pendens"),
+    "LPS":       ("LP",        "Lis Pendens"),
+    "NOFC":      ("NOFC",      "Notice of Foreclosure"),
+    "NOTS":      ("NOFC",      "Notice of Foreclosure"),
+    "TAXDEED":   ("TAXDEED",   "Tax Deed"),
+    "TD":        ("TAXDEED",   "Tax Deed"),
+    "JUD":       ("JUD",       "Judgment"),
+    "CCJ":       ("JUD",       "Certified Judgment"),
+    "DRJUD":     ("JUD",       "Domestic Judgment"),
+    "FJ":        ("JUD",       "Judgment"),
+    "DJ":        ("JUD",       "Judgment"),
+    "LNCORPTX":  ("LNCORPTX",  "Corp Tax Lien"),
+    "LNIRS":     ("LNIRS",     "IRS Lien"),
+    "LNFED":     ("LNFED",     "Federal Lien"),
+    "LN":        ("LN",        "Lien"),
+    "LNMECH":    ("LNMECH",    "Mechanic Lien"),
+    "LNHOA":     ("LNHOA",     "HOA Lien"),
+    "MEDLN":     ("MEDLN",     "Medicaid Lien"),
+    "PRO":       ("PRO",       "Probate Document"),
+    "WILL":      ("PRO",       "Probate Document"),
+    "ADMIN":     ("PRO",       "Probate Document"),
+    "NOC":       ("NOC",       "Notice of Commencement"),
+    "RELLP":     ("RELLP",     "Release Lis Pendens"),
+    "RLP":       ("RELLP",     "Release Lis Pendens"),
 }
 
 TARGET_CATS = {
@@ -100,8 +100,6 @@ TARGET_CATS = {
 # ---------------------------------------------------------------------------
 
 class ParcelLookup:
-    """Loads parcel DBF file and builds owner-name → parcel mapping."""
-
     def __init__(self):
         self.by_owner: dict[str, list[dict]] = {}
         self.loaded = False
@@ -111,62 +109,47 @@ class ParcelLookup:
             from dbfread import DBF
             table = DBF(dbf_path, encoding="latin-1", ignore_missing_memofile=True)
             for rec in table:
-                rec_dict = {
-                    k.upper(): (v or "").strip() if isinstance(v, str) else v
-                    for k, v in rec.items()
-                }
-                owner_raw = (
-                    rec_dict.get("OWN1") or rec_dict.get("OWNER") or
-                    rec_dict.get("OWNER1") or ""
-                ).strip().upper()
+                rd = {k.upper(): (v or "").strip() if isinstance(v, str) else v for k, v in rec.items()}
+                owner_raw = (rd.get("OWN1") or rd.get("OWNER") or rd.get("OWNER1") or "").strip().upper()
                 if not owner_raw:
                     continue
-                parcel = self._normalize_parcel(rec_dict)
-                for variant in self._name_variants(owner_raw):
-                    self.by_owner.setdefault(variant, []).append(parcel)
+                parcel = self._norm(rd)
+                for v in self._variants(owner_raw):
+                    self.by_owner.setdefault(v, []).append(parcel)
             self.loaded = True
-            print(f"[ParcelLookup] Loaded {sum(len(v) for v in self.by_owner.values())} parcel entries")
+            print(f"[ParcelLookup] Loaded {sum(len(v) for v in self.by_owner.values())} entries")
         except Exception as exc:
             print(f"[ParcelLookup] Could not load DBF: {exc}")
 
     @staticmethod
-    def _normalize_parcel(rec: dict) -> dict:
-        site_addr  = (rec.get("SITEADDR") or rec.get("SITE_ADDR") or "").strip()
-        site_city  = (rec.get("SITE_CITY") or "").strip()
-        site_zip   = str(rec.get("SITE_ZIP") or "").strip()
-        mail_addr  = (rec.get("MAILADR1") or rec.get("ADDR_1") or "").strip()
-        mail_city  = (rec.get("MAILCITY") or rec.get("CITY") or "").strip()
-        mail_state = (rec.get("STATE") or "").strip()
-        mail_zip   = str(rec.get("MAILZIP") or rec.get("ZIP") or "").strip()
+    def _norm(rd: dict) -> dict:
         return {
-            "prop_address": site_addr,
-            "prop_city":    site_city,
+            "prop_address": (rd.get("SITEADDR") or rd.get("SITE_ADDR") or "").strip(),
+            "prop_city":    (rd.get("SITE_CITY") or "").strip(),
             "prop_state":   "VA",
-            "prop_zip":     site_zip,
-            "mail_address": mail_addr,
-            "mail_city":    mail_city,
-            "mail_state":   mail_state,
-            "mail_zip":     mail_zip,
+            "prop_zip":     str(rd.get("SITE_ZIP") or "").strip(),
+            "mail_address": (rd.get("MAILADR1") or rd.get("ADDR_1") or "").strip(),
+            "mail_city":    (rd.get("MAILCITY") or rd.get("CITY") or "").strip(),
+            "mail_state":   (rd.get("STATE") or "").strip(),
+            "mail_zip":     str(rd.get("MAILZIP") or rd.get("ZIP") or "").strip(),
         }
 
     @staticmethod
-    def _name_variants(name: str) -> list[str]:
+    def _variants(name: str) -> list[str]:
         name = name.strip().upper()
         variants = {name}
         clean = re.sub(r",\s*", " ", name).strip()
         parts = clean.split()
         if len(parts) >= 2:
-            flipped = " ".join(parts[1:]) + " " + parts[0]
-            variants.add(flipped)
+            variants.add(" ".join(parts[1:]) + " " + parts[0])
             variants.add(f"{parts[0]}, {' '.join(parts[1:])}")
         return [v for v in variants if v]
 
     def lookup(self, owner_name: str) -> Optional[dict]:
         if not owner_name:
             return None
-        key = owner_name.strip().upper()
-        for variant in self._name_variants(key):
-            hits = self.by_owner.get(variant)
+        for v in self._variants(owner_name.strip().upper()):
+            hits = self.by_owner.get(v)
             if hits:
                 return hits[0]
         return None
@@ -175,51 +158,33 @@ class ParcelLookup:
 parcel_db = ParcelLookup()
 
 # ---------------------------------------------------------------------------
-# Retry helper
-# ---------------------------------------------------------------------------
-
-def with_retry(fn, attempts=3, delay=3):
-    last_exc = None
-    for attempt in range(1, attempts + 1):
-        try:
-            return fn()
-        except Exception as exc:
-            last_exc = exc
-            print(f"  [retry {attempt}/{attempts}] {exc}")
-            import time; time.sleep(delay)
-    raise last_exc
-
-# ---------------------------------------------------------------------------
 # Scoring
 # ---------------------------------------------------------------------------
 
 TODAY = datetime.utcnow().date()
 
 
-def compute_flags(record: dict) -> list[str]:
+def compute_flags(rec: dict) -> list[str]:
     flags = []
-    cat   = record.get("cat", "")
-    owner = (record.get("owner") or "").upper()
-    filed_str = record.get("filed") or ""
+    cat   = rec.get("cat", "")
+    owner = (rec.get("owner") or "").upper()
+    filed_str = rec.get("filed") or ""
 
-    if cat == "LP":
-        flags.append("Lis pendens")
-    if cat == "NOFC":
-        flags.append("Pre-foreclosure")
-    if cat == "JUD":
-        flags.append("Judgment lien")
+    flag_map = {
+        "LP":       "Lis pendens",
+        "NOFC":     "Pre-foreclosure",
+        "JUD":      "Judgment lien",
+        "LNMECH":   "Mechanic lien",
+        "PRO":      "Probate / estate",
+    }
+    if cat in flag_map:
+        flags.append(flag_map[cat])
     if cat in ("LNCORPTX", "LNIRS", "LNFED"):
         flags.append("Tax lien")
-    if cat == "LNMECH":
-        flags.append("Mechanic lien")
-    if cat == "PRO":
-        flags.append("Probate / estate")
     if re.search(r"\b(LLC|CORP|INC|LTD|LP|TRUST|HOLDINGS|GROUP|PROPERTIES)\b", owner):
         flags.append("LLC / corp owner")
-
     try:
-        filed_date = datetime.strptime(filed_str, "%Y-%m-%d").date()
-        if (TODAY - filed_date).days <= 7:
+        if (TODAY - datetime.strptime(filed_str, "%Y-%m-%d").date()).days <= 7:
             flags.append("New this week")
     except Exception:
         pass
@@ -227,85 +192,66 @@ def compute_flags(record: dict) -> list[str]:
     return list(dict.fromkeys(flags))
 
 
-def compute_score(record: dict, flags: list[str]) -> int:
-    score = 30
-    score += 10 * len(flags)
-
-    amount = record.get("amount") or 0
+def compute_score(rec: dict, flags: list[str]) -> int:
+    score = 30 + 10 * len(flags)
     if "Lis pendens" in flags and "Pre-foreclosure" in flags:
         score += 20
     try:
-        amt = float(amount)
+        amt = float(rec.get("amount") or 0)
         if amt > 100_000:
             score += 15
         elif amt > 50_000:
             score += 10
     except (TypeError, ValueError):
         pass
-
     if "New this week" in flags:
         score += 5
-    if record.get("prop_address") or record.get("mail_address"):
+    if rec.get("prop_address") or rec.get("mail_address"):
         score += 5
-
     return min(score, 100)
 
 # ---------------------------------------------------------------------------
-# Playwright scraper — Virginia OCIS land records
+# Playwright — one search per court, filter locally
 # ---------------------------------------------------------------------------
 
-async def search_clerk_portal(
-    page: Page,
-    court: dict,
-    doc_type_code: str,
-    start_date: str,
-    end_date: str,
-) -> list[dict]:
-    """Search the Virginia OCIS land records portal for one court + doc type."""
-    records = []
+async def search_court(page: Page, court: dict, start_date: str, end_date: str) -> list[dict]:
+    """
+    Search the Virginia OCIS portal for ALL records in the date range for one court.
+    No doc-type filter — we filter locally after parsing.
+    """
     court_id   = court["id"]
     court_name = court["name"]
+    records    = []
 
     try:
-        await page.goto(f"{VIRGINIA_OCIS_BASE}/landRecordSearch", timeout=30000)
-        await page.wait_for_load_state("networkidle", timeout=20000)
+        # Navigate
+        url = f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
+        await page.goto(url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+        await page.wait_for_load_state("load", timeout=PAGE_LOAD_TIMEOUT)
 
-        # Select court
-        court_selectors = [
-            'select[name="courtId"]', 'select[name="court"]',
-            '#courtSelect', '#court',
-        ]
-        for sel in court_selectors:
+        # Select court by value or label
+        for sel in ['select[name="courtId"]', 'select[name="court"]', '#courtSelect', '#court']:
             try:
-                await page.select_option(sel, value=court_id, timeout=3000)
+                await page.select_option(sel, value=court_id, timeout=ELEMENT_TIMEOUT)
                 break
             except Exception:
                 try:
-                    await page.select_option(sel, label=court_name, timeout=3000)
+                    await page.select_option(sel, label=court_name, timeout=ELEMENT_TIMEOUT)
                     break
                 except Exception:
                     continue
 
-        # Fill document type
-        for sel in ['input[name="documentType"]', 'input[name="docType"]',
-                    'input[name="instrType"]', '#documentType', '#instrType']:
-            try:
-                await page.fill(sel, doc_type_code, timeout=3000)
-                break
-            except Exception:
-                continue
-
-        # Fill date range
+        # Date range only — no doc type — returns all instrument types
         for sel in ['input[name="startDate"]', 'input[name="dateFrom"]', '#startDate', '#dateFrom']:
             try:
-                await page.fill(sel, start_date, timeout=3000)
+                await page.fill(sel, start_date, timeout=ELEMENT_TIMEOUT)
                 break
             except Exception:
                 continue
 
         for sel in ['input[name="endDate"]', 'input[name="dateTo"]', '#endDate', '#dateTo']:
             try:
-                await page.fill(sel, end_date, timeout=3000)
+                await page.fill(sel, end_date, timeout=ELEMENT_TIMEOUT)
                 break
             except Exception:
                 continue
@@ -313,25 +259,47 @@ async def search_clerk_portal(
         # Submit
         for sel in ['button[type="submit"]', 'input[type="submit"]', '#searchBtn', '#search']:
             try:
-                await page.click(sel, timeout=5000)
+                await page.click(sel, timeout=ELEMENT_TIMEOUT)
                 break
             except Exception:
                 continue
 
-        await page.wait_for_load_state("networkidle", timeout=20000)
-        records = await extract_results_from_page(page, court, doc_type_code)
+        # Wait for results — use load instead of networkidle to avoid hanging
+        try:
+            await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
+        except PlaywrightTimeout:
+            pass  # proceed and parse whatever is on the page
+
+        # Paginate through all result pages
+        while True:
+            page_records = await parse_results_page(page, court)
+            records.extend(page_records)
+
+            # Try to go to next page
+            try:
+                next_btn = await page.query_selector('a:has-text("Next"), button:has-text("Next"), [aria-label="Next page"]')
+                if next_btn and await next_btn.is_visible():
+                    await next_btn.click(timeout=ELEMENT_TIMEOUT)
+                    try:
+                        await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
+                    except PlaywrightTimeout:
+                        pass
+                else:
+                    break
+            except Exception:
+                break
 
     except PlaywrightTimeout as exc:
-        print(f"  [clerk] Timeout {court_name}/{doc_type_code}: {exc}")
+        print(f"  [timeout] {court_name}: {exc}")
     except Exception as exc:
-        print(f"  [clerk] Error {court_name}/{doc_type_code}: {exc}")
+        print(f"  [error]   {court_name}: {exc}")
         traceback.print_exc()
 
     return records
 
 
-async def extract_results_from_page(page: Page, court: dict, doc_type_code: str) -> list[dict]:
-    """Parse search results table from the current page."""
+async def parse_results_page(page: Page, court: dict) -> list[dict]:
+    """Parse every result table row on the current page, keep only target cats."""
     records = []
     try:
         content = await page.content()
@@ -346,24 +314,24 @@ async def extract_results_from_page(page: Page, court: dict, doc_type_code: str)
             if not headers:
                 continue
 
-            col_map = {}
+            col_map: dict[str, int] = {}
             for i, h in enumerate(headers):
-                if "INST" in h or "DOC" in h or "NUMBER" in h:
+                if any(x in h for x in ["INST", "DOC", "NUMBER"]):
                     col_map.setdefault("doc_num", i)
                 if "TYPE" in h:
                     col_map.setdefault("doc_type", i)
-                if "DATE" in h or "FILED" in h or "RECORD" in h:
+                if any(x in h for x in ["DATE", "FILED", "RECORD"]):
                     col_map.setdefault("filed", i)
-                if "GRANTOR" in h or "OWNER" in h or "PARTY1" in h:
+                if any(x in h for x in ["GRANTOR", "OWNER", "PARTY1"]):
                     col_map.setdefault("owner", i)
-                if "GRANTEE" in h or "PARTY2" in h:
+                if any(x in h for x in ["GRANTEE", "PARTY2"]):
                     col_map.setdefault("grantee", i)
-                if "LEGAL" in h or "DESCRIPTION" in h:
+                if any(x in h for x in ["LEGAL", "DESCRIPTION"]):
                     col_map.setdefault("legal", i)
-                if "AMOUNT" in h or "CONSIDER" in h or "VALUE" in h:
+                if any(x in h for x in ["AMOUNT", "CONSIDER", "VALUE"]):
                     col_map.setdefault("amount", i)
 
-            if not col_map.get("doc_num"):
+            if "doc_num" not in col_map:
                 continue
 
             for row in rows[1:]:
@@ -371,19 +339,18 @@ async def extract_results_from_page(page: Page, court: dict, doc_type_code: str)
                 if not cells:
                     continue
 
-                def cell_text(key):
+                def ct(key):
                     idx = col_map.get(key)
-                    if idx is not None and idx < len(cells):
-                        return cells[idx].get_text(strip=True)
-                    return ""
+                    return cells[idx].get_text(strip=True) if idx is not None and idx < len(cells) else ""
 
-                doc_num  = cell_text("doc_num")
-                doc_type = cell_text("doc_type") or doc_type_code
-                filed    = normalize_date(cell_text("filed"))
-                owner    = cell_text("owner")
-                grantee  = cell_text("grantee")
-                legal    = cell_text("legal")
-                amount   = parse_amount(cell_text("amount"))
+                doc_num  = ct("doc_num")
+                if not doc_num:
+                    continue
+
+                doc_type = ct("doc_type")
+                cat, cat_label = classify_doc_type(doc_type)
+                if cat not in TARGET_CATS:
+                    continue
 
                 link_tag  = row.find("a", href=True)
                 clerk_url = ""
@@ -391,29 +358,28 @@ async def extract_results_from_page(page: Page, court: dict, doc_type_code: str)
                     href = link_tag["href"]
                     clerk_url = href if href.startswith("http") else VIRGINIA_OCIS_BASE + "/" + href.lstrip("/")
 
-                if not doc_num:
-                    continue
-
-                cat, cat_label = classify_doc_type(doc_type)
-                if cat not in TARGET_CATS:
-                    continue
-
                 records.append(make_record(
-                    doc_num=doc_num, doc_type=doc_type, filed=filed,
-                    cat=cat, cat_label=cat_label, owner=owner, grantee=grantee,
-                    amount=amount, legal=legal,
+                    doc_num=doc_num,
+                    doc_type=doc_type,
+                    filed=normalize_date(ct("filed")),
+                    cat=cat,
+                    cat_label=cat_label,
+                    owner=ct("owner"),
+                    grantee=ct("grantee"),
+                    amount=parse_amount(ct("amount")),
+                    legal=ct("legal"),
                     clerk_url=clerk_url or build_clerk_url(doc_num, court["id"]),
                     court=court,
                 ))
 
     except Exception as exc:
-        print(f"  [extract] Error parsing page: {exc}")
+        print(f"  [parse] Error: {exc}")
 
     return records
 
 
 async def scrape_all_courts(start_date: str, end_date: str) -> list[dict]:
-    """Main async scraping loop — all courts × all doc types."""
+    """One Playwright search per court — 5 total."""
     all_records: list[dict] = []
     seen: set[str] = set()
 
@@ -428,61 +394,51 @@ async def scrape_all_courts(start_date: str, end_date: str) -> list[dict]:
         )
 
         for court in COURTS:
-            print(f"\n{'='*50}")
-            print(f"[court] {court['name']}  (ID: {court['id']})")
-            print(f"{'='*50}")
+            print(f"\n[court] {court['name']}  (ID: {court['id']})")
 
-            for code, (cat, cat_label) in DOC_TYPE_MAP.items():
-                if cat not in TARGET_CATS:
-                    continue
-                print(f"  [search] {code} ({cat_label})  {start_date} → {end_date}")
-                page = await context.new_page()
-                try:
-                    recs = await search_with_retry(page, court, code, start_date, end_date)
-                    new_recs = 0
-                    for rec in recs:
-                        key = f"{court['id']}:{rec['doc_num']}"
-                        if key not in seen:
-                            seen.add(key)
-                            all_records.append(rec)
-                            new_recs += 1
-                    print(f"         → {new_recs} new records")
-                except Exception as exc:
-                    print(f"  [scraper] Failed {court['name']}/{code}: {exc}")
-                finally:
-                    await page.close()
+            page = await context.new_page()
+            try:
+                # Hard timeout per court
+                recs = await asyncio.wait_for(
+                    search_court(page, court, start_date, end_date),
+                    timeout=PER_COURT_TIMEOUT,
+                )
+            except asyncio.TimeoutError:
+                print(f"  [timeout] {court['name']} exceeded {PER_COURT_TIMEOUT}s — skipping")
+                recs = []
+            except Exception as exc:
+                print(f"  [error] {court['name']}: {exc}")
+                recs = []
+            finally:
+                await page.close()
 
-            # Static fallback for this court
-            static_recs = fetch_static_court_records(court, start_date, end_date, seen)
-            all_records.extend(static_recs)
+            new_count = 0
+            for rec in recs:
+                key = f"{court['id']}:{rec['doc_num']}"
+                if key not in seen:
+                    seen.add(key)
+                    all_records.append(rec)
+                    new_count += 1
+
+            print(f"  → {new_count} new records")
+
+            # Fallback HTTP fetch for this court
+            http_recs = fetch_court_http(court, start_date, end_date, seen)
+            all_records.extend(http_recs)
+            if http_recs:
+                print(f"  → {len(http_recs)} additional records via HTTP fallback")
 
         await context.close()
         await browser.close()
 
     return all_records
 
-
-async def search_with_retry(
-    page: Page, court: dict, doc_type_code: str,
-    start_date: str, end_date: str, attempts: int = 3,
-) -> list[dict]:
-    last_exc = None
-    for attempt in range(1, attempts + 1):
-        try:
-            return await search_clerk_portal(page, court, doc_type_code, start_date, end_date)
-        except Exception as exc:
-            last_exc = exc
-            print(f"    [retry {attempt}/{attempts}] {exc}")
-            await asyncio.sleep(3)
-    return []
-
 # ---------------------------------------------------------------------------
-# Static fallback — requests + BeautifulSoup (per court)
+# HTTP fallback (requests + BeautifulSoup)
 # ---------------------------------------------------------------------------
 
-def fetch_static_court_records(court: dict, start_date: str, end_date: str, seen: set) -> list[dict]:
-    """Fallback HTTP fetch for one court using requests + BeautifulSoup."""
-    records = []
+def fetch_court_http(court: dict, start_date: str, end_date: str, seen: set) -> list[dict]:
+    records  = []
     court_id = court["id"]
     session  = requests.Session()
     session.headers.update({
@@ -491,36 +447,34 @@ def fetch_static_court_records(court: dict, start_date: str, end_date: str, seen
     })
 
     # JSON API probe
-    api_urls = [
+    for url in [
         f"{VA_OCIS_API}/landRecords?courtId={court_id}&startDate={start_date}&endDate={end_date}",
         f"{VIRGINIA_OCIS_BASE}/api/landRecords?court={court_id}&fromDate={start_date}&toDate={end_date}",
-    ]
-    for url in api_urls:
+    ]:
         try:
             resp = session.get(url, timeout=20)
             if resp.status_code == 200 and "application/json" in resp.headers.get("content-type", ""):
                 data  = resp.json()
                 items = data if isinstance(data, list) else data.get("records", data.get("results", []))
                 for item in items:
-                    rec = parse_api_record(item, court)
+                    rec = parse_api_item(item, court)
                     if rec:
                         key = f"{court_id}:{rec['doc_num']}"
                         if key not in seen:
                             seen.add(key)
                             records.append(rec)
                 if records:
-                    print(f"  [static] {court['name']}: {len(records)} records via API")
                     return records
-        except Exception as exc:
-            print(f"  [static] API failed {court['name']}: {exc}")
+        except Exception:
+            pass
 
-    # HTML search fallback
-    html_url = (
-        f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
-        f"?courtId={court_id}&startDate={start_date}&endDate={end_date}"
-    )
+    # HTML fallback
     try:
-        resp = session.get(html_url, timeout=30)
+        resp = session.get(
+            f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
+            f"?courtId={court_id}&startDate={start_date}&endDate={end_date}",
+            timeout=30,
+        )
         if resp.status_code == 200:
             soup  = BeautifulSoup(resp.text, "lxml")
             table = soup.find("table")
@@ -538,34 +492,31 @@ def fetch_static_court_records(court: dict, start_date: str, end_date: str, seen
                             seen.add(key)
                             records.append(rec)
     except Exception as exc:
-        print(f"  [static] HTML fallback failed {court['name']}: {exc}")
+        print(f"  [http] HTML fallback failed {court['name']}: {exc}")
 
     return records
 
 
-def parse_api_record(item: dict, court: dict) -> Optional[dict]:
+def parse_api_item(item: dict, court: dict) -> Optional[dict]:
     try:
-        doc_type = (
-            item.get("documentType") or item.get("instrType") or item.get("docType") or ""
-        ).strip()
+        doc_type = (item.get("documentType") or item.get("instrType") or item.get("docType") or "").strip()
         cat, cat_label = classify_doc_type(doc_type)
         if cat not in TARGET_CATS:
             return None
-        doc_num = str(
-            item.get("instrumentNumber") or item.get("docNumber") or item.get("instrNum") or ""
-        ).strip()
+        doc_num = str(item.get("instrumentNumber") or item.get("docNumber") or item.get("instrNum") or "").strip()
         if not doc_num:
             return None
-        filed    = normalize_date(str(item.get("recordedDate") or item.get("filedDate") or item.get("date") or ""))
-        owner    = str(item.get("grantor") or item.get("owner") or "").strip()
-        grantee  = str(item.get("grantee") or "").strip()
-        legal    = str(item.get("legalDescription") or item.get("legal") or "").strip()
-        amount   = parse_amount(str(item.get("consideration") or item.get("amount") or ""))
-        clerk_url = str(item.get("url") or item.get("link") or build_clerk_url(doc_num, court["id"]))
         return make_record(
-            doc_num=doc_num, doc_type=doc_type, filed=filed,
-            cat=cat, cat_label=cat_label, owner=owner, grantee=grantee,
-            amount=amount, legal=legal, clerk_url=clerk_url, court=court,
+            doc_num=doc_num,
+            doc_type=doc_type,
+            filed=normalize_date(str(item.get("recordedDate") or item.get("filedDate") or item.get("date") or "")),
+            cat=cat, cat_label=cat_label,
+            owner=str(item.get("grantor") or item.get("owner") or "").strip(),
+            grantee=str(item.get("grantee") or "").strip(),
+            amount=parse_amount(str(item.get("consideration") or item.get("amount") or "")),
+            legal=str(item.get("legalDescription") or item.get("legal") or "").strip(),
+            clerk_url=str(item.get("url") or item.get("link") or build_clerk_url(doc_num, court["id"])),
+            court=court,
         )
     except Exception:
         return None
@@ -580,30 +531,25 @@ def parse_html_row(cells, headers: list[str], court: dict) -> Optional[dict]:
             return ""
 
         doc_num  = get(["INST", "DOC", "NUM"])
-        doc_type = get(["TYPE"])
-        filed    = normalize_date(get(["DATE", "FILED", "RECORD"]))
-        owner    = get(["GRANTOR", "OWNER"])
-        grantee  = get(["GRANTEE"])
-        legal    = get(["LEGAL", "DESC"])
-        amount   = parse_amount(get(["AMOUNT", "CONSIDER"]))
-
         if not doc_num:
             return None
-
+        doc_type = get(["TYPE"])
         cat, cat_label = classify_doc_type(doc_type)
         if cat not in TARGET_CATS:
             return None
 
-        link_tag  = next((cell.find("a", href=True) for cell in cells if cell.find("a", href=True)), None)
-        clerk_url = ""
-        if link_tag:
-            href = link_tag["href"]
-            clerk_url = href if href.startswith("http") else VIRGINIA_OCIS_BASE + "/" + href.lstrip("/")
+        link_tag  = next((c.find("a", href=True) for c in cells if c.find("a", href=True)), None)
+        href      = link_tag["href"] if link_tag else ""
+        clerk_url = href if href.startswith("http") else (VIRGINIA_OCIS_BASE + "/" + href.lstrip("/") if href else "")
 
         return make_record(
-            doc_num=doc_num, doc_type=doc_type, filed=filed,
-            cat=cat, cat_label=cat_label, owner=owner, grantee=grantee,
-            amount=amount, legal=legal,
+            doc_num=doc_num, doc_type=doc_type,
+            filed=normalize_date(get(["DATE", "FILED", "RECORD"])),
+            cat=cat, cat_label=cat_label,
+            owner=get(["GRANTOR", "OWNER"]),
+            grantee=get(["GRANTEE"]),
+            amount=parse_amount(get(["AMOUNT", "CONSIDER"])),
+            legal=get(["LEGAL", "DESC"]),
             clerk_url=clerk_url or build_clerk_url(doc_num, court["id"]),
             court=court,
         )
@@ -614,25 +560,21 @@ def parse_html_row(cells, headers: list[str], court: dict) -> Optional[dict]:
 # Property Appraiser DBF download
 # ---------------------------------------------------------------------------
 
-# Richmond metro GIS / open data parcel download URLs
 PARCEL_DBF_URLS = [
     "https://www.rva.gov/sites/default/files/2024-01/ParcelData.zip",
     "https://opendata.rva.gov/datasets/parcels/data.zip",
     "https://gis.rva.gov/download/parcels.zip",
-    "https://vgin.vdem.virginia.gov/datasets/richmond-city-parcels/download",
 ]
 
 
 def download_parcel_dbf() -> Optional[str]:
     import zipfile
-
     session = requests.Session()
     session.headers["User-Agent"] = "Mozilla/5.0 (compatible; MotivatedSellerScraper/1.0)"
-
     for url in PARCEL_DBF_URLS:
         try:
             print(f"[parcel] Trying: {url}")
-            resp = session.get(url, timeout=60, stream=True)
+            resp    = session.get(url, timeout=60, stream=True)
             if resp.status_code != 200:
                 continue
             tmpdir   = tempfile.mkdtemp()
@@ -645,12 +587,11 @@ def download_parcel_dbf() -> Optional[str]:
             for root, _, files in os.walk(tmpdir):
                 for fname in files:
                     if fname.lower().endswith(".dbf"):
-                        dbf_path = os.path.join(root, fname)
-                        print(f"[parcel] Found DBF: {dbf_path}")
-                        return dbf_path
+                        path = os.path.join(root, fname)
+                        print(f"[parcel] Found DBF: {path}")
+                        return path
         except Exception as exc:
             print(f"[parcel] Failed {url}: {exc}")
-
     print("[parcel] Could not download parcel DBF — address enrichment skipped")
     return None
 
@@ -658,10 +599,8 @@ def download_parcel_dbf() -> Optional[str]:
 # Helpers
 # ---------------------------------------------------------------------------
 
-def make_record(
-    *, doc_num, doc_type, filed, cat, cat_label,
-    owner, grantee, amount, legal, clerk_url, court: dict,
-) -> dict:
+def make_record(*, doc_num, doc_type, filed, cat, cat_label,
+                owner, grantee, amount, legal, clerk_url, court: dict) -> dict:
     return {
         "doc_num":      doc_num,
         "doc_type":     doc_type,
@@ -702,10 +641,8 @@ def normalize_date(raw: str) -> str:
     if not raw:
         return ""
     raw = raw.strip()
-    for fmt in [
-        "%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y",
-        "%Y%m%d", "%d-%b-%Y", "%B %d, %Y", "%b %d, %Y", "%m/%d/%y",
-    ]:
+    for fmt in ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y%m%d",
+                "%d-%b-%Y", "%B %d, %Y", "%b %d, %Y", "%m/%d/%y"]:
         try:
             return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
         except ValueError:
@@ -725,11 +662,8 @@ def parse_amount(raw: str) -> Optional[float]:
 
 
 def build_clerk_url(doc_num: str, court_id: str) -> str:
-    safe_num = requests.utils.quote(doc_num, safe="")
-    return (
-        f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
-        f"?courtId={court_id}&instrumentNumber={safe_num}"
-    )
+    safe = requests.utils.quote(doc_num, safe="")
+    return f"{VIRGINIA_OCIS_BASE}/landRecordSearch?courtId={court_id}&instrumentNumber={safe}"
 
 # ---------------------------------------------------------------------------
 # GHL CSV Export
@@ -747,19 +681,16 @@ def generate_ghl_csv(records: list[dict]) -> str:
 
     def split_name(full: str) -> tuple[str, str]:
         parts = full.strip().split()
-        if not parts:
-            return ("", "")
-        if len(parts) == 1:
-            return (parts[0], "")
+        if not parts:  return ("", "")
+        if len(parts) == 1: return (parts[0], "")
         return (" ".join(parts[:-1]), parts[-1])
 
-    output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=columns)
-    writer.writeheader()
-
+    out = io.StringIO()
+    w   = csv.DictWriter(out, fieldnames=columns)
+    w.writeheader()
     for rec in records:
         first, last = split_name(rec.get("owner") or "")
-        writer.writerow({
+        w.writerow({
             "First Name":             first,
             "Last Name":              last,
             "Mailing Address":        rec.get("mail_address") or "",
@@ -781,11 +712,10 @@ def generate_ghl_csv(records: list[dict]) -> str:
             "Source":                 "Virginia OCIS - " + (rec.get("jurisdiction") or "Greater Richmond, VA"),
             "Public Records URL":     rec.get("clerk_url") or "",
         })
-
-    return output.getvalue()
+    return out.getvalue()
 
 # ---------------------------------------------------------------------------
-# Main orchestration
+# Main
 # ---------------------------------------------------------------------------
 
 async def main():
@@ -795,91 +725,86 @@ async def main():
     print(f"Run time: {datetime.utcnow().isoformat()}Z")
     print("=" * 60)
 
-    end_date_obj   = datetime.utcnow().date()
-    start_date_obj = end_date_obj - timedelta(days=LOOKBACK_DAYS)
-    start_date = start_date_obj.strftime("%Y-%m-%d")
-    end_date   = end_date_obj.strftime("%Y-%m-%d")
-    print(f"Date range: {start_date} → {end_date}  ({LOOKBACK_DAYS} days)")
+    end_dt   = datetime.utcnow().date()
+    start_dt = end_dt - timedelta(days=LOOKBACK_DAYS)
+    start_date, end_date = start_dt.strftime("%Y-%m-%d"), end_dt.strftime("%Y-%m-%d")
+    print(f"Date range: {start_date} → {end_date}  ({LOOKBACK_DAYS} days)\n")
 
-    # 1. Load parcel data
+    # 1. Parcel data
     dbf_path = download_parcel_dbf()
     if dbf_path:
         parcel_db.load(dbf_path)
 
-    # 2. Scrape all courts
-    print("\n[phase 1] Scraping all courts...")
+    # 2. Scrape
+    print("[phase 1] Scraping all courts (one search per court)...")
     records = await scrape_all_courts(start_date, end_date)
-    print(f"\nTotal raw records across all courts: {len(records)}")
+    print(f"\nTotal raw records: {len(records)}")
 
-    # 3. Enrich with parcel data
-    print("\n[phase 2] Enriching with parcel data...")
+    # 3. Enrich
+    print("[phase 2] Enriching with parcel data...")
     enriched = 0
     for rec in records:
-        parcel = parcel_db.lookup(rec.get("owner") or "")
-        if parcel:
-            rec.update(parcel)
+        p = parcel_db.lookup(rec.get("owner") or "")
+        if p:
+            rec.update(p)
             enriched += 1
-    print(f"Enriched {enriched}/{len(records)} records with address data")
+    print(f"Enriched {enriched}/{len(records)} records")
 
-    # 4. Compute flags and scores
-    print("\n[phase 3] Computing seller scores...")
+    # 4. Score
+    print("[phase 3] Scoring...")
     for rec in records:
         rec["flags"] = compute_flags(rec)
         rec["score"] = compute_score(rec, rec["flags"])
 
-    # Sort by score descending
     records.sort(key=lambda r: r["score"], reverse=True)
     with_address = sum(1 for r in records if r.get("prop_address") or r.get("mail_address"))
 
-    # Per-court breakdown
     by_court: dict[str, int] = {}
     for rec in records:
         j = rec.get("jurisdiction") or "Unknown"
         by_court[j] = by_court.get(j, 0) + 1
 
-    # 5. Build output payload
+    # 5. Save
     payload = {
-        "fetched_at":    datetime.utcnow().isoformat() + "Z",
-        "source":        "Virginia OCIS — Greater Richmond Area",
-        "courts":        [c["name"] for c in COURTS],
-        "date_range":    f"{start_date} to {end_date}",
-        "total":         len(records),
-        "with_address":  with_address,
-        "by_jurisdiction": by_court,
-        "records":       records,
+        "fetched_at":       datetime.utcnow().isoformat() + "Z",
+        "source":           "Virginia OCIS — Greater Richmond Area",
+        "courts":           [c["name"] for c in COURTS],
+        "date_range":       f"{start_date} to {end_date}",
+        "total":            len(records),
+        "with_address":     with_address,
+        "by_jurisdiction":  by_court,
+        "records":          records,
     }
 
-    # 6. Save JSON
-    for output_path in OUTPUT_FILES:
+    for path in OUTPUT_FILES:
         try:
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
-            print(f"[output] Saved {len(records)} records → {output_path}")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
+            print(f"[output] → {path}  ({len(records)} records)")
         except Exception as exc:
-            print(f"[output] Error saving {output_path}: {exc}")
+            print(f"[output] Error {path}: {exc}")
 
-    # 7. GHL CSV
     csv_path = BASE_OUTPUT_DIR / "data" / "ghl_export.csv"
     try:
         csv_path.parent.mkdir(parents=True, exist_ok=True)
         csv_path.write_text(generate_ghl_csv(records), encoding="utf-8")
-        print(f"[output] GHL CSV → {csv_path}")
+        print(f"[output] → {csv_path}")
     except Exception as exc:
-        print(f"[output] Error saving GHL CSV: {exc}")
+        print(f"[output] CSV error: {exc}")
 
-    # 8. Summary
+    # 6. Summary
     print("\n" + "=" * 60)
     print("SUMMARY")
-    print(f"  Date range:        {start_date} → {end_date}")
-    print(f"  Total leads:       {len(records)}")
-    print(f"  With address:      {with_address}")
-    print(f"  High score (≥70):  {sum(1 for r in records if r.get('score', 0) >= 70)}")
+    print(f"  Date range:       {start_date} → {end_date}")
+    print(f"  Total leads:      {len(records)}")
+    print(f"  With address:     {with_address}")
+    print(f"  High score ≥70:   {sum(1 for r in records if r.get('score', 0) >= 70)}")
     print(f"\n  By jurisdiction:")
-    for court_name, count in sorted(by_court.items(), key=lambda x: -x[1]):
-        print(f"    {court_name:<25} {count}")
+    for name, cnt in sorted(by_court.items(), key=lambda x: -x[1]):
+        print(f"    {name:<26} {cnt}")
     if records:
-        top = records[0]
-        print(f"\n  Top lead: {top.get('owner')} | score={top.get('score')} | {top.get('cat_label')} | {top.get('jurisdiction')}")
+        t = records[0]
+        print(f"\n  Top lead: {t.get('owner')} | score={t.get('score')} | {t.get('cat_label')} | {t.get('jurisdiction')}")
     print("=" * 60)
 
 
