@@ -339,32 +339,59 @@ def scrape_henrico_cama(lookback_days: int = LOOKBACK_DAYS) -> list[dict]:
     )
 
     try:
-        # Fetch properties with recent sales, paginating
+        # Try multiple query approaches — Henrico's ArcGIS is restrictive
         all_feats = []
-        offset = 0
-        PAGE   = 1000
-        while True:
+        # ISO date approach works for ArcGIS FeatureServer date fields
+        cutoff_iso = (datetime.now() - timedelta(days=window_days)).strftime("%Y-%m-%d")
+
+        # Attempt simple date-only filter first, then LAST_SALE_PRICE > 0
+        for where_clause in [
+            f"LAST_SALE_DATE > date '{cutoff_iso}'",
+            f"LAST_SALE_DATE > {cutoff_ms}",
+            "LAST_SALE_PRICE > 0 AND LAST_SALE_PRICE < 500000",
+        ]:
             r = SESSION.get(
                 f"{HENRICO_CAMA}/query",
                 params={
-                    "where":             f"LAST_SALE_DATE > {cutoff_ms} AND LAST_SALE_PRICE > 0",
+                    "where":             where_clause,
                     "outFields":         FIELDS,
                     "orderByFields":     "LAST_SALE_DATE DESC",
-                    "resultOffset":      offset,
-                    "resultRecordCount": PAGE,
+                    "resultRecordCount": 1,
                     "f":                 "json",
                 },
-                timeout=30,
+                timeout=20,
             )
-            data = r.json()
-            if "error" in data:
-                print(f"[Henrico CAMA] API error: {data['error']}")
+            probe = r.json()
+            if "error" not in probe:
+                print(f"[Henrico CAMA] Working WHERE clause: {where_clause}")
+                # Paginate with the working clause
+                offset = 0
+                PAGE   = 1000
+                while True:
+                    r2 = SESSION.get(
+                        f"{HENRICO_CAMA}/query",
+                        params={
+                            "where":             where_clause,
+                            "outFields":         FIELDS,
+                            "orderByFields":     "LAST_SALE_DATE DESC",
+                            "resultOffset":      offset,
+                            "resultRecordCount": PAGE,
+                            "f":                 "json",
+                        },
+                        timeout=30,
+                    )
+                    data2 = r2.json()
+                    if "error" in data2:
+                        print(f"[Henrico CAMA] Pagination error: {data2['error']}")
+                        break
+                    feats2 = data2.get("features", [])
+                    all_feats.extend(feats2)
+                    if len(feats2) < PAGE:
+                        break
+                    offset += PAGE
                 break
-            feats = data.get("features", [])
-            all_feats.extend(feats)
-            if len(feats) < PAGE:
-                break
-            offset += PAGE
+            else:
+                print(f"[Henrico CAMA] WHERE failed ({where_clause}): {probe.get('error',{}).get('message','?')}")
 
         print(f"[Henrico CAMA] {len(all_feats)} recent sales fetched (window: {window_days} days)")
 
