@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-08T03:32:33.648200Z",
+  "fetched_at": "2026-04-08T03:48:10.002060Z",
   "source": "Virginia OCIS \u2014 Greater Richmond Area",
   "courts": [
     "Richmond City",
@@ -19,16 +19,28 @@
       "title": "Virginia Judiciary Online Case Information System - Landing Page",
       "forms": [],
       "selects": [],
+      "page_text": "Virginia Judiciary Online Case Information System - Landing Page Virginia Judiciary Online Case Information System 2.0 Terms and Conditions of Use OCIS Terms and Conditions of Use OCIS Terms and Conditions of Use \u200c Online Case Information System 2.0 Terms and Conditions By accessing and using the Online Case Information System 2.0 (\u201cOCIS 2.0\u201d) you are agreeing to comply with the following OCIS 2.0 Terms and Conditions of Use (\"Terms\"), which shall be referred to collectively as the End User Licensing Agreement, or \"EULA.\" This is a legal agreement between the Office of the Executive Secretary of the Supreme Court of Virginia (\u201cOES\u201d or \"Owner\") and you, and no other third party or its subsidiaries are a party to this EULA. This EULA governs your access to and use of OCIS 2.0. 1.\u00a0\u00a0\u00a0Representation and Warranties If you do not accept this EULA in its entirety, then you may not access or use OCIS 2.0, and any use of OCIS 2.0 by you will be considered a violation of OES\u2019s intellectual property rights and may additionally subject you to civil or criminal penalties. 2.\u00a0\u00a0\u00a0Modification of Terms OES may unilaterally modify this EULA. OES reserves the right to, at any time and without prior notice, discontinue OCIS 2.0, change the content or formatting of OCIS 2.0, or terminate access to and any specific use of OCIS 2.0. OES shall not be liable to you or to any third party for taking any of these actions and will not be limited to the remedies below if you violate this EULA. By accessing and using OCIS 2.0 you are accepting and agreeing to the Terms then in effect; it is your responsibility to check for updates to the EULA before use. 3.\u00a0\u00a0\u00a0General Terms 3.1.\u00a0\u00a0\u00a0Proprietary Rights The case information displayed on OCIS 2.0 is case information entered by the respective court clerks into the respective case management systems (CMS). The Office of the Executive Secretary (OES) of the Supreme Court of Virginia is the administrative office for Virginia's Judicial System and provides t",
       "error": null,
-      "has_content": false
-    },
-    {
-      "url": "https://eapps.courts.state.va.us/landRecordSearch",
-      "status": 200,
-      "title": "Supreme Court Of Virginia: Office of the Executive Secretary",
-      "forms": [],
-      "selects": [],
-      "error": null,
+      "all_inputs": [
+        {
+          "tag": "button",
+          "name": null,
+          "id": "acceptTerms",
+          "type": null
+        },
+        {
+          "tag": "button",
+          "name": null,
+          "id": "declineTerms",
+          "type": "button"
+        },
+        {
+          "tag": "button",
+          "name": null,
+          "id": "topBtn",
+          "type": "button"
+        }
+      ],
       "has_content": true
     }
   ],
