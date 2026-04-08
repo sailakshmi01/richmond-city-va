@@ -217,6 +217,7 @@
       <div class="value" style="font-size:1rem" id="stat-range">—</div>
     </div>
   </div>
+  <div id="court-breakdown" style="display:flex;gap:.5rem;flex-wrap:wrap;padding:0 2rem 1rem;"></div>
 
   <div class="controls">
     <input id="search" type="text" placeholder="Search owner, doc #, address..." oninput="applyFilters()" />
@@ -236,6 +237,14 @@
       <option value="PRO">Probate</option>
       <option value="NOC">Notice of Commencement</option>
       <option value="RELLP">Release Lis Pendens</option>
+    </select>
+    <select id="filter-jurisdiction" onchange="applyFilters()">
+      <option value="">All jurisdictions</option>
+      <option value="Richmond City">Richmond City</option>
+      <option value="Henrico County">Henrico County</option>
+      <option value="Chesterfield County">Chesterfield County</option>
+      <option value="Hanover County">Hanover County</option>
+      <option value="Goochland County">Goochland County</option>
     </select>
     <select id="filter-score" onchange="applyFilters()">
       <option value="0">All scores</option>
@@ -259,6 +268,7 @@
           <th>Score</th>
           <th>Flags</th>
           <th>Owner</th>
+          <th>Jurisdiction</th>
           <th>Type</th>
           <th>Filed</th>
           <th>Amount</th>
@@ -269,7 +279,7 @@
         </tr>
       </thead>
       <tbody id="leads-body">
-        <tr><td colspan="10" class="empty">Loading leads...</td></tr>
+        <tr><td colspan="11" class="empty">Loading leads...</td></tr>
       </tbody>
     </table>
   </div>
@@ -294,27 +304,42 @@
         document.getElementById("total-badge").textContent = (data.total || ALL_RECORDS.length) + " leads";
 
         const fetched = data.fetched_at ? new Date(data.fetched_at).toLocaleString() : "unknown";
-        document.getElementById("meta").textContent = "Last updated: " + fetched + "  ·  Source: " + (data.source || "");
+        const courts  = (data.courts || []).join(", ");
+        document.getElementById("meta").textContent = "Last updated: " + fetched + "  ·  Courts: " + (courts || data.source || "");
+
+        // Court breakdown pills
+        if (data.by_jurisdiction) {
+          const bd = document.getElementById("court-breakdown");
+          bd.innerHTML = Object.entries(data.by_jurisdiction)
+            .sort((a, b) => b[1] - a[1])
+            .map(([name, count]) =>
+              `<span style="background:#1e293b;border:1px solid #334155;border-radius:999px;padding:.2rem .75rem;font-size:.75rem;color:#94a3b8">
+                <strong style="color:#e2e8f0">${name}</strong>: ${count}
+              </span>`
+            ).join("");
+        }
 
         applyFilters();
       } catch(e) {
         document.getElementById("leads-body").innerHTML =
-          '<tr><td colspan="10" class="empty">No data yet — run the scraper to populate records.</td></tr>';
+          '<tr><td colspan="11" class="empty">No data yet — run the scraper to populate records.</td></tr>';
         document.getElementById("meta").textContent = "No data loaded.";
       }
     }
 
     function applyFilters() {
-      const q     = document.getElementById("search").value.toLowerCase().trim();
-      const cat   = document.getElementById("filter-cat").value;
-      const minScore = parseInt(document.getElementById("filter-score").value) || 0;
-      const sortF = document.getElementById("sort-field").value;
+      const q            = document.getElementById("search").value.toLowerCase().trim();
+      const cat          = document.getElementById("filter-cat").value;
+      const jurisdiction = document.getElementById("filter-jurisdiction").value;
+      const minScore     = parseInt(document.getElementById("filter-score").value) || 0;
+      const sortF        = document.getElementById("sort-field").value;
 
       filtered = ALL_RECORDS.filter(r => {
         if (cat && r.cat !== cat) return false;
+        if (jurisdiction && r.jurisdiction !== jurisdiction) return false;
         if ((r.score||0) < minScore) return false;
         if (q) {
-          const haystack = [r.owner, r.doc_num, r.prop_address, r.mail_address, r.grantee, r.doc_type]
+          const haystack = [r.owner, r.doc_num, r.prop_address, r.mail_address, r.grantee, r.doc_type, r.jurisdiction]
             .filter(Boolean).join(" ").toLowerCase();
           if (!haystack.includes(q)) return false;
         }
@@ -336,6 +361,7 @@
     function clearFilters() {
       document.getElementById("search").value = "";
       document.getElementById("filter-cat").value = "";
+      document.getElementById("filter-jurisdiction").value = "";
       document.getElementById("filter-score").value = "0";
       document.getElementById("sort-field").value = "score";
       applyFilters();
@@ -386,6 +412,7 @@
           <td><span class="score-pill ${scoreClass(r.score||0)}">${r.score||0}</span></td>
           <td>${flags || "—"}</td>
           <td>${escHtml(r.owner||"—")}</td>
+          <td style="white-space:nowrap;font-size:.75rem;color:#64748b">${escHtml(r.jurisdiction||"—")}</td>
           <td>${escHtml(r.cat_label||r.cat||"—")}</td>
           <td>${escHtml(r.filed||"—")}</td>
           <td>${fmtAmount(r.amount)}</td>
@@ -421,7 +448,8 @@
         "First Name","Last Name","Mailing Address","Mailing City","Mailing State","Mailing Zip",
         "Property Address","Property City","Property State","Property Zip",
         "Lead Type","Document Type","Date Filed","Document Number",
-        "Amount/Debt Owed","Seller Score","Motivated Seller Flags","Source","Public Records URL"
+        "Amount/Debt Owed","Seller Score","Motivated Seller Flags",
+        "Jurisdiction","Source","Public Records URL"
       ];
       function splitName(n) {
         const p = (n||"").trim().split(/\s+/);
@@ -439,7 +467,8 @@
           r.cat_label||r.cat||"", r.doc_type||"", r.filed||"", r.doc_num||"",
           r.amount||"", r.score||0,
           (r.flags||[]).join("; "),
-          "Richmond City, VA - Circuit Court",
+          r.jurisdiction||"",
+          "Virginia OCIS - " + (r.jurisdiction||"Greater Richmond, VA"),
           r.clerk_url||""
         ].map(v => `"${String(v).replace(/"/g,'""')}"`);
         rows.push(row.join(","));
