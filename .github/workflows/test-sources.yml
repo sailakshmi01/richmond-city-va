@@ -19,3 +19,6 @@ jobs:
 
       - name: Run data source discovery test
         run: python scraper/test_sources.py
+
+      - name: Deep-dive new sources (Socrata + Henrico CAMA)
+        run: python scraper/test_new_sources.py
