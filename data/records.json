@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-04-08T03:19:51.900442Z",
+  "fetched_at": "2026-04-08T03:32:33.648200Z",
   "source": "Virginia OCIS \u2014 Greater Richmond Area",
   "courts": [
     "Richmond City",
@@ -12,5 +12,25 @@
   "total": 0,
   "with_address": 0,
   "by_jurisdiction": {},
+  "debug_probe": [
+    {
+      "url": "https://eapps.courts.state.va.us/ocis/landRecordSearch",
+      "status": 200,
+      "title": "Virginia Judiciary Online Case Information System - Landing Page",
+      "forms": [],
+      "selects": [],
+      "error": null,
+      "has_content": false
+    },
+    {
+      "url": "https://eapps.courts.state.va.us/landRecordSearch",
+      "status": 200,
+      "title": "Supreme Court Of Virginia: Office of the Executive Secretary",
+      "forms": [],
+      "selects": [],
+      "error": null,
+      "has_content": true
+    }
+  ],
   "records": []
 }
