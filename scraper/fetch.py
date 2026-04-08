@@ -227,63 +227,78 @@ DEBUG_LOG: list[dict] = []   # captured during run, embedded in output JSON
 
 
 async def probe_land_records_url(page: Page) -> str:
-    """Find the first working Virginia land records URL. Captures debug info."""
-    for url in VA_LAND_RECORD_URLS:
-        entry: dict = {"url": url, "status": None, "title": None, "forms": [], "selects": [], "error": None}
-        try:
-            print(f"  [probe] Trying: {url}")
-            resp = await page.goto(url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
-            entry["status"] = resp.status if resp else None
+    """
+    Find the correct Virginia land records URL.
+    Waits for JavaScript to render the SPA before parsing.
+    """
+    target = VA_LAND_RECORD_URLS[0]  # OCIS is a JS SPA — try it first with proper wait
+    entry: dict = {"url": target, "status": None, "title": None,
+                   "forms": [], "selects": [], "page_text": "", "error": None}
+    try:
+        print(f"  [probe] Loading SPA: {target}")
+        resp = await page.goto(target, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+        entry["status"] = resp.status if resp else None
 
-            if resp and resp.status < 400:
-                content      = await page.content()
-                entry["title"] = await page.title()
-                soup         = BeautifulSoup(content, "lxml")
+        # Wait up to 20s for JS to render at least one input/select/form
+        for selector in ["select", "input", "form", "[class*='search']", "[class*='court']", "main"]:
+            try:
+                await page.wait_for_selector(selector, timeout=20_000)
+                print(f"  [probe] JS rendered — found: {selector}")
+                break
+            except PlaywrightTimeout:
+                continue
 
-                forms = soup.find_all("form")
-                for fi, form in enumerate(forms):
-                    form_info = {
-                        "index":  fi,
-                        "action": form.get("action"),
-                        "method": form.get("method"),
-                        "fields": [],
-                    }
-                    for el in form.find_all(["input", "select", "textarea"]):
-                        form_info["fields"].append({
-                            "tag":  el.name,
-                            "type": el.get("type"),
-                            "name": el.get("name"),
-                            "id":   el.get("id"),
-                        })
-                        name  = el.get("name") or el.get("id") or "(no name)"
-                        etype = el.get("type") or el.name
-                        print(f"           field: {etype} name={name}")
-                    entry["forms"].append(form_info)
+        # Extra settle time for React/Angular
+        await asyncio.sleep(2)
 
-                for sel in soup.find_all("select"):
-                    opts = [{"val": o.get("value",""), "text": o.get_text(strip=True)} for o in sel.find_all("option")[:10]]
-                    entry["selects"].append({"name": sel.get("name"), "id": sel.get("id"), "options": opts})
-                    print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> first opts: {[o['val'] for o in opts[:5]]}")
+        content        = await page.content()
+        entry["title"] = await page.title()
+        soup           = BeautifulSoup(content, "lxml")
 
-                has_content = bool(forms or soup.find("table") or soup.find("input"))
-                entry["has_content"] = has_content
-                DEBUG_LOG.append(entry)
+        # Capture all forms and fields
+        for fi, form in enumerate(soup.find_all("form")):
+            form_info = {"index": fi, "action": form.get("action"),
+                         "method": form.get("method"), "fields": []}
+            for el in form.find_all(["input", "select", "textarea"]):
+                form_info["fields"].append({
+                    "tag": el.name, "type": el.get("type"),
+                    "name": el.get("name"), "id": el.get("id"),
+                })
+                print(f"    field: {el.name} type={el.get('type')} name={el.get('name')} id={el.get('id')}")
+            entry["forms"].append(form_info)
 
-                if has_content:
-                    print(f"  [probe] SUCCESS: {url} | title: {entry['title']}")
-                    return url
-                else:
-                    print(f"  [probe] Page loaded but no form/table found. Title: {entry['title']}")
-            else:
-                entry["has_content"] = False
-                DEBUG_LOG.append(entry)
-        except Exception as exc:
-            entry["error"] = str(exc)
-            entry["has_content"] = False
-            DEBUG_LOG.append(entry)
-            print(f"  [probe] Failed {url}: {exc}")
+        # Capture all selects + options
+        for sel in soup.find_all("select"):
+            opts = [{"val": o.get("value",""), "text": o.get_text(strip=True)} for o in sel.find_all("option")[:15]]
+            entry["selects"].append({"name": sel.get("name"), "id": sel.get("id"), "options": opts})
+            print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> opts: {[o['val'] for o in opts[:6]]}")
 
-    return VA_LAND_RECORD_URLS[0]
+        # Capture visible text (first 2000 chars) for clues
+        entry["page_text"] = soup.get_text(separator=" ", strip=True)[:2000]
+        print(f"  [probe] Page text snippet: {entry['page_text'][:300]}")
+
+        # All input names/ids
+        all_inputs = [{"tag": el.name, "name": el.get("name"), "id": el.get("id"), "type": el.get("type")}
+                      for el in soup.find_all(["input","select","textarea","button"])]
+        entry["all_inputs"] = all_inputs
+        print(f"  [probe] Total inputs found: {len(all_inputs)}")
+
+        has_content = bool(entry["forms"] or entry["selects"] or len(all_inputs) > 0)
+        entry["has_content"] = has_content
+        DEBUG_LOG.append(entry)
+
+        if has_content:
+            print(f"  [probe] SUCCESS: {target}")
+        else:
+            print(f"  [probe] No form elements found after JS render. Title: {entry['title']}")
+
+    except Exception as exc:
+        entry["error"] = str(exc)
+        entry["has_content"] = False
+        DEBUG_LOG.append(entry)
+        print(f"  [probe] Error: {exc}")
+
+    return target
 
 
 async def search_court(page: Page, court: dict, start_date: str, end_date: str,
@@ -298,10 +313,15 @@ async def search_court(page: Page, court: dict, start_date: str, end_date: str,
 
     try:
         await page.goto(base_url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
-        try:
-            await page.wait_for_load_state("load", timeout=PAGE_LOAD_TIMEOUT)
-        except PlaywrightTimeout:
-            pass
+
+        # Wait for the SPA to render form elements (critical for JS apps)
+        for selector in ["select", "input[type='text']", "input[type='date']", "form"]:
+            try:
+                await page.wait_for_selector(selector, timeout=20_000)
+                break
+            except PlaywrightTimeout:
+                continue
+        await asyncio.sleep(1)
 
         content = await page.content()
         soup    = BeautifulSoup(content, "lxml")
