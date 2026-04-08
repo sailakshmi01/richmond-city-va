@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Richmond City VA — Motivated Seller Leads</title>
+  <title>Greater Richmond VA — Motivated Seller Leads</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -22,180 +22,72 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
-    header h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #f8fafc;
-      letter-spacing: -0.02em;
-    }
-    header .badge {
-      font-size: 0.75rem;
-      background: #16a34a;
-      color: #fff;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-    }
-    .meta {
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-    .stats {
-      display: flex;
-      gap: 1rem;
-      padding: 1.5rem 2rem;
-      flex-wrap: wrap;
-    }
-    .stat-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 0.75rem;
-      padding: 1.1rem 1.5rem;
-      min-width: 160px;
-    }
-    .stat-card .label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #64748b;
-      margin-bottom: 0.35rem;
-    }
-    .stat-card .value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #f1f5f9;
-    }
-    .controls {
-      display: flex;
-      gap: 0.75rem;
-      padding: 0 2rem 1rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
+    header h1 { font-size: 1.25rem; font-weight: 700; color: #f8fafc; letter-spacing: -0.02em; }
+    header .badge { font-size: 0.75rem; background: #16a34a; color: #fff; padding: 0.25rem 0.6rem; border-radius: 999px; }
+    .meta { font-size: 0.8rem; color: #94a3b8; margin-top: 0.25rem; }
+    .stats { display: flex; gap: 1rem; padding: 1.5rem 2rem; flex-wrap: wrap; }
+    .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 0.75rem; padding: 1.1rem 1.5rem; min-width: 155px; }
+    .stat-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 0.35rem; }
+    .stat-card .value { font-size: 1.75rem; font-weight: 700; color: #f1f5f9; }
+    .controls { display: flex; gap: 0.75rem; padding: 0 2rem 1rem; flex-wrap: wrap; align-items: center; }
     .controls input, .controls select {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #e2e8f0;
-      padding: 0.5rem 0.9rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      outline: none;
+      background: #1e293b; border: 1px solid #334155; color: #e2e8f0;
+      padding: 0.5rem 0.9rem; border-radius: 0.5rem; font-size: 0.875rem; outline: none;
     }
-    .controls input:focus, .controls select:focus {
-      border-color: #3b82f6;
-    }
-    .btn {
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1.1rem;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      cursor: pointer;
-      font-weight: 600;
-    }
+    .controls input:focus, .controls select:focus { border-color: #3b82f6; }
+    .btn { background: #2563eb; color: #fff; border: none; padding: 0.5rem 1.1rem; border-radius: 0.5rem; font-size: 0.875rem; cursor: pointer; font-weight: 600; }
     .btn:hover { background: #1d4ed8; }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #334155;
-      color: #94a3b8;
-    }
+    .btn-outline { background: transparent; border: 1px solid #334155; color: #94a3b8; }
     .btn-outline:hover { border-color: #64748b; color: #e2e8f0; background: #1e293b; }
-    .table-wrap {
-      overflow-x: auto;
-      padding: 0 2rem 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.825rem;
-    }
+    .table-wrap { overflow-x: auto; padding: 0 2rem 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.825rem; }
     thead th {
-      background: #1e293b;
-      border-bottom: 2px solid #334155;
-      padding: 0.75rem 1rem;
-      text-align: left;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #64748b;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
+      background: #1e293b; border-bottom: 2px solid #334155; padding: 0.75rem 0.75rem;
+      text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em;
+      color: #64748b; white-space: nowrap; cursor: pointer; user-select: none;
     }
     thead th:hover { color: #94a3b8; }
-    thead th.sorted { color: #60a5fa; }
-    tbody tr {
-      border-bottom: 1px solid #1e293b;
-      transition: background 0.1s;
-    }
+    tbody tr { border-bottom: 1px solid #1e293b; transition: background 0.1s; }
     tbody tr:hover { background: #1e293b; }
-    tbody td {
-      padding: 0.6rem 1rem;
-      vertical-align: top;
-      color: #cbd5e1;
-    }
-    .score-pill {
-      display: inline-block;
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      min-width: 2.2rem;
-      text-align: center;
-    }
-    .score-high   { background: #15803d; color: #f0fdf4; }
-    .score-mid    { background: #b45309; color: #fef3c7; }
-    .score-low    { background: #374151; color: #9ca3af; }
-    .flag-badge {
-      display: inline-block;
-      font-size: 0.68rem;
-      padding: 0.1rem 0.45rem;
-      border-radius: 999px;
-      margin: 0.1rem;
-      background: #1d4ed8;
-      color: #bfdbfe;
-    }
-    .flag-lp    { background: #7c2d12; color: #fed7aa; }
-    .flag-fc    { background: #7c2d12; color: #fed7aa; }
-    .flag-jud   { background: #4c1d95; color: #ddd6fe; }
-    .flag-tax   { background: #7c2d12; color: #fed7aa; }
-    .flag-new   { background: #14532d; color: #bbf7d0; }
-    .flag-llc   { background: #1e3a5f; color: #bae6fd; }
+    tbody td { padding: 0.55rem 0.75rem; vertical-align: top; color: #cbd5e1; }
+    .score-pill { display: inline-block; font-weight: 700; font-size: 0.8rem; padding: 0.15rem 0.55rem; border-radius: 999px; min-width: 2.2rem; text-align: center; }
+    .score-high { background: #15803d; color: #f0fdf4; }
+    .score-mid  { background: #b45309; color: #fef3c7; }
+    .score-low  { background: #374151; color: #9ca3af; }
+    .type-pill { display: inline-block; font-size: 0.7rem; padding: 0.1rem 0.45rem; border-radius: 999px; white-space: nowrap; }
+    .type-fc    { background: #7c2d12; color: #fed7aa; }
+    .type-lp    { background: #7f1d1d; color: #fecaca; }
+    .type-tax   { background: #4c1d95; color: #ddd6fe; }
+    .type-del   { background: #581c87; color: #f0abfc; }
+    .type-jud   { background: #1e3a5f; color: #bae6fd; }
+    .type-surp  { background: #14532d; color: #bbf7d0; }
+    .type-dist  { background: #713f12; color: #fef08a; }
+    .type-other { background: #1e293b; color: #94a3b8; }
+    .ratio-good  { color: #4ade80; font-weight: 700; }
+    .ratio-ok    { color: #fbbf24; }
+    .ratio-fair  { color: #94a3b8; }
+    .due-amount  { color: #f87171; font-weight: 600; }
     .link { color: #60a5fa; text-decoration: none; }
     .link:hover { text-decoration: underline; }
-    .empty {
-      text-align: center;
-      padding: 3rem;
-      color: #475569;
-    }
-    .pagination {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem 2rem;
-    }
-    .page-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #94a3b8;
-      padding: 0.4rem 0.75rem;
-      border-radius: 0.4rem;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
+    .empty { text-align: center; padding: 3rem; color: #475569; }
+    .pagination { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 2rem 2rem; flex-wrap: wrap; }
+    .page-btn { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 0.4rem 0.75rem; border-radius: 0.4rem; cursor: pointer; font-size: 0.8rem; }
     .page-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
     .page-btn:hover:not(.active) { background: #334155; }
+    .source-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0 2rem 0.75rem; }
+    .source-pill { background: #1e293b; border: 1px solid #334155; border-radius: 999px; padding: 0.2rem 0.75rem; font-size: 0.75rem; color: #94a3b8; }
+    .source-pill strong { color: #e2e8f0; }
   </style>
 </head>
 <body>
   <header>
     <div>
-      <h1>Richmond City, VA &mdash; Motivated Seller Leads</h1>
+      <h1>Greater Richmond, VA &mdash; Motivated Seller Leads</h1>
       <div class="meta" id="meta">Loading...</div>
     </div>
-    <div style="display:flex;gap:.75rem;align-items:center">
+    <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
       <span class="badge" id="total-badge">0 leads</span>
-      <button class="btn btn-outline" onclick="exportCSV()">Export GHL CSV</button>
+      <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button>
     </div>
   </header>
 
@@ -209,34 +101,52 @@
       <div class="value" id="stat-addr">—</div>
     </div>
     <div class="stat-card">
-      <div class="label">High Score ≥70</div>
+      <div class="label">Score ≥ 80</div>
       <div class="value" id="stat-high">—</div>
     </div>
     <div class="stat-card">
-      <div class="label">Date Range</div>
-      <div class="value" style="font-size:1rem" id="stat-range">—</div>
+      <div class="label">Delinquent Tax</div>
+      <div class="value" id="stat-del">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Foreclosure</div>
+      <div class="value" id="stat-fc">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Henrico Distressed</div>
+      <div class="value" id="stat-henrico">—</div>
     </div>
   </div>
-  <div id="court-breakdown" style="display:flex;gap:.5rem;flex-wrap:wrap;padding:0 2rem 1rem;"></div>
+
+  <div class="source-pills" id="source-pills"></div>
 
   <div class="controls">
-    <input id="search" type="text" placeholder="Search owner, doc #, address..." oninput="applyFilters()" />
-    <select id="filter-cat" onchange="applyFilters()">
+    <input id="search" type="text" placeholder="Search address, owner, parcel, doc #..." oninput="applyFilters()" style="min-width:230px" />
+    <select id="filter-type" onchange="applyFilters()">
       <option value="">All types</option>
-      <option value="LP">Lis Pendens</option>
-      <option value="NOFC">Notice of Foreclosure</option>
-      <option value="TAXDEED">Tax Deed</option>
-      <option value="JUD">Judgment</option>
-      <option value="LNCORPTX">Corp Tax Lien</option>
-      <option value="LNIRS">IRS Lien</option>
-      <option value="LNFED">Federal Lien</option>
-      <option value="LN">Lien</option>
-      <option value="LNMECH">Mechanic Lien</option>
-      <option value="LNHOA">HOA Lien</option>
-      <option value="MEDLN">Medicaid Lien</option>
-      <option value="PRO">Probate</option>
-      <option value="NOC">Notice of Commencement</option>
-      <option value="RELLP">Release Lis Pendens</option>
+      <optgroup label="— Delinquent Tax —">
+        <option value="Delinquent Tax (6+ yrs)">Delinquent Tax (6+ yrs)</option>
+        <option value="Delinquent Tax (3-5 yrs)">Delinquent Tax (3-5 yrs)</option>
+        <option value="Delinquent Tax (1-2 yrs)">Delinquent Tax (1-2 yrs)</option>
+      </optgroup>
+      <optgroup label="— GIS Transfers —">
+        <option value="Foreclosure / Forced Sale">Foreclosure / Forced Sale</option>
+        <option value="Special Financing">Special Financing</option>
+        <option value="Surplus Property">Surplus Property</option>
+      </optgroup>
+      <optgroup label="— Henrico —">
+        <option value="Henrico Distressed Sale">Henrico Distressed Sale</option>
+      </optgroup>
+      <optgroup label="— Other —">
+        <option value="Lis Pendens">Lis Pendens</option>
+        <option value="Judgment">Judgment</option>
+        <option value="Mechanic Lien">Mechanic Lien</option>
+        <option value="HOA Lien">HOA Lien</option>
+        <option value="Federal Tax Lien">Federal Tax Lien</option>
+        <option value="IRS Tax Lien">IRS Tax Lien</option>
+        <option value="Probate">Probate</option>
+        <option value="Tax Deed">Tax Deed</option>
+      </optgroup>
     </select>
     <select id="filter-jurisdiction" onchange="applyFilters()">
       <option value="">All jurisdictions</option>
@@ -249,14 +159,29 @@
     <select id="filter-score" onchange="applyFilters()">
       <option value="0">All scores</option>
       <option value="50">Score ≥ 50</option>
-      <option value="60">Score ≥ 60</option>
       <option value="70">Score ≥ 70</option>
       <option value="80">Score ≥ 80</option>
+      <option value="90">Score ≥ 90</option>
+    </select>
+    <select id="filter-ratio" onchange="applyFilters()">
+      <option value="">Any equity</option>
+      <option value="0.70">Ratio &lt; 70% (deep discount)</option>
+      <option value="0.85">Ratio &lt; 85%</option>
+      <option value="1.00">Below assessed value</option>
+    </select>
+    <select id="filter-del-years" onchange="applyFilters()">
+      <option value="0">Any delinquency</option>
+      <option value="3">3+ yrs delinquent</option>
+      <option value="5">5+ yrs delinquent</option>
+      <option value="10">10+ yrs delinquent</option>
     </select>
     <select id="sort-field" onchange="applyFilters()">
       <option value="score">Sort: Score ↓</option>
-      <option value="filed">Sort: Filed Date ↓</option>
-      <option value="amount">Sort: Amount ↓</option>
+      <option value="date">Sort: Date ↓</option>
+      <option value="sale_price">Sort: Sale Price ↓</option>
+      <option value="total_due">Sort: Total Due ↓</option>
+      <option value="years_del">Sort: Yrs Delinquent ↓</option>
+      <option value="ratio">Sort: Ratio ↑</option>
     </select>
     <button class="btn btn-outline" onclick="clearFilters()">Clear</button>
   </div>
@@ -265,21 +190,22 @@
     <table id="leads-table">
       <thead>
         <tr>
-          <th>Score</th>
-          <th>Flags</th>
-          <th>Owner</th>
-          <th>Jurisdiction</th>
+          <th onclick="toggleSort('score')">Score</th>
           <th>Type</th>
-          <th>Filed</th>
-          <th>Amount</th>
-          <th>Property Address</th>
-          <th>Mailing Address</th>
-          <th>Doc #</th>
-          <th>Link</th>
+          <th>Address</th>
+          <th>Owner / Buyer</th>
+          <th>Jurisdiction</th>
+          <th onclick="toggleSort('date')">Date</th>
+          <th onclick="toggleSort('sale_price')">Sale / Total Due</th>
+          <th>Assessed</th>
+          <th onclick="toggleSort('ratio')">Ratio</th>
+          <th onclick="toggleSort('years_del')">Yrs Del.</th>
+          <th>Parcel / Doc</th>
+          <th>Source</th>
         </tr>
       </thead>
       <tbody id="leads-body">
-        <tr><td colspan="11" class="empty">Loading leads...</td></tr>
+        <tr><td colspan="12" class="empty">Loading leads...</td></tr>
       </tbody>
     </table>
   </div>
@@ -290,66 +216,76 @@
     let filtered = [];
     const PER_PAGE = 50;
     let currentPage = 1;
+    let sortField = "score";
 
     async function loadData() {
       try {
         const r = await fetch("records.json?_=" + Date.now());
         const data = await r.json();
+        const meta = data.metadata || {};
         ALL_RECORDS = data.records || [];
 
-        document.getElementById("stat-total").textContent = data.total ?? ALL_RECORDS.length;
-        document.getElementById("stat-addr").textContent  = data.with_address ?? "—";
-        document.getElementById("stat-high").textContent  = ALL_RECORDS.filter(r => (r.score||0) >= 70).length;
-        document.getElementById("stat-range").textContent = data.date_range || "—";
-        document.getElementById("total-badge").textContent = (data.total || ALL_RECORDS.length) + " leads";
+        document.getElementById("stat-total").textContent = meta.total_records ?? ALL_RECORDS.length;
+        document.getElementById("stat-addr").textContent  = ALL_RECORDS.filter(r => r.address && r.address !== "0").length;
+        document.getElementById("stat-high").textContent  = ALL_RECORDS.filter(r => (r.score||0) >= 80).length;
+        document.getElementById("stat-del").textContent   = ALL_RECORDS.filter(r => (r.doc_type||"").startsWith("Delinquent Tax")).length;
+        document.getElementById("stat-fc").textContent    = ALL_RECORDS.filter(r => /forecl/i.test(r.doc_type||"")).length;
+        document.getElementById("stat-henrico").textContent = ALL_RECORDS.filter(r => r.jurisdiction === "Henrico County").length;
+        document.getElementById("total-badge").textContent = (meta.total_records || ALL_RECORDS.length) + " leads";
 
-        const fetched = data.fetched_at ? new Date(data.fetched_at).toLocaleString() : "unknown";
-        const courts  = (data.courts || []).join(", ");
-        document.getElementById("meta").textContent = "Last updated: " + fetched + "  ·  Courts: " + (courts || data.source || "");
+        const gen = meta.generated ? new Date(meta.generated).toLocaleString() : "unknown";
+        document.getElementById("meta").textContent =
+          "Generated: " + gen + "  ·  Sources: " + (meta.sources || []).join(", ");
 
-        // Court breakdown pills
-        if (data.by_jurisdiction) {
-          const bd = document.getElementById("court-breakdown");
-          bd.innerHTML = Object.entries(data.by_jurisdiction)
-            .sort((a, b) => b[1] - a[1])
-            .map(([name, count]) =>
-              `<span style="background:#1e293b;border:1px solid #334155;border-radius:999px;padding:.2rem .75rem;font-size:.75rem;color:#94a3b8">
-                <strong style="color:#e2e8f0">${name}</strong>: ${count}
-              </span>`
-            ).join("");
-        }
+        const pills = document.getElementById("source-pills");
+        const byJ = meta.by_jurisdiction || {};
+        const byT = meta.by_type || {};
+        let pillHtml = Object.entries(byJ).sort((a,b)=>b[1]-a[1])
+          .map(([name, n]) => `<span class="source-pill"><strong>${name}</strong>: ${n}</span>`).join("");
+        pillHtml += Object.entries(byT).sort((a,b)=>b[1]-a[1])
+          .map(([name, n]) => `<span class="source-pill">${name}: ${n}</span>`).join("");
+        pills.innerHTML = pillHtml;
 
         applyFilters();
       } catch(e) {
+        console.error(e);
         document.getElementById("leads-body").innerHTML =
-          '<tr><td colspan="11" class="empty">No data yet — run the scraper to populate records.</td></tr>';
-        document.getElementById("meta").textContent = "No data loaded.";
+          '<tr><td colspan="12" class="empty">No data yet — trigger a scrape run to populate records.</td></tr>';
+        document.getElementById("meta").textContent = "No data loaded. " + e.message;
       }
     }
 
     function applyFilters() {
-      const q            = document.getElementById("search").value.toLowerCase().trim();
-      const cat          = document.getElementById("filter-cat").value;
-      const jurisdiction = document.getElementById("filter-jurisdiction").value;
-      const minScore     = parseInt(document.getElementById("filter-score").value) || 0;
-      const sortF        = document.getElementById("sort-field").value;
+      const q        = document.getElementById("search").value.toLowerCase().trim();
+      const typeF    = document.getElementById("filter-type").value;
+      const jurisdF  = document.getElementById("filter-jurisdiction").value;
+      const minScore = parseFloat(document.getElementById("filter-score").value) || 0;
+      const maxRatio = parseFloat(document.getElementById("filter-ratio").value) || 0;
+      const minYrsDel = parseInt(document.getElementById("filter-del-years").value) || 0;
+      sortField = document.getElementById("sort-field").value;
 
       filtered = ALL_RECORDS.filter(r => {
-        if (cat && r.cat !== cat) return false;
-        if (jurisdiction && r.jurisdiction !== jurisdiction) return false;
+        if (typeF && r.doc_type !== typeF) return false;
+        if (jurisdF && r.jurisdiction !== jurisdF) return false;
         if ((r.score||0) < minScore) return false;
+        if (maxRatio && (r.sale_ratio === null || r.sale_ratio >= maxRatio)) return false;
+        if (minYrsDel && (r.years_delinquent || 0) < minYrsDel) return false;
         if (q) {
-          const haystack = [r.owner, r.doc_num, r.prop_address, r.mail_address, r.grantee, r.doc_type, r.jurisdiction]
+          const hay = [r.address, r.city, r.grantee, r.grantor, r.doc_number, r.parcel_id,
+                       r.doc_type, r.jurisdiction, r.val_code, r.source]
             .filter(Boolean).join(" ").toLowerCase();
-          if (!haystack.includes(q)) return false;
+          if (!hay.includes(q)) return false;
         }
         return true;
       });
 
       filtered.sort((a, b) => {
-        if (sortF === "score")  return (b.score||0) - (a.score||0);
-        if (sortF === "amount") return (b.amount||0) - (a.amount||0);
-        if (sortF === "filed")  return (b.filed||"").localeCompare(a.filed||"");
+        if (sortField === "score")      return (b.score||0) - (a.score||0);
+        if (sortField === "date")       return (b.recorded_date||"").localeCompare(a.recorded_date||"");
+        if (sortField === "sale_price") return (b.sale_price||0) - (a.sale_price||0);
+        if (sortField === "total_due")  return (b.total_due||0) - (a.total_due||0);
+        if (sortField === "years_del")  return (b.years_delinquent||0) - (a.years_delinquent||0);
+        if (sortField === "ratio")      return (a.sale_ratio??99) - (b.sale_ratio??99);
         return 0;
       });
 
@@ -360,31 +296,53 @@
 
     function clearFilters() {
       document.getElementById("search").value = "";
-      document.getElementById("filter-cat").value = "";
+      document.getElementById("filter-type").value = "";
       document.getElementById("filter-jurisdiction").value = "";
       document.getElementById("filter-score").value = "0";
+      document.getElementById("filter-ratio").value = "";
+      document.getElementById("filter-del-years").value = "0";
       document.getElementById("sort-field").value = "score";
       applyFilters();
     }
 
-    function flagClass(flag) {
-      if (flag.includes("Lis pendens") || flag.includes("Pre-foreclosure")) return "flag-lp";
-      if (flag.includes("Judgment")) return "flag-jud";
-      if (flag.includes("Tax") || flag.includes("IRS") || flag.includes("Mechanic") || flag.includes("Medicaid")) return "flag-tax";
-      if (flag.includes("New this week")) return "flag-new";
-      if (flag.includes("LLC") || flag.includes("corp")) return "flag-llc";
-      return "";
+    function toggleSort(field) {
+      document.getElementById("sort-field").value = field;
+      applyFilters();
+    }
+
+    function typeClass(dt) {
+      dt = (dt||"").toLowerCase();
+      if (dt.startsWith("delinquent tax"))              return "type-del";
+      if (dt.includes("forecl") || dt.includes("forced")) return "type-fc";
+      if (dt.includes("lis pendens"))                   return "type-lp";
+      if (dt.includes("distressed"))                    return "type-dist";
+      if (dt.includes("tax") || dt.includes("lien"))   return "type-tax";
+      if (dt.includes("judg"))                          return "type-jud";
+      if (dt.includes("surplus") || dt.includes("probate")) return "type-surp";
+      return "type-other";
     }
 
     function scoreClass(s) {
-      if (s >= 70) return "score-high";
-      if (s >= 50) return "score-mid";
+      if (s >= 80) return "score-high";
+      if (s >= 55) return "score-mid";
       return "score-low";
     }
 
-    function fmtAmount(a) {
-      if (!a && a !== 0) return "—";
-      return "$" + Number(a).toLocaleString("en-US", {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    function ratioClass(r) {
+      if (r === null || r === undefined) return "ratio-fair";
+      if (r < 0.70) return "ratio-good";
+      if (r < 0.85) return "ratio-ok";
+      return "ratio-fair";
+    }
+
+    function fmtMoney(v) {
+      if (!v && v !== 0) return "—";
+      return "$" + Number(v).toLocaleString("en-US");
+    }
+
+    function fmtRatio(r) {
+      if (r === null || r === undefined) return "—";
+      return (r * 100).toFixed(0) + "%";
     }
 
     function renderTable() {
@@ -393,33 +351,42 @@
       const page  = filtered.slice(start, start + PER_PAGE);
 
       if (page.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" class="empty">No records match the current filters.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12" class="empty">No records match the current filters.</td></tr>';
         return;
       }
 
       tbody.innerHTML = page.map(r => {
-        const flags = (r.flags || []).map(f =>
-          `<span class="flag-badge ${flagClass(f)}">${escHtml(f)}</span>`
-        ).join("");
+        const addr  = [r.address, r.city, r.state, r.zip].filter(Boolean).join(", ");
+        const owner = r.grantee || r.grantor || "—";
+        const ratio = r.sale_ratio;
+        const isDelinquent = (r.doc_type||"").startsWith("Delinquent Tax");
 
-        const propAddr  = [r.prop_address, r.prop_city, r.prop_state, r.prop_zip].filter(Boolean).join(", ");
-        const mailAddr  = [r.mail_address, r.mail_city, r.mail_state, r.mail_zip].filter(Boolean).join(", ");
-        const link = r.clerk_url
-          ? `<a class="link" href="${escHtml(r.clerk_url)}" target="_blank" rel="noopener">View ↗</a>`
-          : "—";
+        // For delinquent tax: show total_due; for others: show sale_price
+        let amountCell;
+        if (isDelinquent && r.total_due) {
+          amountCell = `<span class="due-amount">${fmtMoney(r.total_due)} owed</span>`;
+        } else if (r.sale_price) {
+          amountCell = fmtMoney(r.sale_price);
+        } else {
+          amountCell = "—";
+        }
+
+        const yrsDel = r.years_delinquent ? `<span style="color:#f0abfc;font-weight:700">${r.years_delinquent}yr</span>` : "—";
+        const docRef = escHtml(r.doc_number || r.parcel_id || "—");
 
         return `<tr>
           <td><span class="score-pill ${scoreClass(r.score||0)}">${r.score||0}</span></td>
-          <td>${flags || "—"}</td>
-          <td>${escHtml(r.owner||"—")}</td>
+          <td><span class="type-pill ${typeClass(r.doc_type)}">${escHtml(r.doc_type||"—")}</span></td>
+          <td style="max-width:200px">${escHtml(addr||"—")}</td>
+          <td style="max-width:180px;font-size:.78rem">${escHtml(owner)}</td>
           <td style="white-space:nowrap;font-size:.75rem;color:#64748b">${escHtml(r.jurisdiction||"—")}</td>
-          <td>${escHtml(r.cat_label||r.cat||"—")}</td>
-          <td>${escHtml(r.filed||"—")}</td>
-          <td>${fmtAmount(r.amount)}</td>
-          <td>${escHtml(propAddr||"—")}</td>
-          <td>${escHtml(mailAddr||"—")}</td>
-          <td style="font-family:monospace;font-size:.75rem">${escHtml(r.doc_num||"—")}</td>
-          <td>${link}</td>
+          <td style="white-space:nowrap">${escHtml(r.recorded_date||"—")}</td>
+          <td>${amountCell}</td>
+          <td>${fmtMoney(r.assessed_value)}</td>
+          <td><span class="${ratioClass(ratio)}">${fmtRatio(ratio)}</span></td>
+          <td style="text-align:center">${yrsDel}</td>
+          <td style="font-family:monospace;font-size:.72rem">${docRef}</td>
+          <td style="font-size:.72rem;color:#64748b">${escHtml(r.source||"—")}</td>
         </tr>`;
       }).join("");
     }
@@ -428,11 +395,17 @@
       const total = Math.ceil(filtered.length / PER_PAGE);
       const pg = document.getElementById("pagination");
       if (total <= 1) { pg.innerHTML = ""; return; }
-
       let html = "";
-      for (let i = 1; i <= total; i++) {
+      const maxShow = 10;
+      const half = Math.floor(maxShow / 2);
+      let start = Math.max(1, currentPage - half);
+      let end   = Math.min(total, start + maxShow - 1);
+      if (end - start < maxShow - 1) start = Math.max(1, end - maxShow + 1);
+      if (start > 1) html += `<button class="page-btn" onclick="goPage(1)">1</button><span style="color:#475569">…</span>`;
+      for (let i = start; i <= end; i++) {
         html += `<button class="page-btn${i === currentPage ? " active" : ""}" onclick="goPage(${i})">${i}</button>`;
       }
+      if (end < total) html += `<span style="color:#475569">…</span><button class="page-btn" onclick="goPage(${total})">${total}</button>`;
       pg.innerHTML = html;
     }
 
@@ -440,40 +413,28 @@
       currentPage = p;
       renderTable();
       renderPagination();
-      window.scrollTo({top: 0, behavior: "smooth"});
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function exportCSV() {
       const cols = [
-        "First Name","Last Name","Mailing Address","Mailing City","Mailing State","Mailing Zip",
-        "Property Address","Property City","Property State","Property Zip",
-        "Lead Type","Document Type","Date Filed","Document Number",
-        "Amount/Debt Owed","Seller Score","Motivated Seller Flags",
-        "Jurisdiction","Source","Public Records URL"
+        "Score","Type","Address","City","State","Zip",
+        "Owner/Buyer","Grantor","Jurisdiction","RecordedDate",
+        "SalePrice","TotalDue","YearsDelinquent","AssessedValue","SaleRatio",
+        "ParcelID","DocNumber","ValCode","Source","ScrapedAt"
       ];
-      function splitName(n) {
-        const p = (n||"").trim().split(/\s+/);
-        if (!p.length) return ["",""];
-        if (p.length === 1) return [p[0],""];
-        return [p.slice(0,-1).join(" "), p[p.length-1]];
-      }
       const rows = [cols.join(",")];
       (filtered.length ? filtered : ALL_RECORDS).forEach(r => {
-        const [fn, ln] = splitName(r.owner);
         const row = [
-          fn, ln,
-          r.mail_address||"", r.mail_city||"", r.mail_state||"", r.mail_zip||"",
-          r.prop_address||"", r.prop_city||"", r.prop_state||"", r.prop_zip||"",
-          r.cat_label||r.cat||"", r.doc_type||"", r.filed||"", r.doc_num||"",
-          r.amount||"", r.score||0,
-          (r.flags||[]).join("; "),
-          r.jurisdiction||"",
-          "Virginia OCIS - " + (r.jurisdiction||"Greater Richmond, VA"),
-          r.clerk_url||""
+          r.score||0, r.doc_type||"", r.address||"", r.city||"", r.state||"", r.zip||"",
+          r.grantee||"", r.grantor||"", r.jurisdiction||"", r.recorded_date||"",
+          r.sale_price||"", r.total_due||"", r.years_delinquent||"",
+          r.assessed_value||"", r.sale_ratio||"",
+          r.parcel_id||"", r.doc_number||"", r.val_code||"", r.source||"", r.scraped_at||""
         ].map(v => `"${String(v).replace(/"/g,'""')}"`);
         rows.push(row.join(","));
       });
-      const blob = new Blob([rows.join("\n")], {type:"text/csv"});
+      const blob = new Blob([rows.join("\n")], { type: "text/csv" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "richmond_va_motivated_sellers_" + new Date().toISOString().slice(0,10) + ".csv";
