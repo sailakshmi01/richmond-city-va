@@ -138,7 +138,6 @@ async def test_ocis():
                         }
                         """,
                         [f"{OCIS_REST_BASE}/search", payload],
-                        timeout=30000,
                     )
                     status = result.get("status")
                     data   = result.get("data", {})
