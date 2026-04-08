@@ -223,47 +223,67 @@ def compute_score(rec: dict, flags: list[str]) -> int:
 # Playwright — one search per court, filter locally
 # ---------------------------------------------------------------------------
 
-async def probe_land_records_url(page: Page) -> str:
-    """Find the first working Virginia land records URL. Saves debug HTML."""
-    debug_dir = BASE_OUTPUT_DIR / "data"
-    debug_dir.mkdir(parents=True, exist_ok=True)
+DEBUG_LOG: list[dict] = []   # captured during run, embedded in output JSON
 
+
+async def probe_land_records_url(page: Page) -> str:
+    """Find the first working Virginia land records URL. Captures debug info."""
     for url in VA_LAND_RECORD_URLS:
+        entry: dict = {"url": url, "status": None, "title": None, "forms": [], "selects": [], "error": None}
         try:
             print(f"  [probe] Trying: {url}")
             resp = await page.goto(url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+            entry["status"] = resp.status if resp else None
+
             if resp and resp.status < 400:
-                content = await page.content()
-                soup    = BeautifulSoup(content, "lxml")
+                content      = await page.content()
+                entry["title"] = await page.title()
+                soup         = BeautifulSoup(content, "lxml")
 
-                # Save first successful page for debugging
-                debug_path = debug_dir / "debug_portal.html"
-                try:
-                    debug_path.write_text(content, encoding="utf-8")
-                except Exception:
-                    pass
-
-                # Log all form elements so we know the real field names
                 forms = soup.find_all("form")
                 for fi, form in enumerate(forms):
-                    print(f"  [probe] Form {fi}: action={form.get('action')} method={form.get('method')}")
+                    form_info = {
+                        "index":  fi,
+                        "action": form.get("action"),
+                        "method": form.get("method"),
+                        "fields": [],
+                    }
                     for el in form.find_all(["input", "select", "textarea"]):
-                        name = el.get("name") or el.get("id") or "(no name)"
+                        form_info["fields"].append({
+                            "tag":  el.name,
+                            "type": el.get("type"),
+                            "name": el.get("name"),
+                            "id":   el.get("id"),
+                        })
+                        name  = el.get("name") or el.get("id") or "(no name)"
                         etype = el.get("type") or el.name
                         print(f"           field: {etype} name={name}")
+                    entry["forms"].append(form_info)
 
-                # Also log any selects with options
                 for sel in soup.find_all("select"):
-                    opts = [o.get("value","") + "=" + o.get_text(strip=True) for o in sel.find_all("option")[:5]]
-                    print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> options: {opts}")
+                    opts = [{"val": o.get("value",""), "text": o.get_text(strip=True)} for o in sel.find_all("option")[:10]]
+                    entry["selects"].append({"name": sel.get("name"), "id": sel.get("id"), "options": opts})
+                    print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> first opts: {[o['val'] for o in opts[:5]]}")
 
-                if forms or soup.find("table"):
-                    print(f"  [probe] SUCCESS: {url}")
+                has_content = bool(forms or soup.find("table") or soup.find("input"))
+                entry["has_content"] = has_content
+                DEBUG_LOG.append(entry)
+
+                if has_content:
+                    print(f"  [probe] SUCCESS: {url} | title: {entry['title']}")
                     return url
+                else:
+                    print(f"  [probe] Page loaded but no form/table found. Title: {entry['title']}")
+            else:
+                entry["has_content"] = False
+                DEBUG_LOG.append(entry)
         except Exception as exc:
+            entry["error"] = str(exc)
+            entry["has_content"] = False
+            DEBUG_LOG.append(entry)
             print(f"  [probe] Failed {url}: {exc}")
 
-    return VA_LAND_RECORD_URLS[0]  # fall back to first URL
+    return VA_LAND_RECORD_URLS[0]
 
 
 async def search_court(page: Page, court: dict, start_date: str, end_date: str,
@@ -895,6 +915,7 @@ async def main():
         "total":            len(records),
         "with_address":     with_address,
         "by_jurisdiction":  by_court,
+        "debug_probe":      DEBUG_LOG,
         "records":          records,
     }
 
