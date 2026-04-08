@@ -22,3 +22,6 @@ jobs:
 
       - name: Deep-dive new sources (Socrata + Henrico CAMA)
         run: python scraper/test_new_sources.py
+
+      - name: Socrata delinquent tax + CAMA distressed filter
+        run: python scraper/test_socrata.py
