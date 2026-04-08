@@ -1,8 +1,16 @@
 {
-  "fetched_at": null,
-  "source": "Richmond City, VA - Circuit Court Clerk",
-  "date_range": null,
+  "fetched_at": "2026-04-08T03:05:45.225221Z",
+  "source": "Virginia OCIS \u2014 Greater Richmond Area",
+  "courts": [
+    "Richmond City",
+    "Henrico County",
+    "Chesterfield County",
+    "Hanover County",
+    "Goochland County"
+  ],
+  "date_range": "2026-04-01 to 2026-04-08",
   "total": 0,
   "with_address": 0,
+  "by_jurisdiction": {},
   "records": []
 }
