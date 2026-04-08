@@ -1,0 +1,21 @@
+name: Test Data Sources
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-sources:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run data source discovery test
+        run: python scraper/test_sources.py
