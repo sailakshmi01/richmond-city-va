@@ -1,974 +1,851 @@
 """
-Greater Richmond, VA — Automated Motivated Seller Lead Scraper
-Covers: Richmond City, Henrico, Chesterfield, Hanover, Goochland
-Virginia OCIS portal: https://eapps.courts.state.va.us/ocis/landRecordSearch
+Greater Richmond, VA — Motivated Seller Lead Scraper v3
+=======================================================
+Covers: Richmond City (#760), Henrico (#087), Chesterfield (#041),
+        Hanover (#085), Goochland (#075)
 
-Strategy: one search per court (date-range only, no doc-type filter),
-filter records locally — 5 searches total instead of 100+.
+Sources (in priority order):
+  1. Richmond City GIS ArcGIS REST API — property transfers with distress markers
+     (free, no captcha, uses services1.arcgis.com/k3vhq11XkBNeeOfM)
+  2. ACT DataScout Playwright — land instruments recorded with circuit court clerks
+     (actdatascout.com — Richmond City, reCAPTCHA v3 auto-handled by Playwright)
+  3. OCIS Playwright — circuit court civil cases across all 5 jurisdictions
+     (eapps.courts.state.va.us/ocis — Angular SPA navigated by Playwright)
+
+Outputs: data/records.json, dashboard/records.json, data/leads.csv (GHL format)
 """
 
 import asyncio
+import csv
+import io
 import json
 import os
 import re
-import csv
-import io
-import tempfile
 import traceback
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 import requests
-from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright, Page, TimeoutError as PlaywrightTimeout
 
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
 
-LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", 7))
-BASE_OUTPUT_DIR = Path(__file__).parent.parent
+LOOKBACK_DAYS = int(os.environ.get("LOOKBACK_DAYS", 30))
+BASE_DIR      = Path(__file__).parent.parent
 
-OUTPUT_FILES = [
-    BASE_OUTPUT_DIR / "dashboard" / "records.json",
-    BASE_OUTPUT_DIR / "data" / "records.json",
+OUTPUT_JSON   = [
+    BASE_DIR / "dashboard" / "records.json",
+    BASE_DIR / "data"      / "records.json",
 ]
-
-VIRGINIA_OCIS_BASE = "https://eapps.courts.state.va.us/ocis"
-VA_OCIS_API        = "https://eapps.courts.state.va.us/api"
-
-# All known Virginia land records entry points (tried in order)
-VA_LAND_RECORD_URLS = [
-    "https://eapps.courts.state.va.us/ocis/landRecordSearch",
-    "https://eapps.courts.state.va.us/landRecordSearch",
-    "https://lrims.courts.state.va.us/",
-    "https://publicaccess.courts.state.va.us/",
-    "https://eapps.courts.state.va.us/caseSearch/landRecords",
-]
-
-# Per-search timeouts (seconds)
-PAGE_LOAD_TIMEOUT   = 30_000   # 30s
-NETWORK_TIMEOUT     = 15_000   # 15s
-ELEMENT_TIMEOUT     = 5_000    # 5s
-PER_COURT_TIMEOUT   = 120      # 2 min hard cap per court
-
-# ---------------------------------------------------------------------------
-# Target jurisdictions
-# ---------------------------------------------------------------------------
+OUTPUT_CSV    = BASE_DIR / "data" / "leads.csv"
 
 COURTS = [
-    {"id": "760", "name": "Richmond City",       "city": "Richmond",      "state": "VA"},
-    {"id": "087", "name": "Henrico County",       "city": "Henrico",       "state": "VA"},
-    {"id": "041", "name": "Chesterfield County",  "city": "Chesterfield",  "state": "VA"},
-    {"id": "085", "name": "Hanover County",       "city": "Hanover",       "state": "VA"},
-    {"id": "075", "name": "Goochland County",     "city": "Goochland",     "state": "VA"},
+    {"fips": "760", "ocis_id": "760C", "name": "Richmond City",       "state": "VA"},
+    {"fips": "087", "ocis_id": "087C", "name": "Henrico County",       "state": "VA"},
+    {"fips": "041", "ocis_id": "041C", "name": "Chesterfield County",  "state": "VA"},
+    {"fips": "085", "ocis_id": "085C", "name": "Hanover County",       "state": "VA"},
+    {"fips": "075", "ocis_id": "075C", "name": "Goochland County",     "state": "VA"},
 ]
 
+# Richmond City GIS ArcGIS REST (no auth required)
+RVA_GIS_BASE = "https://services1.arcgis.com/k3vhq11XkBNeeOfM/arcgis/rest/services"
+
+# ACT DataScout — Virginia land records
+ACTDATASCOUT_BASE = "https://www.actdatascout.com/RealProperty/Virginia"
+
+# OCIS — Virginia court case search (Angular SPA)
+OCIS_BASE = "https://eapps.courts.state.va.us/ocis"
+
+PAGE_TIMEOUT = 30_000   # ms
+
 # ---------------------------------------------------------------------------
-# Document type codes → category mappings
+# Lead scoring
 # ---------------------------------------------------------------------------
 
-DOC_TYPE_MAP = {
-    "LP":        ("LP",        "Lis Pendens"),
-    "LIS":       ("LP",        "Lis Pendens"),
-    "LPS":       ("LP",        "Lis Pendens"),
-    "NOFC":      ("NOFC",      "Notice of Foreclosure"),
-    "NOTS":      ("NOFC",      "Notice of Foreclosure"),
-    "TAXDEED":   ("TAXDEED",   "Tax Deed"),
-    "TD":        ("TAXDEED",   "Tax Deed"),
-    "JUD":       ("JUD",       "Judgment"),
-    "CCJ":       ("JUD",       "Certified Judgment"),
-    "DRJUD":     ("JUD",       "Domestic Judgment"),
-    "FJ":        ("JUD",       "Judgment"),
-    "DJ":        ("JUD",       "Judgment"),
-    "LNCORPTX":  ("LNCORPTX",  "Corp Tax Lien"),
-    "LNIRS":     ("LNIRS",     "IRS Lien"),
-    "LNFED":     ("LNFED",     "Federal Lien"),
-    "LN":        ("LN",        "Lien"),
-    "LNMECH":    ("LNMECH",    "Mechanic Lien"),
-    "LNHOA":     ("LNHOA",     "HOA Lien"),
-    "MEDLN":     ("MEDLN",     "Medicaid Lien"),
-    "PRO":       ("PRO",       "Probate Document"),
-    "WILL":      ("PRO",       "Probate Document"),
-    "ADMIN":     ("PRO",       "Probate Document"),
-    "NOC":       ("NOC",       "Notice of Commencement"),
-    "RELLP":     ("RELLP",     "Release Lis Pendens"),
-    "RLP":       ("RELLP",     "Release Lis Pendens"),
+SCORE_RULES = {
+    # Source type
+    "Foreclosure / Forced Sale":   85,
+    "Lis Pendens":                  90,
+    "Tax Deed":                     80,
+    "Notice of Foreclosure":        82,
+    "Judgment":                     70,
+    "Mechanic Lien":                65,
+    "HOA Lien":                     60,
+    "Federal Tax Lien":             75,
+    "IRS Tax Lien":                 78,
+    "Medicaid Lien":                62,
+    "Probate":                      68,
+    "Special Financing":            50,
+    "Surplus Property":             55,
+    "Civil Case - Foreclosure":     75,
+    "Civil Case":                   45,
 }
 
-TARGET_CATS = {
-    "LP", "NOFC", "TAXDEED", "JUD",
-    "LNCORPTX", "LNIRS", "LNFED",
-    "LN", "LNMECH", "LNHOA", "MEDLN",
-    "PRO", "NOC", "RELLP",
-}
+def score_lead(lead: dict) -> int:
+    base = SCORE_RULES.get(lead.get("doc_type"), 40)
+    # Equity bonus: if sale price < 70% of AV
+    ratio = lead.get("sale_ratio", 1.0)
+    if ratio and ratio < 0.70:
+        base = min(100, base + 10)
+    elif ratio and ratio < 0.85:
+        base = min(100, base + 5)
+    return base
+
 
 # ---------------------------------------------------------------------------
-# Property Appraiser lookup (DBF)
+# Source 1: Richmond City GIS — Property Transfers
 # ---------------------------------------------------------------------------
 
-class ParcelLookup:
-    def __init__(self):
-        self.by_owner: dict[str, list[dict]] = {}
-        self.loaded = False
-
-    def load(self, dbf_path: str):
-        try:
-            from dbfread import DBF
-            table = DBF(dbf_path, encoding="latin-1", ignore_missing_memofile=True)
-            for rec in table:
-                rd = {k.upper(): (v or "").strip() if isinstance(v, str) else v for k, v in rec.items()}
-                owner_raw = (rd.get("OWN1") or rd.get("OWNER") or rd.get("OWNER1") or "").strip().upper()
-                if not owner_raw:
-                    continue
-                parcel = self._norm(rd)
-                for v in self._variants(owner_raw):
-                    self.by_owner.setdefault(v, []).append(parcel)
-            self.loaded = True
-            print(f"[ParcelLookup] Loaded {sum(len(v) for v in self.by_owner.values())} entries")
-        except Exception as exc:
-            print(f"[ParcelLookup] Could not load DBF: {exc}")
-
-    @staticmethod
-    def _norm(rd: dict) -> dict:
-        return {
-            "prop_address": (rd.get("SITEADDR") or rd.get("SITE_ADDR") or "").strip(),
-            "prop_city":    (rd.get("SITE_CITY") or "").strip(),
-            "prop_state":   "VA",
-            "prop_zip":     str(rd.get("SITE_ZIP") or "").strip(),
-            "mail_address": (rd.get("MAILADR1") or rd.get("ADDR_1") or "").strip(),
-            "mail_city":    (rd.get("MAILCITY") or rd.get("CITY") or "").strip(),
-            "mail_state":   (rd.get("STATE") or "").strip(),
-            "mail_zip":     str(rd.get("MAILZIP") or rd.get("ZIP") or "").strip(),
-        }
-
-    @staticmethod
-    def _variants(name: str) -> list[str]:
-        name = name.strip().upper()
-        variants = {name}
-        clean = re.sub(r",\s*", " ", name).strip()
-        parts = clean.split()
-        if len(parts) >= 2:
-            variants.add(" ".join(parts[1:]) + " " + parts[0])
-            variants.add(f"{parts[0]}, {' '.join(parts[1:])}")
-        return [v for v in variants if v]
-
-    def lookup(self, owner_name: str) -> Optional[dict]:
-        if not owner_name:
-            return None
-        for v in self._variants(owner_name.strip().upper()):
-            hits = self.by_owner.get(v)
-            if hits:
-                return hits[0]
-        return None
-
-
-parcel_db = ParcelLookup()
-
-# ---------------------------------------------------------------------------
-# Scoring
-# ---------------------------------------------------------------------------
-
-TODAY = datetime.utcnow().date()
-
-
-def compute_flags(rec: dict) -> list[str]:
-    flags = []
-    cat   = rec.get("cat", "")
-    owner = (rec.get("owner") or "").upper()
-    filed_str = rec.get("filed") or ""
-
-    flag_map = {
-        "LP":       "Lis pendens",
-        "NOFC":     "Pre-foreclosure",
-        "JUD":      "Judgment lien",
-        "LNMECH":   "Mechanic lien",
-        "PRO":      "Probate / estate",
-    }
-    if cat in flag_map:
-        flags.append(flag_map[cat])
-    if cat in ("LNCORPTX", "LNIRS", "LNFED"):
-        flags.append("Tax lien")
-    if re.search(r"\b(LLC|CORP|INC|LTD|LP|TRUST|HOLDINGS|GROUP|PROPERTIES)\b", owner):
-        flags.append("LLC / corp owner")
-    try:
-        if (TODAY - datetime.strptime(filed_str, "%Y-%m-%d").date()).days <= 7:
-            flags.append("New this week")
-    except Exception:
-        pass
-
-    return list(dict.fromkeys(flags))
-
-
-def compute_score(rec: dict, flags: list[str]) -> int:
-    score = 30 + 10 * len(flags)
-    if "Lis pendens" in flags and "Pre-foreclosure" in flags:
-        score += 20
-    try:
-        amt = float(rec.get("amount") or 0)
-        if amt > 100_000:
-            score += 15
-        elif amt > 50_000:
-            score += 10
-    except (TypeError, ValueError):
-        pass
-    if "New this week" in flags:
-        score += 5
-    if rec.get("prop_address") or rec.get("mail_address"):
-        score += 5
-    return min(score, 100)
-
-# ---------------------------------------------------------------------------
-# Playwright — one search per court, filter locally
-# ---------------------------------------------------------------------------
-
-DEBUG_LOG: list[dict] = []   # captured during run, embedded in output JSON
-
-
-async def probe_land_records_url(page: Page) -> str:
+def scrape_richmond_gis(lookback_days: int = LOOKBACK_DAYS) -> list[dict]:
     """
-    Find the correct Virginia land records URL.
-    Waits for JavaScript to render the SPA before parsing.
+    Query Richmond City's ArcGIS FeatureServer for property transfer records.
+    Filters for distressed sale indicators (Foreclosure, Special Financing, etc.).
+    Data covers ~Oct 2021 – Oct 2024 (annual CAMA snapshot).
     """
-    target = VA_LAND_RECORD_URLS[0]  # OCIS is a JS SPA — try it first with proper wait
-    entry: dict = {"url": target, "status": None, "title": None,
-                   "forms": [], "selects": [], "page_text": "", "error": None}
-    try:
-        print(f"  [probe] Loading SPA: {target}")
-        resp = await page.goto(target, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
-        entry["status"] = resp.status if resp else None
-
-        # Wait up to 20s for JS to render at least one input/select/form
-        for selector in ["select", "input", "form", "[class*='search']", "[class*='court']", "main"]:
-            try:
-                await page.wait_for_selector(selector, timeout=20_000)
-                print(f"  [probe] JS rendered — found: {selector}")
-                break
-            except PlaywrightTimeout:
-                continue
-
-        # Extra settle time for React/Angular
-        await asyncio.sleep(2)
-
-        content        = await page.content()
-        entry["title"] = await page.title()
-        soup           = BeautifulSoup(content, "lxml")
-
-        # Capture all forms and fields
-        for fi, form in enumerate(soup.find_all("form")):
-            form_info = {"index": fi, "action": form.get("action"),
-                         "method": form.get("method"), "fields": []}
-            for el in form.find_all(["input", "select", "textarea"]):
-                form_info["fields"].append({
-                    "tag": el.name, "type": el.get("type"),
-                    "name": el.get("name"), "id": el.get("id"),
-                })
-                print(f"    field: {el.name} type={el.get('type')} name={el.get('name')} id={el.get('id')}")
-            entry["forms"].append(form_info)
-
-        # Capture all selects + options
-        for sel in soup.find_all("select"):
-            opts = [{"val": o.get("value",""), "text": o.get_text(strip=True)} for o in sel.find_all("option")[:15]]
-            entry["selects"].append({"name": sel.get("name"), "id": sel.get("id"), "options": opts})
-            print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> opts: {[o['val'] for o in opts[:6]]}")
-
-        # Capture visible text (first 2000 chars) for clues
-        entry["page_text"] = soup.get_text(separator=" ", strip=True)[:2000]
-        print(f"  [probe] Page text snippet: {entry['page_text'][:300]}")
-
-        # All input names/ids
-        all_inputs = [{"tag": el.name, "name": el.get("name"), "id": el.get("id"), "type": el.get("type")}
-                      for el in soup.find_all(["input","select","textarea","button"])]
-        entry["all_inputs"] = all_inputs
-        print(f"  [probe] Total inputs found: {len(all_inputs)}")
-
-        has_content = bool(entry["forms"] or entry["selects"] or len(all_inputs) > 0)
-        entry["has_content"] = has_content
-        DEBUG_LOG.append(entry)
-
-        if has_content:
-            print(f"  [probe] SUCCESS: {target}")
-        else:
-            print(f"  [probe] No form elements found after JS render. Title: {entry['title']}")
-
-    except Exception as exc:
-        entry["error"] = str(exc)
-        entry["has_content"] = False
-        DEBUG_LOG.append(entry)
-        print(f"  [probe] Error: {exc}")
-
-    return target
-
-
-async def search_court(page: Page, court: dict, start_date: str, end_date: str,
-                       base_url: str) -> list[dict]:
-    """
-    Search the Virginia land records portal for all records in the date range
-    for one court. Auto-detects form field names from the live page.
-    """
-    court_id   = court["id"]
-    court_name = court["name"]
-    records    = []
-
-    try:
-        await page.goto(base_url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
-
-        # Wait for the SPA to render form elements (critical for JS apps)
-        for selector in ["select", "input[type='text']", "input[type='date']", "form"]:
-            try:
-                await page.wait_for_selector(selector, timeout=20_000)
-                break
-            except PlaywrightTimeout:
-                continue
-        await asyncio.sleep(1)
-
-        content = await page.content()
-        soup    = BeautifulSoup(content, "lxml")
-
-        # --- Auto-detect field names from the live HTML ---
-        court_sel_name  = None
-        start_field     = None
-        end_field       = None
-
-        for sel_tag in soup.find_all("select"):
-            n = sel_tag.get("name") or sel_tag.get("id") or ""
-            opts_vals = [o.get("value","") for o in sel_tag.find_all("option")]
-            if court_id in opts_vals or any(c["id"] in opts_vals for c in COURTS):
-                court_sel_name = n
-                print(f"  [detect] Court select: name={n}")
-                break
-            if any(k in n.lower() for k in ["court", "jurisdiction", "fips"]):
-                court_sel_name = n
-                print(f"  [detect] Court select (by name): name={n}")
-
-        for inp in soup.find_all("input"):
-            n = (inp.get("name") or inp.get("id") or "").lower()
-            if not start_field and any(k in n for k in ["startdate","start_date","datefrom","from","begindate","filed_from"]):
-                start_field = inp.get("name") or inp.get("id")
-                print(f"  [detect] Start date field: {start_field}")
-            if not end_field and any(k in n for k in ["enddate","end_date","dateto","to","enddt","filed_to"]):
-                end_field = inp.get("name") or inp.get("id")
-                print(f"  [detect] End date field: {end_field}")
-
-        # --- Fill the form ---
-        if court_sel_name:
-            try:
-                await page.select_option(f'[name="{court_sel_name}"]', value=court_id, timeout=ELEMENT_TIMEOUT)
-            except Exception:
-                try:
-                    await page.select_option(f'[name="{court_sel_name}"]', label=court_name, timeout=ELEMENT_TIMEOUT)
-                except Exception as e:
-                    print(f"  [warn] Could not select court: {e}")
-        else:
-            # Try common selectors
-            for sel in ['select[name="courtId"]', 'select[name="court"]', '#courtSelect',
-                        '#court', 'select[name="fipsCode"]', 'select[name="selectedCourt"]']:
-                try:
-                    await page.select_option(sel, value=court_id, timeout=ELEMENT_TIMEOUT)
-                    print(f"  [fallback] Used court selector: {sel}")
-                    break
-                except Exception:
-                    try:
-                        await page.select_option(sel, label=court_name, timeout=ELEMENT_TIMEOUT)
-                        print(f"  [fallback] Used court selector by label: {sel}")
-                        break
-                    except Exception:
-                        continue
-
-        date_fmt = "%m/%d/%Y"  # Most Virginia portals use MM/DD/YYYY
-        start_str = datetime.strptime(start_date, "%Y-%m-%d").strftime(date_fmt)
-        end_str   = datetime.strptime(end_date,   "%Y-%m-%d").strftime(date_fmt)
-
-        if start_field:
-            await page.fill(f'[name="{start_field}"], #{start_field}', start_str, timeout=ELEMENT_TIMEOUT)
-        else:
-            for sel in ['input[name="startDate"]', 'input[name="dateFrom"]', '#startDate',
-                        '#dateFrom', 'input[name="instrumentDateFrom"]', 'input[name="fromDate"]']:
-                try:
-                    await page.fill(sel, start_str, timeout=ELEMENT_TIMEOUT)
-                    break
-                except Exception:
-                    continue
-
-        if end_field:
-            await page.fill(f'[name="{end_field}"], #{end_field}', end_str, timeout=ELEMENT_TIMEOUT)
-        else:
-            for sel in ['input[name="endDate"]', 'input[name="dateTo"]', '#endDate',
-                        '#dateTo', 'input[name="instrumentDateTo"]', 'input[name="toDate"]']:
-                try:
-                    await page.fill(sel, end_str, timeout=ELEMENT_TIMEOUT)
-                    break
-                except Exception:
-                    continue
-
-        # --- Submit ---
-        for sel in ['button[type="submit"]', 'input[type="submit"]', '#searchBtn',
-                    '#btnSearch', '#search', 'button:has-text("Search")', 'a:has-text("Search")']:
-            try:
-                await page.click(sel, timeout=ELEMENT_TIMEOUT)
-                print(f"  [submit] Clicked: {sel}")
-                break
-            except Exception:
-                continue
-
-        try:
-            await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
-        except PlaywrightTimeout:
-            pass
-
-        # Save post-search HTML for debugging
-        post_content = await page.content()
-        debug_path   = BASE_OUTPUT_DIR / "data" / f"debug_{court_id}_results.html"
-        try:
-            debug_path.write_text(post_content, encoding="utf-8")
-        except Exception:
-            pass
-
-        # --- Paginate and parse ---
-        while True:
-            recs = await parse_results_page(page, court)
-            records.extend(recs)
-            print(f"  [page] +{len(recs)} records (total {len(records)})")
-
-            try:
-                nxt = await page.query_selector('a:has-text("Next"), button:has-text("Next"), [aria-label="Next page"]')
-                if nxt and await nxt.is_visible():
-                    await nxt.click(timeout=ELEMENT_TIMEOUT)
-                    try:
-                        await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
-                    except PlaywrightTimeout:
-                        pass
-                else:
-                    break
-            except Exception:
-                break
-
-    except PlaywrightTimeout as exc:
-        print(f"  [timeout] {court_name}: {exc}")
-    except Exception as exc:
-        print(f"  [error]   {court_name}: {exc}")
-        traceback.print_exc()
-
-    return records
-
-
-async def parse_results_page(page: Page, court: dict) -> list[dict]:
-    """Parse every result table row on the current page, keep only target cats."""
-    records = []
-    try:
-        content = await page.content()
-        soup    = BeautifulSoup(content, "lxml")
-
-        for table in soup.find_all("table"):
-            rows = table.find_all("tr")
-            if len(rows) < 2:
-                continue
-
-            headers = [th.get_text(strip=True).upper() for th in rows[0].find_all(["th", "td"])]
-            if not headers:
-                continue
-
-            col_map: dict[str, int] = {}
-            for i, h in enumerate(headers):
-                if any(x in h for x in ["INST", "DOC", "NUMBER"]):
-                    col_map.setdefault("doc_num", i)
-                if "TYPE" in h:
-                    col_map.setdefault("doc_type", i)
-                if any(x in h for x in ["DATE", "FILED", "RECORD"]):
-                    col_map.setdefault("filed", i)
-                if any(x in h for x in ["GRANTOR", "OWNER", "PARTY1"]):
-                    col_map.setdefault("owner", i)
-                if any(x in h for x in ["GRANTEE", "PARTY2"]):
-                    col_map.setdefault("grantee", i)
-                if any(x in h for x in ["LEGAL", "DESCRIPTION"]):
-                    col_map.setdefault("legal", i)
-                if any(x in h for x in ["AMOUNT", "CONSIDER", "VALUE"]):
-                    col_map.setdefault("amount", i)
-
-            if "doc_num" not in col_map:
-                continue
-
-            for row in rows[1:]:
-                cells = row.find_all("td")
-                if not cells:
-                    continue
-
-                def ct(key):
-                    idx = col_map.get(key)
-                    return cells[idx].get_text(strip=True) if idx is not None and idx < len(cells) else ""
-
-                doc_num  = ct("doc_num")
-                if not doc_num:
-                    continue
-
-                doc_type = ct("doc_type")
-                cat, cat_label = classify_doc_type(doc_type)
-                if cat not in TARGET_CATS:
-                    continue
-
-                link_tag  = row.find("a", href=True)
-                clerk_url = ""
-                if link_tag:
-                    href = link_tag["href"]
-                    clerk_url = href if href.startswith("http") else VIRGINIA_OCIS_BASE + "/" + href.lstrip("/")
-
-                records.append(make_record(
-                    doc_num=doc_num,
-                    doc_type=doc_type,
-                    filed=normalize_date(ct("filed")),
-                    cat=cat,
-                    cat_label=cat_label,
-                    owner=ct("owner"),
-                    grantee=ct("grantee"),
-                    amount=parse_amount(ct("amount")),
-                    legal=ct("legal"),
-                    clerk_url=clerk_url or build_clerk_url(doc_num, court["id"]),
-                    court=court,
-                ))
-
-    except Exception as exc:
-        print(f"  [parse] Error: {exc}")
-
-    return records
-
-
-async def scrape_all_courts(start_date: str, end_date: str) -> list[dict]:
-    """One Playwright search per court — 5 total."""
-    all_records: list[dict] = []
-    seen: set[str] = set()
-
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=True,
-            args=["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
-        )
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-            viewport={"width": 1280, "height": 800},
-        )
-
-        # Step 1: Probe for the correct URL (once)
-        probe_page = await context.new_page()
-        print("[probe] Finding working Virginia land records URL...")
-        base_url = await probe_land_records_url(probe_page)
-        await probe_page.close()
-        print(f"[probe] Using: {base_url}\n")
-
-        # Step 2: Search each court
-        for court in COURTS:
-            print(f"\n[court] {court['name']}  (ID: {court['id']})")
-
-            page = await context.new_page()
-            try:
-                recs = await asyncio.wait_for(
-                    search_court(page, court, start_date, end_date, base_url),
-                    timeout=PER_COURT_TIMEOUT,
-                )
-            except asyncio.TimeoutError:
-                print(f"  [timeout] {court['name']} exceeded {PER_COURT_TIMEOUT}s — skipping")
-                recs = []
-            except Exception as exc:
-                print(f"  [error] {court['name']}: {exc}")
-                recs = []
-            finally:
-                await page.close()
-
-            new_count = 0
-            for rec in recs:
-                key = f"{court['id']}:{rec['doc_num']}"
-                if key not in seen:
-                    seen.add(key)
-                    all_records.append(rec)
-                    new_count += 1
-
-            print(f"  → {new_count} new records")
-
-            # HTTP fallback
-            http_recs = fetch_court_http(court, start_date, end_date, seen)
-            all_records.extend(http_recs)
-            if http_recs:
-                print(f"  → {len(http_recs)} additional via HTTP fallback")
-
-        await context.close()
-        await browser.close()
-
-    return all_records
-
-# ---------------------------------------------------------------------------
-# HTTP fallback (requests + BeautifulSoup)
-# ---------------------------------------------------------------------------
-
-def fetch_court_http(court: dict, start_date: str, end_date: str, seen: set) -> list[dict]:
-    records  = []
-    court_id = court["id"]
-    session  = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-        "Accept": "application/json, text/html, */*",
-    })
-
-    # JSON API probe
-    for url in [
-        f"{VA_OCIS_API}/landRecords?courtId={court_id}&startDate={start_date}&endDate={end_date}",
-        f"{VIRGINIA_OCIS_BASE}/api/landRecords?court={court_id}&fromDate={start_date}&toDate={end_date}",
-    ]:
-        try:
-            resp = session.get(url, timeout=20)
-            if resp.status_code == 200 and "application/json" in resp.headers.get("content-type", ""):
-                data  = resp.json()
-                items = data if isinstance(data, list) else data.get("records", data.get("results", []))
-                for item in items:
-                    rec = parse_api_item(item, court)
-                    if rec:
-                        key = f"{court_id}:{rec['doc_num']}"
-                        if key not in seen:
-                            seen.add(key)
-                            records.append(rec)
-                if records:
-                    return records
-        except Exception:
-            pass
-
-    # HTML fallback
-    try:
-        resp = session.get(
-            f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
-            f"?courtId={court_id}&startDate={start_date}&endDate={end_date}",
-            timeout=30,
-        )
-        if resp.status_code == 200:
-            soup  = BeautifulSoup(resp.text, "lxml")
-            table = soup.find("table")
-            if table:
-                rows    = table.find_all("tr")
-                headers = [th.get_text(strip=True).upper() for th in rows[0].find_all(["th", "td"])]
-                for row in rows[1:]:
-                    cells = row.find_all("td")
-                    if not cells:
-                        continue
-                    rec = parse_html_row(cells, headers, court)
-                    if rec:
-                        key = f"{court_id}:{rec['doc_num']}"
-                        if key not in seen:
-                            seen.add(key)
-                            records.append(rec)
-    except Exception as exc:
-        print(f"  [http] HTML fallback failed {court['name']}: {exc}")
-
-    return records
-
-
-def parse_api_item(item: dict, court: dict) -> Optional[dict]:
-    try:
-        doc_type = (item.get("documentType") or item.get("instrType") or item.get("docType") or "").strip()
-        cat, cat_label = classify_doc_type(doc_type)
-        if cat not in TARGET_CATS:
-            return None
-        doc_num = str(item.get("instrumentNumber") or item.get("docNumber") or item.get("instrNum") or "").strip()
-        if not doc_num:
-            return None
-        return make_record(
-            doc_num=doc_num,
-            doc_type=doc_type,
-            filed=normalize_date(str(item.get("recordedDate") or item.get("filedDate") or item.get("date") or "")),
-            cat=cat, cat_label=cat_label,
-            owner=str(item.get("grantor") or item.get("owner") or "").strip(),
-            grantee=str(item.get("grantee") or "").strip(),
-            amount=parse_amount(str(item.get("consideration") or item.get("amount") or "")),
-            legal=str(item.get("legalDescription") or item.get("legal") or "").strip(),
-            clerk_url=str(item.get("url") or item.get("link") or build_clerk_url(doc_num, court["id"])),
-            court=court,
-        )
-    except Exception:
-        return None
-
-
-def parse_html_row(cells, headers: list[str], court: dict) -> Optional[dict]:
-    try:
-        def get(frags):
-            for i, h in enumerate(headers):
-                if any(f in h for f in frags) and i < len(cells):
-                    return cells[i].get_text(strip=True)
-            return ""
-
-        doc_num  = get(["INST", "DOC", "NUM"])
-        if not doc_num:
-            return None
-        doc_type = get(["TYPE"])
-        cat, cat_label = classify_doc_type(doc_type)
-        if cat not in TARGET_CATS:
-            return None
-
-        link_tag  = next((c.find("a", href=True) for c in cells if c.find("a", href=True)), None)
-        href      = link_tag["href"] if link_tag else ""
-        clerk_url = href if href.startswith("http") else (VIRGINIA_OCIS_BASE + "/" + href.lstrip("/") if href else "")
-
-        return make_record(
-            doc_num=doc_num, doc_type=doc_type,
-            filed=normalize_date(get(["DATE", "FILED", "RECORD"])),
-            cat=cat, cat_label=cat_label,
-            owner=get(["GRANTOR", "OWNER"]),
-            grantee=get(["GRANTEE"]),
-            amount=parse_amount(get(["AMOUNT", "CONSIDER"])),
-            legal=get(["LEGAL", "DESC"]),
-            clerk_url=clerk_url or build_clerk_url(doc_num, court["id"]),
-            court=court,
-        )
-    except Exception:
-        return None
-
-# ---------------------------------------------------------------------------
-# Property Appraiser DBF download
-# ---------------------------------------------------------------------------
-
-PARCEL_DBF_URLS = [
-    "https://www.rva.gov/sites/default/files/2024-01/ParcelData.zip",
-    "https://opendata.rva.gov/datasets/parcels/data.zip",
-    "https://gis.rva.gov/download/parcels.zip",
-]
-
-
-def download_parcel_dbf() -> Optional[str]:
-    import zipfile
+    leads = []
     session = requests.Session()
-    session.headers["User-Agent"] = "Mozilla/5.0 (compatible; MotivatedSellerScraper/1.0)"
-    for url in PARCEL_DBF_URLS:
-        try:
-            print(f"[parcel] Trying: {url}")
-            resp    = session.get(url, timeout=60, stream=True)
-            if resp.status_code != 200:
-                continue
-            tmpdir   = tempfile.mkdtemp()
-            zip_path = os.path.join(tmpdir, "parcels.zip")
-            with open(zip_path, "wb") as f:
-                for chunk in resp.iter_content(chunk_size=65536):
-                    f.write(chunk)
-            with zipfile.ZipFile(zip_path, "r") as zf:
-                zf.extractall(tmpdir)
-            for root, _, files in os.walk(tmpdir):
-                for fname in files:
-                    if fname.lower().endswith(".dbf"):
-                        path = os.path.join(root, fname)
-                        print(f"[parcel] Found DBF: {path}")
-                        return path
-        except Exception as exc:
-            print(f"[parcel] Failed {url}: {exc}")
-    print("[parcel] Could not download parcel DBF — address enrichment skipped")
-    return None
+    session.headers.update({"User-Agent": "Mozilla/5.0 Chrome/120", "Accept": "application/json"})
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
+    # Richmond City GIS data is an annual CAMA snapshot (Oct 2021 – Oct 2024).
+    # Filter to the most recent 12 months of available data to surface
+    # recent distress transactions; fall back to all records if nothing found.
+    # The GIS is refreshed annually so this gives the most relevant leads.
+    cutoff_date = "2024-01-01"  # most recent annual data year
 
-def make_record(*, doc_num, doc_type, filed, cat, cat_label,
-                owner, grantee, amount, legal, clerk_url, court: dict) -> dict:
-    return {
-        "doc_num":      doc_num,
-        "doc_type":     doc_type,
-        "filed":        filed,
-        "cat":          cat,
-        "cat_label":    cat_label,
-        "owner":        owner,
-        "grantee":      grantee,
-        "amount":       amount,
-        "legal":        legal,
-        "jurisdiction": court["name"],
-        "court_id":     court["id"],
-        "prop_address": "",
-        "prop_city":    court["city"],
-        "prop_state":   court["state"],
-        "prop_zip":     "",
-        "mail_address": "",
-        "mail_city":    "",
-        "mail_state":   "",
-        "mail_zip":     "",
-        "clerk_url":    clerk_url,
-        "flags":        [],
-        "score":        0,
-    }
-
-
-def classify_doc_type(doc_type: str) -> tuple[str, str]:
-    upper = doc_type.strip().upper()
-    if upper in DOC_TYPE_MAP:
-        return DOC_TYPE_MAP[upper]
-    for key, (cat, label) in DOC_TYPE_MAP.items():
-        if key in upper or upper in key:
-            return (cat, label)
-    return ("OTHER", doc_type)
-
-
-def normalize_date(raw: str) -> str:
-    if not raw:
-        return ""
-    raw = raw.strip()
-    for fmt in ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y%m%d",
-                "%d-%b-%Y", "%B %d, %Y", "%b %d, %Y", "%m/%d/%y"]:
-        try:
-            return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
-        except ValueError:
-            continue
-    return raw
-
-
-def parse_amount(raw: str) -> Optional[float]:
-    if not raw:
-        return None
-    clean = re.sub(r"[,$\s]", "", raw)
-    try:
-        v = float(clean)
-        return v if v > 0 else None
-    except (ValueError, TypeError):
-        return None
-
-
-def build_clerk_url(doc_num: str, court_id: str) -> str:
-    safe = requests.utils.quote(doc_num, safe="")
-    return f"{VIRGINIA_OCIS_BASE}/landRecordSearch?courtId={court_id}&instrumentNumber={safe}"
-
-# ---------------------------------------------------------------------------
-# GHL CSV Export
-# ---------------------------------------------------------------------------
-
-def generate_ghl_csv(records: list[dict]) -> str:
-    columns = [
-        "First Name", "Last Name",
-        "Mailing Address", "Mailing City", "Mailing State", "Mailing Zip",
-        "Property Address", "Property City", "Property State", "Property Zip",
-        "Lead Type", "Document Type", "Date Filed", "Document Number",
-        "Amount/Debt Owed", "Seller Score", "Motivated Seller Flags",
-        "Jurisdiction", "Source", "Public Records URL",
+    DISTRESS_CODES = [
+        "Foreclosure%",
+        "Special Financing%",
     ]
 
-    def split_name(full: str) -> tuple[str, str]:
-        parts = full.strip().split()
-        if not parts:  return ("", "")
-        if len(parts) == 1: return (parts[0], "")
-        return (" ".join(parts[:-1]), parts[-1])
+    for code_filter in DISTRESS_CODES:
+        try:
+            params = {
+                "where": f"val_code_2 LIKE '{code_filter}' AND sale_date >= date '{cutoff_date}'",
+                "outFields": (
+                    "OBJECTID2,parcel_id,prop_street,owner1,sale_date,sale_price,"
+                    "Land,Impr,tot,val_code_1,val_code_2,DocNum"
+                ),
+                "orderByFields": "sale_date DESC",
+                "resultRecordCount": 500,
+                "f": "json",
+            }
+            r = session.get(
+                f"{RVA_GIS_BASE}/AssessorProValGPINRecTransPublish/FeatureServer/0/query",
+                params=params,
+                timeout=30,
+            )
+            r.raise_for_status()
+            data = r.json()
+            if "error" in data:
+                print(f"[RVA GIS] Error for {code_filter}: {data['error']}")
+                continue
 
-    out = io.StringIO()
-    w   = csv.DictWriter(out, fieldnames=columns)
-    w.writeheader()
-    for rec in records:
-        first, last = split_name(rec.get("owner") or "")
-        w.writerow({
-            "First Name":             first,
-            "Last Name":              last,
-            "Mailing Address":        rec.get("mail_address") or "",
-            "Mailing City":           rec.get("mail_city") or "",
-            "Mailing State":          rec.get("mail_state") or "",
-            "Mailing Zip":            rec.get("mail_zip") or "",
-            "Property Address":       rec.get("prop_address") or "",
-            "Property City":          rec.get("prop_city") or "",
-            "Property State":         rec.get("prop_state") or "",
-            "Property Zip":           rec.get("prop_zip") or "",
-            "Lead Type":              rec.get("cat_label") or rec.get("cat") or "",
-            "Document Type":          rec.get("doc_type") or "",
-            "Date Filed":             rec.get("filed") or "",
-            "Document Number":        rec.get("doc_num") or "",
-            "Amount/Debt Owed":       str(rec.get("amount") or ""),
-            "Seller Score":           str(rec.get("score") or 0),
-            "Motivated Seller Flags": "; ".join(rec.get("flags") or []),
-            "Jurisdiction":           rec.get("jurisdiction") or "",
-            "Source":                 "Virginia OCIS - " + (rec.get("jurisdiction") or "Greater Richmond, VA"),
-            "Public Records URL":     rec.get("clerk_url") or "",
-        })
-    return out.getvalue()
+            features = data.get("features", [])
+            print(f"[RVA GIS] {code_filter}: {len(features)} records")
+
+            for feat in features:
+                a = feat.get("attributes", {})
+                try:
+                    sale_ts = a.get("sale_date")
+                    sale_date = (
+                        datetime.fromtimestamp(sale_ts / 1000).strftime("%Y-%m-%d")
+                        if sale_ts else None
+                    )
+                    assessed   = a.get("tot", 0) or 0
+                    sale_price = a.get("sale_price", 0) or 0
+                    ratio      = round(sale_price / assessed, 3) if assessed > 0 else None
+                    address    = (a.get("prop_street") or "").strip()
+                    vc2        = (a.get("val_code_2") or "").strip()
+                    doc_type   = (
+                        "Foreclosure / Forced Sale" if "foreclo" in vc2.lower()
+                        else "Special Financing"
+                    )
+                    lead = {
+                        "id":            f"rva-gis-{a.get('OBJECTID2', a.get('parcel_id',''))}",
+                        "source":        "Richmond City GIS",
+                        "jurisdiction":  "Richmond City",
+                        "doc_type":      doc_type,
+                        "recorded_date": sale_date,
+                        "address":       address,
+                        "city":          "Richmond",
+                        "state":         "VA",
+                        "zip":           "",
+                        "grantor":       "",
+                        "grantee":       (a.get("owner1") or "").strip(),
+                        "assessed_value": assessed,
+                        "sale_price":    sale_price,
+                        "sale_ratio":    ratio,
+                        "doc_number":    (a.get("DocNum") or "").strip(),
+                        "parcel_id":     (a.get("parcel_id") or "").strip(),
+                        "val_code":      vc2,
+                        "scraped_at":    datetime.utcnow().isoformat() + "Z",
+                    }
+                    lead["score"] = score_lead(lead)
+                    leads.append(lead)
+                except Exception:
+                    continue
+
+        except Exception as e:
+            print(f"[RVA GIS] Error fetching {code_filter}: {e}")
+
+    # Deduplicate by unique OBJECTID2-based id
+    seen = set()
+    unique = []
+    for lead in leads:
+        lid = lead["id"]
+        if lid not in seen:
+            seen.add(lid)
+            unique.append(lead)
+
+    print(f"[RVA GIS] Total unique leads: {len(unique)}")
+    return unique
+
+
+def scrape_richmond_surplus() -> list[dict]:
+    """Richmond City surplus / tax-sale properties (free ArcGIS API)."""
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Mozilla/5.0 Chrome/120", "Accept": "application/json"})
+    leads = []
+    try:
+        r = session.get(
+            f"{RVA_GIS_BASE}/2020_Surplus_Properties___New2/FeatureServer/0/query",
+            params={"where": "1=1", "outFields": "*", "resultRecordCount": 200, "f": "json"},
+            timeout=20,
+        )
+        data = r.json()
+        if "error" in data:
+            return []
+        for feat in data.get("features", []):
+            a = feat.get("attributes", {})
+            lead = {
+                "id":            f"rva-surplus-{a.get('ObjectId','')}",
+                "source":        "Richmond City Surplus",
+                "jurisdiction":  "Richmond City",
+                "doc_type":      "Surplus Property",
+                "recorded_date": None,
+                "address":       (a.get("Address") or "").strip(),
+                "city":          "Richmond",
+                "state":         "VA",
+                "zip":           "",
+                "grantor":       "City of Richmond",
+                "grantee":       "",
+                "assessed_value": 0,
+                "sale_price":    0,
+                "sale_ratio":    None,
+                "doc_number":    "",
+                "parcel_id":     (a.get("Parcel_ID") or "").strip(),
+                "val_code":      "Surplus",
+                "scraped_at":    datetime.utcnow().isoformat() + "Z",
+            }
+            lead["score"] = score_lead(lead)
+            leads.append(lead)
+    except Exception as e:
+        print(f"[RVA Surplus] Error: {e}")
+    print(f"[RVA Surplus] {len(leads)} properties")
+    return leads
+
+
+# ---------------------------------------------------------------------------
+# Source 2: ACT DataScout (Playwright) — Richmond City Land Instruments
+# ---------------------------------------------------------------------------
+
+async def scrape_actdatascout(
+    page: Page, lookback_days: int = LOOKBACK_DAYS
+) -> list[dict]:
+    """
+    Navigate ACT DataScout for Richmond City land records.
+    Searches for Lis Pendens, Deeds of Trust, Mechanic Liens, etc.
+    reCAPTCHA v3 is invisible — Playwright typically passes it.
+    """
+    leads = []
+    url = f"{ACTDATASCOUT_BASE}/Richmond"
+
+    DOC_TYPE_TARGETS = [
+        ("Lis Pendens",         "LP"),
+        ("Deed of Trust",       "DT"),
+        ("Mechanic Lien",       "ML"),
+        ("Release",             "REL"),
+    ]
+
+    try:
+        print(f"[ACT DataScout] Navigating to {url}")
+        await page.goto(url, wait_until="networkidle", timeout=PAGE_TIMEOUT)
+        await page.wait_for_timeout(2000)
+
+        # Take screenshot for debug
+        await page.screenshot(path="/tmp/actdatascout.png")
+
+        # Detect if we're on a search page or got redirected
+        page_url = page.url
+        title    = await page.title()
+        print(f"[ACT DataScout] URL={page_url}, Title={title[:60]}")
+
+        if "actdatascout.com/RealProperty" not in page_url:
+            print("[ACT DataScout] Redirected away — not available for this county")
+            return leads
+
+        # Look for date-range search fields
+        from_date = (datetime.now() - timedelta(days=lookback_days)).strftime("%m/%d/%Y")
+        to_date   = datetime.now().strftime("%m/%d/%Y")
+
+        # Common ACT DataScout field selectors
+        selectors = {
+            "from_date": ["#FromDate", "#StartDate", "[name='FromDate']", "[name='StartDate']",
+                          "input[placeholder*='from']", "input[placeholder*='From']"],
+            "to_date":   ["#ToDate",   "#EndDate",   "[name='ToDate']",   "[name='EndDate']",
+                          "input[placeholder*='to']",   "input[placeholder*='To']"],
+            "doc_type":  ["#InstrumentType", "#DocType", "select[name='InstrumentType']"],
+            "submit":    ["#btnSearch", "input[type='submit']", "button[type='submit']",
+                          "button:has-text('Search')"],
+        }
+
+        # Try to fill the from_date
+        for sel in selectors["from_date"]:
+            if await page.query_selector(sel):
+                await page.fill(sel, from_date)
+                print(f"[ACT DataScout] Filled from_date via {sel}")
+                break
+
+        # Try to fill the to_date
+        for sel in selectors["to_date"]:
+            if await page.query_selector(sel):
+                await page.fill(sel, to_date)
+                print(f"[ACT DataScout] Filled to_date via {sel}")
+                break
+
+        # Click search
+        for sel in selectors["submit"]:
+            btn = await page.query_selector(sel)
+            if btn:
+                await btn.click()
+                print(f"[ACT DataScout] Clicked search via {sel}")
+                await page.wait_for_load_state("networkidle", timeout=15000)
+                break
+
+        await page.wait_for_timeout(2000)
+        await page.screenshot(path="/tmp/actdatascout_results.png")
+
+        # Extract results table
+        rows = await page.query_selector_all("table tr")
+        print(f"[ACT DataScout] Found {len(rows)} rows")
+        headers = []
+        for i, row in enumerate(rows):
+            cells = await row.query_selector_all("td, th")
+            cell_texts = [((await c.inner_text()).strip()) for c in cells]
+            if i == 0:
+                headers = cell_texts
+                continue
+            if not any(cell_texts):
+                continue
+            rec = dict(zip(headers, cell_texts)) if headers else {"row": cell_texts}
+            lead = _parse_actdatascout_row(rec)
+            if lead:
+                leads.append(lead)
+
+    except PlaywrightTimeout:
+        print("[ACT DataScout] Timed out")
+    except Exception as e:
+        print(f"[ACT DataScout] Error: {e}")
+        traceback.print_exc()
+
+    print(f"[ACT DataScout] {len(leads)} leads")
+    return leads
+
+
+def _parse_actdatascout_row(rec: dict) -> Optional[dict]:
+    """Parse a single ACT DataScout result row."""
+    # Try to find common field names (vary by county configuration)
+    address    = rec.get("Property Address") or rec.get("Address") or rec.get("Situs") or ""
+    grantor    = rec.get("Grantor") or rec.get("Seller") or ""
+    grantee    = rec.get("Grantee") or rec.get("Buyer") or ""
+    doc_type   = rec.get("Instrument Type") or rec.get("Doc Type") or rec.get("Type") or ""
+    rec_date   = rec.get("Recording Date") or rec.get("Recorded") or rec.get("Date") or ""
+    doc_num    = rec.get("Instrument Number") or rec.get("Doc #") or rec.get("Book/Page") or ""
+    amount_str = rec.get("Consideration") or rec.get("Amount") or rec.get("Price") or "0"
+
+    if not address and not grantor:
+        return None
+
+    # Parse amount
+    amount = 0
+    try:
+        amount = int(re.sub(r"[^\d]", "", amount_str))
+    except Exception:
+        pass
+
+    # Map doc type to canonical type
+    doc_type_canonical = _map_doc_type(doc_type)
+
+    lead = {
+        "id":            f"actscout-{doc_num.replace('/', '-').replace(' ', '')}",
+        "source":        "ACT DataScout",
+        "jurisdiction":  "Richmond City",
+        "doc_type":      doc_type_canonical,
+        "recorded_date": _parse_date(rec_date),
+        "address":       address.strip(),
+        "city":          "Richmond",
+        "state":         "VA",
+        "zip":           "",
+        "grantor":       grantor.strip(),
+        "grantee":       grantee.strip(),
+        "assessed_value": 0,
+        "sale_price":    amount,
+        "sale_ratio":    None,
+        "doc_number":    doc_num.strip(),
+        "parcel_id":     "",
+        "val_code":      doc_type,
+        "scraped_at":    datetime.utcnow().isoformat() + "Z",
+    }
+    lead["score"] = score_lead(lead)
+    return lead
+
+
+def _map_doc_type(raw: str) -> str:
+    raw_upper = raw.upper()
+    mapping = {
+        "LP": "Lis Pendens",   "LIS PENDENS": "Lis Pendens",
+        "DT": "Deed of Trust", "DEED OF TRUST": "Deed of Trust",
+        "ML": "Mechanic Lien", "MECHANIC LIEN": "Mechanic Lien",
+        "HOA": "HOA Lien",
+        "FL": "Federal Tax Lien", "FEDERAL": "Federal Tax Lien",
+        "IRS": "IRS Tax Lien",
+        "TD": "Tax Deed",      "TAX DEED": "Tax Deed",
+        "JUD": "Judgment",     "JUDGMENT": "Judgment",
+        "PROB": "Probate",     "PROBATE": "Probate",
+        "MED": "Medicaid Lien","MEDICAID": "Medicaid Lien",
+    }
+    for key, val in mapping.items():
+        if key in raw_upper:
+            return val
+    return raw.strip() or "Unknown"
+
+
+def _parse_date(s: str) -> Optional[str]:
+    """Parse various date formats → YYYY-MM-DD."""
+    s = (s or "").strip()
+    for fmt in ["%m/%d/%Y", "%Y-%m-%d", "%m-%d-%Y", "%B %d, %Y"]:
+        try:
+            return datetime.strptime(s, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return s or None
+
+
+# ---------------------------------------------------------------------------
+# Source 3: OCIS Playwright — Circuit Court Civil Cases
+# ---------------------------------------------------------------------------
+
+async def scrape_ocis(
+    page: Page, courts: list[dict], lookback_days: int = LOOKBACK_DAYS
+) -> list[dict]:
+    """
+    Navigate Virginia OCIS (Angular SPA) to find civil court cases.
+    - Accepts terms of service by clicking the UI button
+    - Searches each circuit court for recent civil cases
+    - Filters for foreclosure/judgment/lien-related case types
+    """
+    all_leads = []
+    landing_url = f"{OCIS_BASE}/landing"
+
+    # Plaintiff names that indicate foreclosure/liens
+    FORECLOSURE_PLAINTIFFS = [
+        "TRUSTEE",
+        "BANK OF AMERICA",
+        "WELLS FARGO",
+        "PENNYMAC",
+        "MR COOPER",
+        "NATIONSTAR",
+        "SPECIALIZED LOAN",
+        "PHH MORTGAGE",
+        "NEWREZ",
+        "FREEDOM MORTGAGE",
+        "LOANCARE",
+        "CARRINGTON",
+        "COMMONWEALTH OF VIRGINIA",
+        "SECRETARY OF VETERANS",
+        "INTERNAL REVENUE",
+    ]
+
+    try:
+        print(f"[OCIS] Loading landing page: {landing_url}")
+        await page.goto(landing_url, wait_until="networkidle", timeout=PAGE_TIMEOUT)
+        await page.wait_for_timeout(2000)
+
+        # Accept terms — click "I Accept" button
+        terms_selectors = [
+            "button:has-text('I Accept')",
+            "button:has-text('Accept')",
+            "button:has-text('Agree')",
+            "#btnAccept",
+            ".accept-btn",
+            "[data-test='accept']",
+        ]
+        terms_clicked = False
+        for sel in terms_selectors:
+            try:
+                btn = await page.wait_for_selector(sel, timeout=5000)
+                if btn:
+                    await btn.click()
+                    print(f"[OCIS] Accepted terms via {sel}")
+                    terms_clicked = True
+                    break
+            except PlaywrightTimeout:
+                continue
+
+        if not terms_clicked:
+            # Try to click any visible button in the terms dialog
+            visible_buttons = await page.query_selector_all("button:visible, .btn:visible")
+            for btn in visible_buttons:
+                text = (await btn.inner_text()).strip().lower()
+                if "accept" in text or "agree" in text or "continue" in text:
+                    await btn.click()
+                    terms_clicked = True
+                    print(f"[OCIS] Accepted terms via text match: '{text}'")
+                    break
+
+        await page.wait_for_timeout(2000)
+
+        # Navigate to search page
+        search_url = f"{OCIS_BASE}/search"
+        print(f"[OCIS] Navigating to search: {search_url}")
+        await page.goto(search_url, wait_until="networkidle", timeout=PAGE_TIMEOUT)
+        await page.wait_for_timeout(3000)
+        await page.screenshot(path="/tmp/ocis_search.png")
+        print(f"[OCIS] Search page loaded: {page.url}")
+
+        # For each court, search for civil cases
+        for court in courts:
+            court_leads = await _ocis_search_court(page, court, FORECLOSURE_PLAINTIFFS, lookback_days)
+            all_leads.extend(court_leads)
+            await asyncio.sleep(2)
+
+    except PlaywrightTimeout:
+        print("[OCIS] Timed out on landing page")
+    except Exception as e:
+        print(f"[OCIS] Error: {e}")
+        traceback.print_exc()
+
+    print(f"[OCIS] Total leads: {len(all_leads)}")
+    return all_leads
+
+
+async def _ocis_search_court(
+    page: Page, court: dict, plaintiffs: list[str], lookback_days: int
+) -> list[dict]:
+    """Search OCIS for a specific court's civil cases."""
+    leads = []
+    court_name = court["name"]
+
+    try:
+        # Select court from dropdown
+        court_sel = f"option:has-text('{court_name.upper()}')"
+        court_dropdown = await page.query_selector("select[name*='court'], select[id*='court'], .court-select")
+        if court_dropdown:
+            await court_dropdown.select_option(label=court_name.upper())
+            print(f"[OCIS:{court_name}] Selected court")
+        else:
+            # Try clicking on a multi-select or checkbox for this court
+            court_checkbox = await page.query_selector(f"label:has-text('{court_name.upper()}')")
+            if court_checkbox:
+                await court_checkbox.click()
+                print(f"[OCIS:{court_name}] Clicked court checkbox")
+
+        # Search for each common foreclosure plaintiff
+        for plaintiff in plaintiffs[:5]:  # Limit to avoid too many requests
+            await asyncio.sleep(1)
+            # Find search input
+            search_input = await page.query_selector(
+                "input[name*='search'], input[placeholder*='name'], input[id*='search'], input[type='text']"
+            )
+            if search_input:
+                await search_input.fill(plaintiff)
+                # Submit
+                submit = await page.query_selector("button[type='submit'], input[type='submit'], button:has-text('Search')")
+                if submit:
+                    await submit.click()
+                    await page.wait_for_timeout(3000)
+                    # Extract results
+                    rows = await page.query_selector_all("table.results tr, .case-row, .result-row")
+                    for row in rows[1:]:  # Skip header
+                        cells = await row.query_selector_all("td")
+                        cell_texts = [(await c.inner_text()).strip() for c in cells]
+                        if cell_texts:
+                            lead = _parse_ocis_row(cell_texts, court_name)
+                            if lead:
+                                leads.append(lead)
+
+    except Exception as e:
+        print(f"[OCIS:{court_name}] Error: {e}")
+
+    return leads
+
+
+def _parse_ocis_row(cells: list[str], jurisdiction: str) -> Optional[dict]:
+    """Parse an OCIS result row into a lead."""
+    if len(cells) < 3:
+        return None
+    # Typical OCIS columns: Case Number, Filed Date, Case Type, Parties
+    case_num   = cells[0] if len(cells) > 0 else ""
+    filed_date = cells[1] if len(cells) > 1 else ""
+    case_type  = cells[2] if len(cells) > 2 else ""
+    parties    = cells[3] if len(cells) > 3 else ""
+
+    # Only keep civil cases likely related to motivated sellers
+    if not any(k in (case_type + parties).upper() for k in
+               ["FORECLOSURE", "JUDGMENT", "LIEN", "TRUST", "BANK", "PROBATE",
+                "ESTATE", "MORTGAGE", "LEVY", "IRS", "TAX"]):
+        return None
+
+    doc_type = "Civil Case - Foreclosure" if "FORECLO" in case_type.upper() else "Civil Case"
+    if "PROB" in case_type.upper() or "ESTATE" in (parties + case_type).upper():
+        doc_type = "Probate"
+    elif "JUDG" in case_type.upper():
+        doc_type = "Judgment"
+
+    lead = {
+        "id":            f"ocis-{case_num.replace(' ', '')}",
+        "source":        "OCIS Court Cases",
+        "jurisdiction":  jurisdiction,
+        "doc_type":      doc_type,
+        "recorded_date": _parse_date(filed_date),
+        "address":       "",
+        "city":          "",
+        "state":         "VA",
+        "zip":           "",
+        "grantor":       parties,
+        "grantee":       "",
+        "assessed_value": 0,
+        "sale_price":    0,
+        "sale_ratio":    None,
+        "doc_number":    case_num,
+        "parcel_id":     "",
+        "val_code":      case_type,
+        "scraped_at":    datetime.utcnow().isoformat() + "Z",
+    }
+    lead["score"] = score_lead(lead)
+    return lead
+
+
+# ---------------------------------------------------------------------------
+# Enrichment — Richmond City GIS parcel lookup
+# ---------------------------------------------------------------------------
+
+def enrich_with_parcel_data(leads: list[dict]) -> list[dict]:
+    """
+    Enrich leads that have a parcel_id with Richmond City GIS parcel data.
+    Adds address, assessed value, owner name where missing.
+    """
+    rva_leads = [l for l in leads if not l.get("assessed_value") and l.get("parcel_id")
+                 and l.get("jurisdiction") == "Richmond City"]
+    if not rva_leads:
+        return leads
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Mozilla/5.0 Chrome/120", "Accept": "application/json"})
+
+    # Batch lookup (max 100 at a time)
+    ids = list({l["parcel_id"] for l in rva_leads})[:100]
+    parcel_map = {}
+
+    try:
+        ids_escaped = "','".join(ids)
+        r = session.get(
+            f"{RVA_GIS_BASE}/Parcels/FeatureServer/0/query",
+            params={
+                "where": f"PIN IN ('{ids_escaped}')",
+                "outFields": "PIN,OwnerName,AsrLocationBldgNo,LandValue,DwellingValue,TotalValue,LandUse",
+                "f": "json",
+            },
+            timeout=30,
+        )
+        data = r.json()
+        for feat in data.get("features", []):
+            a = feat["attributes"]
+            parcel_map[a.get("PIN", "").strip()] = a
+    except Exception as e:
+        print(f"[Enrich] Parcel lookup error: {e}")
+
+    # Apply enrichment
+    for lead in leads:
+        pid = lead.get("parcel_id", "").strip()
+        if pid in parcel_map:
+            p = parcel_map[pid]
+            if not lead.get("address"):
+                lead["address"] = p.get("AsrLocationBldgNo", "").strip()
+            if not lead.get("assessed_value"):
+                lead["assessed_value"] = p.get("TotalValue", 0)
+            if not lead.get("grantee"):
+                lead["grantee"] = p.get("OwnerName", "").strip()
+            lead["land_use"] = p.get("LandUse", "").strip()
+
+    return leads
+
+
+# ---------------------------------------------------------------------------
+# Export functions
+# ---------------------------------------------------------------------------
+
+def export_json(leads: list[dict]) -> dict:
+    """Write leads to all JSON output paths."""
+    now = datetime.utcnow().isoformat() + "Z"
+
+    # Build summary stats
+    by_jurisdiction = {}
+    by_type = {}
+    for l in leads:
+        j = l.get("jurisdiction", "Unknown")
+        t = l.get("doc_type", "Unknown")
+        by_jurisdiction[j] = by_jurisdiction.get(j, 0) + 1
+        by_type[t] = by_type.get(t, 0) + 1
+
+    output = {
+        "metadata": {
+            "generated": now,
+            "lookback_days": LOOKBACK_DAYS,
+            "total_records": len(leads),
+            "by_jurisdiction": by_jurisdiction,
+            "by_type": by_type,
+            "sources": list({l.get("source", "") for l in leads}),
+        },
+        "records": leads,
+    }
+
+    for path in OUTPUT_JSON:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(output, indent=2, default=str))
+        print(f"[Export] JSON → {path}")
+
+    return output
+
+
+def export_csv_ghl(leads: list[dict]) -> None:
+    """Export leads in Go High Level CRM format."""
+    OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
+
+    GHL_FIELDS = [
+        ("firstName",      lambda l: (l.get("grantee") or "").split()[0] if l.get("grantee") else ""),
+        ("lastName",       lambda l: " ".join((l.get("grantee") or "").split()[1:]) if l.get("grantee") else ""),
+        ("email",          lambda l: ""),
+        ("phone",          lambda l: ""),
+        ("address1",       lambda l: l.get("address", "")),
+        ("city",           lambda l: l.get("city", "")),
+        ("state",          lambda l: l.get("state", "VA")),
+        ("postalCode",     lambda l: l.get("zip", "")),
+        ("companyName",    lambda l: l.get("grantor", "")),
+        ("tags",           lambda l: l.get("doc_type", "")),
+        ("source",         lambda l: l.get("source", "")),
+        ("jurisdiction",   lambda l: l.get("jurisdiction", "")),
+        ("docType",        lambda l: l.get("doc_type", "")),
+        ("recordedDate",   lambda l: l.get("recorded_date", "")),
+        ("docNumber",      lambda l: l.get("doc_number", "")),
+        ("parcelId",       lambda l: l.get("parcel_id", "")),
+        ("assessedValue",  lambda l: l.get("assessed_value", "")),
+        ("salePrice",      lambda l: l.get("sale_price", "")),
+        ("saleRatio",      lambda l: l.get("sale_ratio", "")),
+        ("score",          lambda l: l.get("score", "")),
+        ("scrapedAt",      lambda l: l.get("scraped_at", "")),
+    ]
+
+    with open(OUTPUT_CSV, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[h for h, _ in GHL_FIELDS])
+        writer.writeheader()
+        for lead in leads:
+            writer.writerow({h: fn(lead) for h, fn in GHL_FIELDS})
+
+    print(f"[Export] GHL CSV → {OUTPUT_CSV} ({len(leads)} rows)")
+
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-async def main():
-    print("=" * 60)
-    print("Greater Richmond, VA — Motivated Seller Lead Scraper")
-    print(f"Courts: {', '.join(c['name'] for c in COURTS)}")
-    print(f"Run time: {datetime.utcnow().isoformat()}Z")
-    print("=" * 60)
+async def main() -> None:
+    now_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    print(f"\n{'='*60}")
+    print(f"  Richmond VA Lead Scraper — {now_str}")
+    print(f"  Lookback: {LOOKBACK_DAYS} days")
+    print(f"{'='*60}\n")
 
-    end_dt   = datetime.utcnow().date()
-    start_dt = end_dt - timedelta(days=LOOKBACK_DAYS)
-    start_date, end_date = start_dt.strftime("%Y-%m-%d"), end_dt.strftime("%Y-%m-%d")
-    print(f"Date range: {start_date} → {end_date}  ({LOOKBACK_DAYS} days)\n")
+    all_leads: list[dict] = []
 
-    # 1. Parcel data
-    dbf_path = download_parcel_dbf()
-    if dbf_path:
-        parcel_db.load(dbf_path)
+    # ── Source 1: Richmond City GIS (free REST API, no captcha) ──
+    print("── Source 1: Richmond City GIS ──")
+    gis_leads = scrape_richmond_gis(LOOKBACK_DAYS)
+    all_leads.extend(gis_leads)
 
-    # 2. Scrape
-    print("[phase 1] Scraping all courts (one search per court)...")
-    records = await scrape_all_courts(start_date, end_date)
-    print(f"\nTotal raw records: {len(records)}")
+    surplus_leads = scrape_richmond_surplus()
+    all_leads.extend(surplus_leads)
 
-    # 3. Enrich
-    print("[phase 2] Enriching with parcel data...")
-    enriched = 0
-    for rec in records:
-        p = parcel_db.lookup(rec.get("owner") or "")
-        if p:
-            rec.update(p)
-            enriched += 1
-    print(f"Enriched {enriched}/{len(records)} records")
+    # ── Playwright sources ──
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch(
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-blink-features=AutomationControlled",
+            ],
+        )
+        context = await browser.new_context(
+            viewport={"width": 1280, "height": 800},
+            user_agent=(
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            ),
+            java_script_enabled=True,
+        )
+        page = await context.new_page()
 
-    # 4. Score
-    print("[phase 3] Scoring...")
-    for rec in records:
-        rec["flags"] = compute_flags(rec)
-        rec["score"] = compute_score(rec, rec["flags"])
-
-    records.sort(key=lambda r: r["score"], reverse=True)
-    with_address = sum(1 for r in records if r.get("prop_address") or r.get("mail_address"))
-
-    by_court: dict[str, int] = {}
-    for rec in records:
-        j = rec.get("jurisdiction") or "Unknown"
-        by_court[j] = by_court.get(j, 0) + 1
-
-    # 5. Save
-    payload = {
-        "fetched_at":       datetime.utcnow().isoformat() + "Z",
-        "source":           "Virginia OCIS — Greater Richmond Area",
-        "courts":           [c["name"] for c in COURTS],
-        "date_range":       f"{start_date} to {end_date}",
-        "total":            len(records),
-        "with_address":     with_address,
-        "by_jurisdiction":  by_court,
-        "debug_probe":      DEBUG_LOG,
-        "records":          records,
-    }
-
-    for path in OUTPUT_FILES:
+        # ── Source 2: ACT DataScout (Richmond City land instruments) ──
+        print("\n── Source 2: ACT DataScout (Richmond City) ──")
         try:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
-            print(f"[output] → {path}  ({len(records)} records)")
-        except Exception as exc:
-            print(f"[output] Error {path}: {exc}")
+            actscout_leads = await scrape_actdatascout(page, LOOKBACK_DAYS)
+            all_leads.extend(actscout_leads)
+        except Exception as e:
+            print(f"[ACT DataScout] Failed: {e}")
 
-    csv_path = BASE_OUTPUT_DIR / "data" / "ghl_export.csv"
-    try:
-        csv_path.parent.mkdir(parents=True, exist_ok=True)
-        csv_path.write_text(generate_ghl_csv(records), encoding="utf-8")
-        print(f"[output] → {csv_path}")
-    except Exception as exc:
-        print(f"[output] CSV error: {exc}")
+        # ── Source 3: OCIS Circuit Court Civil Cases ──
+        print("\n── Source 3: OCIS Circuit Court Cases ──")
+        try:
+            await page.goto("about:blank")
+            ocis_leads = await scrape_ocis(page, COURTS, LOOKBACK_DAYS)
+            all_leads.extend(ocis_leads)
+        except Exception as e:
+            print(f"[OCIS] Failed: {e}")
 
-    # 6. Summary
-    print("\n" + "=" * 60)
-    print("SUMMARY")
-    print(f"  Date range:       {start_date} → {end_date}")
-    print(f"  Total leads:      {len(records)}")
-    print(f"  With address:     {with_address}")
-    print(f"  High score ≥70:   {sum(1 for r in records if r.get('score', 0) >= 70)}")
-    print(f"\n  By jurisdiction:")
-    for name, cnt in sorted(by_court.items(), key=lambda x: -x[1]):
-        print(f"    {name:<26} {cnt}")
-    if records:
-        t = records[0]
-        print(f"\n  Top lead: {t.get('owner')} | score={t.get('score')} | {t.get('cat_label')} | {t.get('jurisdiction')}")
-    print("=" * 60)
+        await context.close()
+        await browser.close()
+
+    # ── Enrich ──
+    print(f"\n── Enriching {len(all_leads)} leads ──")
+    all_leads = enrich_with_parcel_data(all_leads)
+
+    # ── Deduplicate ──
+    seen_ids = set()
+    unique_leads = []
+    for lead in all_leads:
+        lid = lead.get("id", "")
+        if lid and lid not in seen_ids:
+            seen_ids.add(lid)
+            unique_leads.append(lead)
+
+    # ── Sort by score desc, then date desc ──
+    unique_leads.sort(
+        key=lambda l: (-(l.get("score") or 0), l.get("recorded_date") or ""),
+        reverse=False,
+    )
+
+    # ── Export ──
+    print(f"\n── Exporting {len(unique_leads)} unique leads ──")
+    export_json(unique_leads)
+    export_csv_ghl(unique_leads)
+
+    print(f"\n{'='*60}")
+    print(f"  Done. {len(unique_leads)} total leads exported.")
+    print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":
