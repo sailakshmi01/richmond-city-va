@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       lookback_days:
-        description: "Look-back window in days (default: 30). GIS data is annual; OCIS/ACT DataScout search this window."
+        description: "Look-back window in days (default: 30). Controls Henrico CAMA date filter."
         required: false
         default: "30"
 
@@ -24,7 +24,7 @@ jobs:
   scrape:
     name: Scrape & Update Records
     runs-on: ubuntu-22.04
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -43,9 +43,6 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r scraper/requirements.txt
-
-      - name: Install Playwright Chromium (with system dependencies)
-        run: python -m playwright install --with-deps chromium
 
       - name: Create output directories
         run: mkdir -p data dashboard
