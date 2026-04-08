@@ -38,6 +38,15 @@ OUTPUT_FILES = [
 VIRGINIA_OCIS_BASE = "https://eapps.courts.state.va.us/ocis"
 VA_OCIS_API        = "https://eapps.courts.state.va.us/api"
 
+# All known Virginia land records entry points (tried in order)
+VA_LAND_RECORD_URLS = [
+    "https://eapps.courts.state.va.us/ocis/landRecordSearch",
+    "https://eapps.courts.state.va.us/landRecordSearch",
+    "https://lrims.courts.state.va.us/",
+    "https://publicaccess.courts.state.va.us/",
+    "https://eapps.courts.state.va.us/caseSearch/landRecords",
+]
+
 # Per-search timeouts (seconds)
 PAGE_LOAD_TIMEOUT   = 30_000   # 30s
 NETWORK_TIMEOUT     = 15_000   # 15s
@@ -214,72 +223,178 @@ def compute_score(rec: dict, flags: list[str]) -> int:
 # Playwright — one search per court, filter locally
 # ---------------------------------------------------------------------------
 
-async def search_court(page: Page, court: dict, start_date: str, end_date: str) -> list[dict]:
+async def probe_land_records_url(page: Page) -> str:
+    """Find the first working Virginia land records URL. Saves debug HTML."""
+    debug_dir = BASE_OUTPUT_DIR / "data"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+
+    for url in VA_LAND_RECORD_URLS:
+        try:
+            print(f"  [probe] Trying: {url}")
+            resp = await page.goto(url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+            if resp and resp.status < 400:
+                content = await page.content()
+                soup    = BeautifulSoup(content, "lxml")
+
+                # Save first successful page for debugging
+                debug_path = debug_dir / "debug_portal.html"
+                try:
+                    debug_path.write_text(content, encoding="utf-8")
+                except Exception:
+                    pass
+
+                # Log all form elements so we know the real field names
+                forms = soup.find_all("form")
+                for fi, form in enumerate(forms):
+                    print(f"  [probe] Form {fi}: action={form.get('action')} method={form.get('method')}")
+                    for el in form.find_all(["input", "select", "textarea"]):
+                        name = el.get("name") or el.get("id") or "(no name)"
+                        etype = el.get("type") or el.name
+                        print(f"           field: {etype} name={name}")
+
+                # Also log any selects with options
+                for sel in soup.find_all("select"):
+                    opts = [o.get("value","") + "=" + o.get_text(strip=True) for o in sel.find_all("option")[:5]]
+                    print(f"  [probe] <select name={sel.get('name')} id={sel.get('id')}> options: {opts}")
+
+                if forms or soup.find("table"):
+                    print(f"  [probe] SUCCESS: {url}")
+                    return url
+        except Exception as exc:
+            print(f"  [probe] Failed {url}: {exc}")
+
+    return VA_LAND_RECORD_URLS[0]  # fall back to first URL
+
+
+async def search_court(page: Page, court: dict, start_date: str, end_date: str,
+                       base_url: str) -> list[dict]:
     """
-    Search the Virginia OCIS portal for ALL records in the date range for one court.
-    No doc-type filter — we filter locally after parsing.
+    Search the Virginia land records portal for all records in the date range
+    for one court. Auto-detects form field names from the live page.
     """
     court_id   = court["id"]
     court_name = court["name"]
     records    = []
 
     try:
-        # Navigate
-        url = f"{VIRGINIA_OCIS_BASE}/landRecordSearch"
-        await page.goto(url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
-        await page.wait_for_load_state("load", timeout=PAGE_LOAD_TIMEOUT)
+        await page.goto(base_url, timeout=PAGE_LOAD_TIMEOUT, wait_until="domcontentloaded")
+        try:
+            await page.wait_for_load_state("load", timeout=PAGE_LOAD_TIMEOUT)
+        except PlaywrightTimeout:
+            pass
 
-        # Select court by value or label
-        for sel in ['select[name="courtId"]', 'select[name="court"]', '#courtSelect', '#court']:
-            try:
-                await page.select_option(sel, value=court_id, timeout=ELEMENT_TIMEOUT)
+        content = await page.content()
+        soup    = BeautifulSoup(content, "lxml")
+
+        # --- Auto-detect field names from the live HTML ---
+        court_sel_name  = None
+        start_field     = None
+        end_field       = None
+
+        for sel_tag in soup.find_all("select"):
+            n = sel_tag.get("name") or sel_tag.get("id") or ""
+            opts_vals = [o.get("value","") for o in sel_tag.find_all("option")]
+            if court_id in opts_vals or any(c["id"] in opts_vals for c in COURTS):
+                court_sel_name = n
+                print(f"  [detect] Court select: name={n}")
                 break
+            if any(k in n.lower() for k in ["court", "jurisdiction", "fips"]):
+                court_sel_name = n
+                print(f"  [detect] Court select (by name): name={n}")
+
+        for inp in soup.find_all("input"):
+            n = (inp.get("name") or inp.get("id") or "").lower()
+            if not start_field and any(k in n for k in ["startdate","start_date","datefrom","from","begindate","filed_from"]):
+                start_field = inp.get("name") or inp.get("id")
+                print(f"  [detect] Start date field: {start_field}")
+            if not end_field and any(k in n for k in ["enddate","end_date","dateto","to","enddt","filed_to"]):
+                end_field = inp.get("name") or inp.get("id")
+                print(f"  [detect] End date field: {end_field}")
+
+        # --- Fill the form ---
+        if court_sel_name:
+            try:
+                await page.select_option(f'[name="{court_sel_name}"]', value=court_id, timeout=ELEMENT_TIMEOUT)
             except Exception:
                 try:
-                    await page.select_option(sel, label=court_name, timeout=ELEMENT_TIMEOUT)
+                    await page.select_option(f'[name="{court_sel_name}"]', label=court_name, timeout=ELEMENT_TIMEOUT)
+                except Exception as e:
+                    print(f"  [warn] Could not select court: {e}")
+        else:
+            # Try common selectors
+            for sel in ['select[name="courtId"]', 'select[name="court"]', '#courtSelect',
+                        '#court', 'select[name="fipsCode"]', 'select[name="selectedCourt"]']:
+                try:
+                    await page.select_option(sel, value=court_id, timeout=ELEMENT_TIMEOUT)
+                    print(f"  [fallback] Used court selector: {sel}")
+                    break
+                except Exception:
+                    try:
+                        await page.select_option(sel, label=court_name, timeout=ELEMENT_TIMEOUT)
+                        print(f"  [fallback] Used court selector by label: {sel}")
+                        break
+                    except Exception:
+                        continue
+
+        date_fmt = "%m/%d/%Y"  # Most Virginia portals use MM/DD/YYYY
+        start_str = datetime.strptime(start_date, "%Y-%m-%d").strftime(date_fmt)
+        end_str   = datetime.strptime(end_date,   "%Y-%m-%d").strftime(date_fmt)
+
+        if start_field:
+            await page.fill(f'[name="{start_field}"], #{start_field}', start_str, timeout=ELEMENT_TIMEOUT)
+        else:
+            for sel in ['input[name="startDate"]', 'input[name="dateFrom"]', '#startDate',
+                        '#dateFrom', 'input[name="instrumentDateFrom"]', 'input[name="fromDate"]']:
+                try:
+                    await page.fill(sel, start_str, timeout=ELEMENT_TIMEOUT)
                     break
                 except Exception:
                     continue
 
-        # Date range only — no doc type — returns all instrument types
-        for sel in ['input[name="startDate"]', 'input[name="dateFrom"]', '#startDate', '#dateFrom']:
-            try:
-                await page.fill(sel, start_date, timeout=ELEMENT_TIMEOUT)
-                break
-            except Exception:
-                continue
+        if end_field:
+            await page.fill(f'[name="{end_field}"], #{end_field}', end_str, timeout=ELEMENT_TIMEOUT)
+        else:
+            for sel in ['input[name="endDate"]', 'input[name="dateTo"]', '#endDate',
+                        '#dateTo', 'input[name="instrumentDateTo"]', 'input[name="toDate"]']:
+                try:
+                    await page.fill(sel, end_str, timeout=ELEMENT_TIMEOUT)
+                    break
+                except Exception:
+                    continue
 
-        for sel in ['input[name="endDate"]', 'input[name="dateTo"]', '#endDate', '#dateTo']:
-            try:
-                await page.fill(sel, end_date, timeout=ELEMENT_TIMEOUT)
-                break
-            except Exception:
-                continue
-
-        # Submit
-        for sel in ['button[type="submit"]', 'input[type="submit"]', '#searchBtn', '#search']:
+        # --- Submit ---
+        for sel in ['button[type="submit"]', 'input[type="submit"]', '#searchBtn',
+                    '#btnSearch', '#search', 'button:has-text("Search")', 'a:has-text("Search")']:
             try:
                 await page.click(sel, timeout=ELEMENT_TIMEOUT)
+                print(f"  [submit] Clicked: {sel}")
                 break
             except Exception:
                 continue
 
-        # Wait for results — use load instead of networkidle to avoid hanging
         try:
             await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
         except PlaywrightTimeout:
-            pass  # proceed and parse whatever is on the page
+            pass
 
-        # Paginate through all result pages
+        # Save post-search HTML for debugging
+        post_content = await page.content()
+        debug_path   = BASE_OUTPUT_DIR / "data" / f"debug_{court_id}_results.html"
+        try:
+            debug_path.write_text(post_content, encoding="utf-8")
+        except Exception:
+            pass
+
+        # --- Paginate and parse ---
         while True:
-            page_records = await parse_results_page(page, court)
-            records.extend(page_records)
+            recs = await parse_results_page(page, court)
+            records.extend(recs)
+            print(f"  [page] +{len(recs)} records (total {len(records)})")
 
-            # Try to go to next page
             try:
-                next_btn = await page.query_selector('a:has-text("Next"), button:has-text("Next"), [aria-label="Next page"]')
-                if next_btn and await next_btn.is_visible():
-                    await next_btn.click(timeout=ELEMENT_TIMEOUT)
+                nxt = await page.query_selector('a:has-text("Next"), button:has-text("Next"), [aria-label="Next page"]')
+                if nxt and await nxt.is_visible():
+                    await nxt.click(timeout=ELEMENT_TIMEOUT)
                     try:
                         await page.wait_for_load_state("load", timeout=NETWORK_TIMEOUT)
                     except PlaywrightTimeout:
@@ -393,14 +508,21 @@ async def scrape_all_courts(start_date: str, end_date: str) -> list[dict]:
             viewport={"width": 1280, "height": 800},
         )
 
+        # Step 1: Probe for the correct URL (once)
+        probe_page = await context.new_page()
+        print("[probe] Finding working Virginia land records URL...")
+        base_url = await probe_land_records_url(probe_page)
+        await probe_page.close()
+        print(f"[probe] Using: {base_url}\n")
+
+        # Step 2: Search each court
         for court in COURTS:
             print(f"\n[court] {court['name']}  (ID: {court['id']})")
 
             page = await context.new_page()
             try:
-                # Hard timeout per court
                 recs = await asyncio.wait_for(
-                    search_court(page, court, start_date, end_date),
+                    search_court(page, court, start_date, end_date, base_url),
                     timeout=PER_COURT_TIMEOUT,
                 )
             except asyncio.TimeoutError:
@@ -422,11 +544,11 @@ async def scrape_all_courts(start_date: str, end_date: str) -> list[dict]:
 
             print(f"  → {new_count} new records")
 
-            # Fallback HTTP fetch for this court
+            # HTTP fallback
             http_recs = fetch_court_http(court, start_date, end_date, seen)
             all_records.extend(http_recs)
             if http_recs:
-                print(f"  → {len(http_recs)} additional records via HTTP fallback")
+                print(f"  → {len(http_recs)} additional via HTTP fallback")
 
         await context.close()
         await browser.close()
