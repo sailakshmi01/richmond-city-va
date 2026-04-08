@@ -1,0 +1,62 @@
+name: Richmond City VA — Motivated Seller Scraper
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "Number of days to look back (default: 7)"
+        required: false
+        default: "7"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: scraper
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    name: Scrape & Update Records
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: scraper/requirements.txt
+      - run: pip install --upgrade pip && pip install requests beautifulsoup4 lxml dbfread playwright
+      - run: python -m playwright install --with-deps chromium
+      - env:
+          LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
+        run: python scraper/fetch.py
+      - run: mkdir -p data dashboard
+      - run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add dashboard/records.json data/records.json data/ghl_export.csv || true
+          git diff --staged --quiet || git commit -m "chore: update records $(date -u '+%Y-%m-%d %H:%M') UTC" && git push
+
+  deploy-dashboard:
+    name: Deploy Dashboard to GitHub Pages
+    needs: scrape
+    runs-on: ubuntu-22.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, fetch-depth: 1 }
+      - run: git pull --rebase origin main || true
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dashboard/ }
+      - id: deployment
+        uses: actions/deploy-pages@v4
