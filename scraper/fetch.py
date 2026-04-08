@@ -419,7 +419,6 @@ async def _ocis_search_court_via_api(
                 }
                 """,
                 [f"{OCIS_REST_BASE}/search", payload],
-                timeout=API_TIMEOUT,
             )
 
             if result.get("_error"):
