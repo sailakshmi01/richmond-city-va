@@ -24,39 +24,76 @@ jobs:
     name: Scrape & Update Records
     runs-on: ubuntu-22.04
     timeout-minutes: 60
+
     steps:
-      - uses: actions/checkout@v4
-        with: { fetch-depth: 1 }
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
           cache-dependency-path: scraper/requirements.txt
-      - run: pip install --upgrade pip && pip install requests beautifulsoup4 lxml dbfread playwright
-      - run: python -m playwright install --with-deps chromium
-      - env:
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests beautifulsoup4 lxml dbfread playwright
+
+      - name: Install Playwright Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run scraper
+        env:
           LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
         run: python scraper/fetch.py
-      - run: mkdir -p data dashboard
-      - run: |
+
+      - name: Create directories if missing
+        run: mkdir -p data dashboard
+
+      - name: Commit and push updated records
+        run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add dashboard/records.json data/records.json data/ghl_export.csv || true
-          git diff --staged --quiet || git commit -m "chore: update records $(date -u '+%Y-%m-%d %H:%M') UTC" && git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update records $(date -u '+%Y-%m-%d %H:%M') UTC"
+            git push
+          fi
 
   deploy-dashboard:
     name: Deploy Dashboard to GitHub Pages
     needs: scrape
     runs-on: ubuntu-22.04
+    if: success()
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v4
-        with: { ref: main, fetch-depth: 1 }
-      - run: git pull --rebase origin main || true
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: dashboard/ }
-      - id: deployment
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Pull latest changes
+        run: git pull --rebase origin main || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload dashboard artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
