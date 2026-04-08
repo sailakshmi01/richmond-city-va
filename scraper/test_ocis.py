@@ -1,41 +1,29 @@
 """
-OCIS scraper test v2 — intercepts real Angular network requests to learn the
-exact API payload format, then replays searches for motivated-seller lead types.
+OCIS scraper test v3 — fully interacts with Angular form to capture the exact
+search payload the app sends, then replays it programmatically.
 
 Usage: python scraper/test_ocis.py
 """
 
 import asyncio
 import json
-import sys
 from datetime import datetime
 from pathlib import Path
+import sys
 
 sys.path.insert(0, str(Path(__file__).parent))
-
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeout
 
 OCIS_BASE      = "https://eapps.courts.state.va.us/ocis"
 OCIS_REST_BASE = "https://eapps.courts.state.va.us/ocis-rest/api/public"
 
-TEST_COURTS = [
-    {"fips": "760", "ocis_id": "760C", "name": "Richmond City",      "city": "Richmond"},
-    {"fips": "087", "ocis_id": "087C", "name": "Henrico County",      "city": "Henrico"},
-    {"fips": "041", "ocis_id": "041C", "name": "Chesterfield County", "city": "Chesterfield"},
-    {"fips": "085", "ocis_id": "085C", "name": "Hanover County",      "city": "Hanover"},
-    {"fips": "075", "ocis_id": "075C", "name": "Goochland County",    "city": "Goochland"},
-]
-
-# Searches for motivated sellers
-TEST_SEARCHES = ["TRUSTEE", "BANK", "INTERNAL REVENUE", "PENNYMAC", "NEWREZ"]
-
 
 async def test_ocis():
     print(f"\n{'='*60}")
-    print(f"  OCIS Playwright Test v2 — {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
+    print(f"  OCIS Test v3 — {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}")
     print(f"{'='*60}\n")
 
-    captured_requests = []
+    captured = []   # all OCIS REST API calls intercepted
 
     async with async_playwright() as pw:
         browser = await pw.chromium.launch(
@@ -53,194 +41,245 @@ async def test_ocis():
         )
         page = await context.new_page()
 
-        # ── Intercept all OCIS REST requests ─────────────────────────────────
-        async def capture_request(request):
-            if "ocis-rest" in request.url:
-                try:
-                    body = request.post_data or ""
-                    captured_requests.append({
-                        "url":     request.url,
-                        "method":  request.method,
-                        "body":    body,
-                        "headers": dict(request.headers),
-                    })
-                    print(f"  [INTERCEPT] {request.method} {request.url.split('/')[-1]}")
-                    if body:
-                        print(f"    Payload: {body[:300]}")
-                except Exception as e:
-                    print(f"  [INTERCEPT ERROR] {e}")
+        # ── Intercept every OCIS REST call ────────────────────────────────────
+        async def on_request(req):
+            if "ocis-rest" in req.url:
+                body = req.post_data or ""
+                captured.append({"url": req.url, "method": req.method, "body": body})
+                short = req.url.split("/")[-1]
+                print(f"[REQ] {req.method} {short}  body={body[:200] or '(none)'}")
 
-        async def capture_response(response):
-            if "ocis-rest/api/public/search" in response.url:
+        async def on_response(resp):
+            if "ocis-rest/api/public/search" in resp.url:
                 try:
-                    body = await response.text()
-                    print(f"  [RESPONSE] {response.status} — {body[:500]}")
+                    body = await resp.text()
+                    print(f"[RESP] {resp.status} {body[:600]}")
                 except Exception:
                     pass
 
-        page.on("request", capture_request)
-        page.on("response", capture_response)
+        page.on("request",  on_request)
+        page.on("response", on_response)
 
-        # ── Step 1: Accept terms ──────────────────────────────────────────────
-        print("Step 1: Loading OCIS landing page and accepting terms…")
+        # ── Step 1: Load & accept terms ───────────────────────────────────────
+        print("── Step 1: Accept terms ──")
         await page.goto(f"{OCIS_BASE}/landing", wait_until="domcontentloaded", timeout=45000)
         await page.wait_for_function(
             "document.querySelector('app-root') && document.querySelector('app-root').children.length > 0",
             timeout=20000,
         )
         await page.wait_for_timeout(2000)
-
-        btn = await page.wait_for_selector("#acceptTerms", timeout=10000, state="visible")
-        await btn.click()
-        print(f"  ✅ Clicked #acceptTerms")
-
+        await (await page.wait_for_selector("#acceptTerms", timeout=10000)).click()
+        print("  ✅ Clicked #acceptTerms")
         await page.wait_for_timeout(3000)
         await page.wait_for_load_state("networkidle", timeout=20000)
-        print(f"  URL after terms: {page.url}")
+        print(f"  URL: {page.url}")
 
-        await page.screenshot(path="/tmp/ocis_test_01_search.png")
+        # ── Step 2: Dump full page HTML to understand Angular DOM ─────────────
+        print("\n── Step 2: Dump entire search page DOM ──")
+        html = await page.content()
+        # Write to a file so we can see everything
+        Path("/tmp/ocis_search_dom.html").write_text(html)
+        print(f"  DOM written to /tmp/ocis_search_dom.html ({len(html)} bytes)")
 
-        # ── Step 2: Inspect the search page form ──────────────────────────────
-        print("\nStep 2: Inspecting search form elements…")
-        form_elements = await page.evaluate("""
+        # Find ALL input elements including hidden
+        all_inputs = await page.evaluate("""
             () => {
                 const result = [];
-                // Find all inputs, selects, buttons
-                document.querySelectorAll('input, select, button, [role="combobox"], [role="listbox"]').forEach(el => {
+                document.querySelectorAll('input, textarea').forEach(el => {
                     result.push({
-                        tag:   el.tagName,
-                        id:    el.id || '',
-                        name:  el.name || el.getAttribute('name') || '',
-                        type:  el.type || '',
-                        class: el.className.substring(0, 60),
-                        text:  (el.textContent || el.value || '').trim().substring(0, 50),
-                        role:  el.getAttribute('role') || '',
+                        id:          el.id || '',
+                        name:        el.name || '',
+                        type:        el.type || '',
+                        placeholder: el.placeholder || '',
+                        value:       el.value || '',
+                        hidden:      el.hidden,
+                        display:     window.getComputedStyle(el).display,
+                        visibility:  window.getComputedStyle(el).visibility,
+                        ariaLabel:   el.getAttribute('aria-label') || '',
+                        ngModel:     el.getAttribute('ng-reflect-model') || '',
                     });
                 });
                 return result;
             }
         """)
-        for el in form_elements[:30]:
-            print(f"  <{el['tag'].lower()}> id={el['id']!r} name={el['name']!r} type={el['type']!r} text={el['text']!r}")
+        print(f"\n  All inputs ({len(all_inputs)}):")
+        for el in all_inputs:
+            print(f"    id={el['id']!r} name={el['name']!r} type={el['type']!r} "
+                  f"ph={el['placeholder']!r} val={el['value']!r} "
+                  f"display={el['display']!r} aria={el['ariaLabel']!r} ngModel={el['ngModel']!r}")
 
-        # ── Step 3: Try to interact with the form ─────────────────────────────
-        print("\nStep 3: Interacting with search form…")
+        # ── Step 3: Try to interact with Angular form & trigger real search ────
+        print("\n── Step 3: Interact with Angular form ──")
 
-        # Find and fill the search input
-        search_filled = False
+        # The Angular search form uses custom components. Try the name input via
+        # Angular binding or by looking at the text node near the search field.
+        search_text = "TRUSTEE"
+
+        # Strategy A: Look for the input inside the search-by section
         for selector in [
-            "input[id*='search' i]", "input[placeholder*='name' i]",
-            "input[placeholder*='search' i]", "input[type='text']",
-            "#searchInput", "#nameSearch", ".search-input input",
+            "#searchString0",          # likely Angular model binding
+            "#nameField",
+            "#searchField",
+            "input[ng-reflect-model]", # Angular ng-model bound inputs
+            "input[formcontrolname]",  # Angular reactive form
+            "app-search input[type='text']",
+            "app-search-criteria input[type='text']",
+            ".search-input",
+            "#content input[type='text']",
         ]:
-            try:
-                el = await page.query_selector(selector)
-                if el and await el.is_visible():
-                    await el.fill("TRUSTEE")
-                    print(f"  ✅ Filled search input via: {selector}")
-                    search_filled = True
+            el = await page.query_selector(selector)
+            if el:
+                vis = await el.is_visible()
+                print(f"  Found selector {selector!r} visible={vis}")
+                if vis:
+                    await el.fill(search_text)
+                    print(f"  ✅ Filled via {selector!r}")
                     break
-            except Exception:
-                continue
 
-        if not search_filled:
-            print("  ⚠️  Could not find search input — trying Angular component approach")
-            # Try clicking a court level first
-            try:
-                # Look for court level selector
-                court_level_els = await page.query_selector_all("[id*='courtLevel' i], [id*='court-level' i]")
-                print(f"  Court level elements found: {len(court_level_els)}")
-            except Exception as e:
-                print(f"  Error: {e}")
+        # Strategy B: Use keyboard — Tab through to find the search field
+        # First click the search area to focus
+        try:
+            await page.click("#searchCriteriaContentDesktop")
+            await page.wait_for_timeout(500)
+            # Get all visible inputs after clicking
+            visible_inputs = await page.evaluate("""
+                () => {
+                    const result = [];
+                    document.querySelectorAll('input[type="text"], input:not([type])').forEach(el => {
+                        const style = window.getComputedStyle(el);
+                        if (style.display !== 'none' && style.visibility !== 'hidden' && el.offsetParent !== null) {
+                            result.push({
+                                id: el.id || '', placeholder: el.placeholder || '',
+                                value: el.value || '', className: el.className.substring(0, 40)
+                            });
+                        }
+                    });
+                    return result;
+                }
+            """)
+            print(f"  Visible text inputs after clicking search area: {visible_inputs}")
+        except Exception as e:
+            print(f"  Strategy B error: {e}")
 
-        # Look for search button and click
-        await page.wait_for_timeout(1000)
-        search_clicked = False
-        for selector in [
-            "button:has-text('Search')", "input[type='submit']",
-            "button[type='submit']", "#searchBtn", "[id*='search' i][type='button']",
-        ]:
-            try:
-                btn = await page.query_selector(selector)
-                if btn and await btn.is_visible():
-                    await btn.click()
-                    print(f"  ✅ Clicked search via: {selector}")
-                    search_clicked = True
-                    break
-            except Exception:
-                continue
-
-        if search_clicked:
-            await page.wait_for_timeout(5000)
-            await page.screenshot(path="/tmp/ocis_test_02_results.png")
-
-        # ── Step 4: Test payload variations directly ──────────────────────────
-        print("\nStep 4: Testing payload variations via page.evaluate()…")
-
-        PAYLOAD_VARIANTS = [
-            # Minimal — just search string
-            {"searchBy": "Name", "searchString": ["BANK"]},
-            # With divisions default
-            {"searchBy": "Name", "searchString": ["BANK"], "divisions": ["Adult Criminal/Traffic"]},
-            # With all courts
-            {"searchBy": "Name", "searchString": ["BANK"], "selectedCourts": ["All"], "divisions": ["All"]},
-            # Single court, no divisions
-            {"searchBy": "Name", "searchString": ["BANK"], "selectedCourts": ["760C"]},
-            # Circuit only
-            {"courtLevels": ["C"], "searchBy": "Name", "searchString": ["BANK"]},
-            # Criminal division (the default)
-            {"courtLevels": ["C"], "selectedCourts": ["760C"], "searchBy": "Name",
-             "searchString": ["BANK"], "divisions": ["Adult Criminal/Traffic"]},
-            # Case number search
-            {"searchBy": "Case Number", "searchString": ["CL24"], "selectedCourts": ["760C"]},
-        ]
-
-        for i, payload in enumerate(PAYLOAD_VARIANTS):
-            try:
-                result = await page.evaluate(
-                    """
-                    async (args) => {
-                        const [url, payload] = args;
-                        const resp = await fetch(url, {
-                            method: "POST",
-                            headers: {"Content-Type": "application/json", "Accept": "application/json"},
-                            body: JSON.stringify(payload),
-                            credentials: "include",
+        # Strategy C: Use JavaScript to find and set the Angular component value
+        try:
+            result = await page.evaluate("""
+                () => {
+                    // Try to find Angular's ng-model bound inputs
+                    const inputs = Array.from(document.querySelectorAll('input'));
+                    const info = [];
+                    for (const inp of inputs) {
+                        // Check for Angular internal properties
+                        const keys = Object.keys(inp).filter(k => k.startsWith('__ngContext') || k.startsWith('_ng'));
+                        info.push({
+                            id: inp.id, type: inp.type,
+                            placeholder: inp.placeholder,
+                            hasNgContext: keys.length > 0,
+                            parentId: inp.parentElement ? inp.parentElement.id : ''
                         });
-                        const text = await resp.text();
-                        try { return { status: resp.status, data: JSON.parse(text) }; }
-                        catch { return { status: resp.status, raw: text.slice(0, 300) }; }
                     }
-                    """,
-                    [f"{OCIS_REST_BASE}/search", payload],
-                )
-                data   = result.get("data", {})
-                entity = data.get("context", {}).get("entity", data.get("entity", {}))
-                api_status = entity.get("status") if isinstance(entity, dict) else "?"
-                msgs = [m.get("messageCode") for m in (entity.get("messages", []) if isinstance(entity, dict) else [])]
-                print(f"\n  Variant {i+1}: {json.dumps(payload)}")
-                print(f"    → HTTP {result.get('status')} | API: {api_status} | msgs: {msgs}")
-                if api_status == "SUCCESS":
-                    p = entity.get("payload")
-                    print(f"    ✅ SUCCESS! Payload type: {type(p).__name__}")
-                    print(f"    Payload sample: {json.dumps(p, default=str)[:800]}")
-            except Exception as e:
-                print(f"  Variant {i+1} ERROR: {e}")
+                    return info;
+                }
+            """)
+            print(f"\n  Angular context inputs:")
+            for inp in result:
+                if inp['hasNgContext']:
+                    print(f"    ✅ id={inp['id']!r} ph={inp['placeholder']!r} parent={inp['parentId']!r}")
+        except Exception as e:
+            print(f"  Strategy C error: {e}")
 
-        # ── Step 5: Show captured intercepted requests ─────────────────────────
-        print(f"\nStep 5: Captured {len(captured_requests)} OCIS REST requests during session:")
-        for req in captured_requests:
-            print(f"  {req['method']} {req['url']}")
+        # ── Step 4: Try clicking Search All to trigger a search ───────────────
+        print("\n── Step 4: Click 'Search All' button ──")
+        for selector in ["#searchAllCourt", "button:has-text('Search All')",
+                         "button:has-text('Search')", "#btnSearch"]:
+            btn = await page.query_selector(selector)
+            if btn and await btn.is_visible():
+                print(f"  Clicking {selector!r}…")
+                await btn.click()
+                await page.wait_for_timeout(4000)
+                print(f"  URL after click: {page.url}")
+                break
+
+        await page.screenshot(path="/tmp/ocis_test_03_after_search.png")
+
+        # ── Step 5: Try directly calling getCourtsCodeDetails to understand format ──
+        print("\n── Step 5: Inspect getCourtsCodeDetails ──")
+        courts_result = await page.evaluate("""
+            async () => {
+                const r = await fetch('/ocis-rest/api/public/getCourtsCodeDetails',
+                    {credentials: 'include'});
+                const text = await r.text();
+                try { return JSON.parse(text); } catch { return {raw: text.slice(0, 1000)}; }
+            }
+        """)
+        courts_json = json.dumps(courts_result, default=str)
+        print(f"  getCourtsCodeDetails response ({len(courts_json)} chars):")
+        # Just print the first part showing court structure
+        if isinstance(courts_result, dict):
+            entity = courts_result.get("context", {}).get("entity", courts_result)
+            payload = entity.get("payload") if isinstance(entity, dict) else None
+            if isinstance(payload, list) and payload:
+                print(f"  Total courts: {len(payload)}")
+                # Find our 5 courts
+                our_fips = ["760", "087", "041", "085", "075"]
+                for court in payload:
+                    fc = str(court.get("fipsCode", court.get("fipsCode4", "")))
+                    if any(f in fc for f in our_fips):
+                        print(f"    {json.dumps(court)}")
+            else:
+                print(f"  Raw: {courts_json[:800]}")
+
+        # ── Step 6: Inspect getUIConfig for valid division names ──────────────
+        print("\n── Step 6: Inspect getUIConfig ──")
+        ui_result = await page.evaluate("""
+            async () => {
+                const r = await fetch('/ocis-rest/api/public/getUIConfig',
+                    {credentials: 'include'});
+                const text = await r.text();
+                try { return JSON.parse(text); } catch { return {raw: text.slice(0, 1000)}; }
+            }
+        """)
+        ui_json = json.dumps(ui_result, default=str)
+        print(f"  getUIConfig ({len(ui_json)} chars):")
+        if isinstance(ui_result, dict):
+            entity = ui_result.get("context", {}).get("entity", ui_result)
+            payload = entity.get("payload") if isinstance(entity, dict) else None
+            print(f"  Payload keys: {list(payload.keys()) if isinstance(payload, dict) else type(payload).__name__}")
+            if isinstance(payload, dict):
+                print(f"  Full payload: {json.dumps(payload, default=str)[:2000]}")
+
+        # ── Step 7: Try getLookupCodeDetails for division codes ───────────────
+        print("\n── Step 7: getLookupCodeDetails ──")
+        lookup_result = await page.evaluate("""
+            async () => {
+                const r = await fetch('/ocis-rest/api/public/getLookupCodeDetails',
+                    {credentials: 'include'});
+                const text = await r.text();
+                try { return JSON.parse(text); } catch { return {raw: text.slice(0, 1000)}; }
+            }
+        """)
+        if isinstance(lookup_result, dict):
+            entity = lookup_result.get("context", {}).get("entity", lookup_result)
+            payload = entity.get("payload") if isinstance(entity, dict) else None
+            if isinstance(payload, dict):
+                # Show division-related keys
+                for key in payload:
+                    if "div" in key.lower() or "type" in key.lower():
+                        print(f"  [{key}]: {json.dumps(payload[key])[:300]}")
+            print(f"  Full lookup keys: {list(payload.keys()) if isinstance(payload, dict) else 'n/a'}")
+
+        # ── Step 8: Summary of intercepted requests ───────────────────────────
+        print(f"\n── Step 8: All {len(captured)} captured OCIS requests ──")
+        for req in captured:
+            print(f"  {req['method']} {req['url'].split('/')[-1]}")
             if req['body']:
-                print(f"    Body: {req['body'][:400]}")
+                print(f"    → {req['body'][:300]}")
 
         await page.close()
         await context.close()
         await browser.close()
 
-    print(f"\n{'='*60}")
-    print("  Test complete. See /tmp/ocis_test_*.png for screenshots.")
-    print(f"{'='*60}\n")
+    print(f"\n{'='*60}  Done  {'='*60}\n")
 
 
 if __name__ == "__main__":
