@@ -1,14 +1,15 @@
-name: Richmond City VA — Motivated Seller Scraper
+name: Greater Richmond VA — Motivated Seller Lead Scraper
 
 on:
   schedule:
+    # Run daily at 7:00 AM UTC (3:00 AM ET)
     - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       lookback_days:
-        description: "Number of days to look back (default: 7)"
+        description: "Look-back window in days (default: 30). GIS data is annual; OCIS/ACT DataScout search this window."
         required: false
-        default: "7"
+        default: "30"
 
 permissions:
   contents: write
@@ -41,28 +42,54 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
-          pip install requests beautifulsoup4 lxml dbfread playwright
+          pip install -r scraper/requirements.txt
 
-      - name: Install Playwright Chromium
+      - name: Install Playwright Chromium (with system dependencies)
         run: python -m playwright install --with-deps chromium
+
+      - name: Create output directories
+        run: mkdir -p data dashboard
 
       - name: Run scraper
         env:
-          LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '7' }}
+          LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '30' }}
         run: python scraper/fetch.py
 
-      - name: Create directories if missing
-        run: mkdir -p data dashboard
+      - name: Verify output files
+        run: |
+          echo "=== dashboard/records.json ==="
+          if [ -f dashboard/records.json ]; then
+            python3 -c "
+          import json
+          d = json.load(open('dashboard/records.json'))
+          m = d.get('metadata', {})
+          print(f'Total: {m.get(\"total_records\", 0)}')
+          print(f'Sources: {m.get(\"sources\", [])}')
+          print(f'By type: {m.get(\"by_type\", {})}')
+          print(f'By jurisdiction: {m.get(\"by_jurisdiction\", {})}')
+          "
+          else
+            echo "WARNING: dashboard/records.json not found"
+            exit 1
+          fi
+          echo ""
+          echo "=== data/leads.csv ==="
+          if [ -f data/leads.csv ]; then
+            echo "CSV rows: $(wc -l < data/leads.csv)"
+          else
+            echo "WARNING: data/leads.csv not found"
+          fi
 
       - name: Commit and push updated records
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add dashboard/records.json data/records.json data/ghl_export.csv || true
+          git add dashboard/records.json data/records.json data/leads.csv || true
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: update records $(date -u '+%Y-%m-%d %H:%M') UTC"
+            TOTAL=$(python3 -c "import json; d=json.load(open('dashboard/records.json')); print(d.get('metadata',{}).get('total_records',0))" 2>/dev/null || echo "?")
+            git commit -m "chore: scrape update — ${TOTAL} leads — $(date -u '+%Y-%m-%d %H:%M') UTC"
             git push
           fi
 
@@ -83,7 +110,7 @@ jobs:
           ref: main
           fetch-depth: 1
 
-      - name: Pull latest changes
+      - name: Pull latest changes (after scrape commit)
         run: git pull --rebase origin main || true
 
       - name: Setup Pages
