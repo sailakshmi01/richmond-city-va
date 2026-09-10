@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated": "2026-09-09T12:03:35.502771Z",
+    "generated": "2026-09-10T11:58:37.685090Z",
     "lookback_days": 30,
-    "total_records": 530,
+    "total_records": 531,
     "by_jurisdiction": {
       "Richmond City": 308,
-      "Henrico County": 222
+      "Henrico County": 223
     },
     "by_type": {
       "Foreclosure / Forced Sale": 95,
-      "Henrico Distressed Sale": 222,
+      "Henrico Distressed Sale": 223,
       "Special Financing": 128,
       "Surplus Property": 85
     },
@@ -38,7 +38,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000487001",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269451Z",
+      "scraped_at": "2026-09-10T11:58:10.880573Z",
       "score": 97
     },
     {
@@ -59,7 +59,7 @@
       "doc_number": "DF",
       "parcel_id": "N0000892022",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269456Z",
+      "scraped_at": "2026-09-10T11:58:10.880577Z",
       "score": 97
     },
     {
@@ -80,7 +80,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000388064",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269420Z",
+      "scraped_at": "2026-09-10T11:58:10.880549Z",
       "score": 97
     },
     {
@@ -101,7 +101,7 @@
       "doc_number": "DF",
       "parcel_id": "W0000904019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269407Z",
+      "scraped_at": "2026-09-10T11:58:10.880538Z",
       "score": 97
     },
     {
@@ -122,7 +122,7 @@
       "doc_number": "DF",
       "parcel_id": "C0090350014",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269385Z",
+      "scraped_at": "2026-09-10T11:58:10.880521Z",
       "score": 97
     },
     {
@@ -143,7 +143,7 @@
       "doc_number": "BS",
       "parcel_id": "S0060392017",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269355Z",
+      "scraped_at": "2026-09-10T11:58:10.880497Z",
       "score": 97
     },
     {
@@ -164,7 +164,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002915001",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269328Z",
+      "scraped_at": "2026-09-10T11:58:10.880476Z",
       "score": 97
     },
     {
@@ -185,7 +185,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002792010",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269334Z",
+      "scraped_at": "2026-09-10T11:58:10.880480Z",
       "score": 97
     },
     {
@@ -206,7 +206,7 @@
       "doc_number": "BS",
       "parcel_id": "S0001226006",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269318Z",
+      "scraped_at": "2026-09-10T11:58:10.880467Z",
       "score": 97
     },
     {
@@ -227,7 +227,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000549012",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269298Z",
+      "scraped_at": "2026-09-10T11:58:10.880452Z",
       "score": 97
     },
     {
@@ -248,7 +248,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080294012",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269284Z",
+      "scraped_at": "2026-09-10T11:58:10.880442Z",
       "score": 97
     },
     {
@@ -269,7 +269,7 @@
       "doc_number": "DF",
       "parcel_id": "E0110144017",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269261Z",
+      "scraped_at": "2026-09-10T11:58:10.880431Z",
       "score": 97
     },
     {
@@ -290,7 +290,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000346024",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269082Z",
+      "scraped_at": "2026-09-10T11:58:10.880285Z",
       "score": 97
     },
     {
@@ -311,7 +311,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050686054",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269065Z",
+      "scraped_at": "2026-09-10T11:58:10.880272Z",
       "score": 97
     },
     {
@@ -332,7 +332,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071677018",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269054Z",
+      "scraped_at": "2026-09-10T11:58:10.880263Z",
       "score": 97
     },
     {
@@ -353,7 +353,7 @@
       "doc_number": "BS",
       "parcel_id": "N0180531014",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269028Z",
+      "scraped_at": "2026-09-10T11:58:10.880245Z",
       "score": 97
     },
     {
@@ -374,7 +374,7 @@
       "doc_number": "BS",
       "parcel_id": "N0170549020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269011Z",
+      "scraped_at": "2026-09-10T11:58:10.880229Z",
       "score": 97
     },
     {
@@ -395,7 +395,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080487019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269000Z",
+      "scraped_at": "2026-09-10T11:58:10.880220Z",
       "score": 97
     },
     {
@@ -416,7 +416,7 @@
       "doc_number": "DF",
       "parcel_id": "S0071229025",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269472Z",
+      "scraped_at": "2026-09-10T11:58:10.880592Z",
       "score": 93
     },
     {
@@ -437,7 +437,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050482034",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269461Z",
+      "scraped_at": "2026-09-10T11:58:10.880581Z",
       "score": 93
     },
     {
@@ -458,7 +458,7 @@
       "doc_number": "BS",
       "parcel_id": "N0002181006",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269445Z",
+      "scraped_at": "2026-09-10T11:58:10.880569Z",
       "score": 93
     },
     {
@@ -479,7 +479,7 @@
       "doc_number": "BS",
       "parcel_id": "S0090459003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269439Z",
+      "scraped_at": "2026-09-10T11:58:10.880564Z",
       "score": 93
     },
     {
@@ -500,7 +500,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080844042",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269366Z",
+      "scraped_at": "2026-09-10T11:58:10.880506Z",
       "score": 93
     },
     {
@@ -521,7 +521,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050685074",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269309Z",
+      "scraped_at": "2026-09-10T11:58:10.880460Z",
       "score": 93
     },
     {
@@ -542,7 +542,7 @@
       "doc_number": "WD",
       "parcel_id": "N0000572036",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269201Z",
+      "scraped_at": "2026-09-10T11:58:10.880392Z",
       "score": 93
     },
     {
@@ -563,7 +563,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000387032",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269112Z",
+      "scraped_at": "2026-09-10T11:58:10.880309Z",
       "score": 93
     },
     {
@@ -584,7 +584,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002921011",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269088Z",
+      "scraped_at": "2026-09-10T11:58:10.880290Z",
       "score": 93
     },
     {
@@ -605,7 +605,7 @@
       "doc_number": "BS",
       "parcel_id": "C0040250020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269071Z",
+      "scraped_at": "2026-09-10T11:58:10.880277Z",
       "score": 93
     },
     {
@@ -626,7 +626,7 @@
       "doc_number": "DF",
       "parcel_id": "C0050225052",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268982Z",
+      "scraped_at": "2026-09-10T11:58:10.880206Z",
       "score": 93
     },
     {
@@ -647,7 +647,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000234042",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268881Z",
+      "scraped_at": "2026-09-10T11:58:10.880127Z",
       "score": 93
     },
     {
@@ -668,7 +668,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002794013",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268871Z",
+      "scraped_at": "2026-09-10T11:58:10.880118Z",
       "score": 93
     },
     {
@@ -689,7 +689,7 @@
       "doc_number": "BS",
       "parcel_id": "S0090224010",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268863Z",
+      "scraped_at": "2026-09-10T11:58:10.880112Z",
       "score": 93
     },
     {
@@ -710,7 +710,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001153013",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269426Z",
+      "scraped_at": "2026-09-10T11:58:10.880553Z",
       "score": 89
     },
     {
@@ -731,7 +731,7 @@
       "doc_number": "DF",
       "parcel_id": "W0000147037",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269415Z",
+      "scraped_at": "2026-09-10T11:58:10.880545Z",
       "score": 89
     },
     {
@@ -752,7 +752,7 @@
       "doc_number": "WD",
       "parcel_id": "W0001076033",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269391Z",
+      "scraped_at": "2026-09-10T11:58:10.880525Z",
       "score": 89
     },
     {
@@ -773,7 +773,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000619082",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269339Z",
+      "scraped_at": "2026-09-10T11:58:10.880486Z",
       "score": 89
     },
     {
@@ -794,7 +794,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001164026",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269323Z",
+      "scraped_at": "2026-09-10T11:58:10.880471Z",
       "score": 89
     },
     {
@@ -815,7 +815,7 @@
       "doc_number": "BS",
       "parcel_id": "W0190167019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269251Z",
+      "scraped_at": "2026-09-10T11:58:10.880427Z",
       "score": 89
     },
     {
@@ -836,7 +836,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002454004",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269232Z",
+      "scraped_at": "2026-09-10T11:58:10.880418Z",
       "score": 89
     },
     {
@@ -857,7 +857,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050963020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269211Z",
+      "scraped_at": "2026-09-10T11:58:10.880401Z",
       "score": 89
     },
     {
@@ -878,7 +878,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000985006",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269187Z",
+      "scraped_at": "2026-09-10T11:58:10.880382Z",
       "score": 89
     },
     {
@@ -899,7 +899,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071227020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269158Z",
+      "scraped_at": "2026-09-10T11:58:10.880361Z",
       "score": 89
     },
     {
@@ -920,7 +920,7 @@
       "doc_number": "DF",
       "parcel_id": "C0090320032",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269131Z",
+      "scraped_at": "2026-09-10T11:58:10.880324Z",
       "score": 89
     },
     {
@@ -941,7 +941,7 @@
       "doc_number": "BS",
       "parcel_id": "C0040291020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269107Z",
+      "scraped_at": "2026-09-10T11:58:10.880305Z",
       "score": 89
     },
     {
@@ -962,7 +962,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071229032",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269093Z",
+      "scraped_at": "2026-09-10T11:58:10.880294Z",
       "score": 89
     },
     {
@@ -983,7 +983,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000457008",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269046Z",
+      "scraped_at": "2026-09-10T11:58:10.880257Z",
       "score": 89
     },
     {
@@ -1004,7 +1004,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120334004",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269022Z",
+      "scraped_at": "2026-09-10T11:58:10.880238Z",
       "score": 89
     },
     {
@@ -1025,7 +1025,7 @@
       "doc_number": "DF",
       "parcel_id": "S0000151003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269036Z",
+      "scraped_at": "2026-09-10T11:58:10.880250Z",
       "score": 89
     },
     {
@@ -1046,7 +1046,7 @@
       "doc_number": "DF",
       "parcel_id": "C0080309012",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268994Z",
+      "scraped_at": "2026-09-10T11:58:10.880215Z",
       "score": 89
     },
     {
@@ -1067,7 +1067,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050095018",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268948Z",
+      "scraped_at": "2026-09-10T11:58:10.880179Z",
       "score": 89
     },
     {
@@ -1088,7 +1088,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060469020",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268895Z",
+      "scraped_at": "2026-09-10T11:58:10.880139Z",
       "score": 89
     },
     {
@@ -1109,7 +1109,7 @@
       "doc_number": "WD",
       "parcel_id": "E0120230012",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269481Z",
+      "scraped_at": "2026-09-10T11:58:10.880597Z",
       "score": 85
     },
     {
@@ -1130,7 +1130,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000095003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269467Z",
+      "scraped_at": "2026-09-10T11:58:10.880586Z",
       "score": 85
     },
     {
@@ -1151,7 +1151,7 @@
       "doc_number": "WD",
       "parcel_id": "N0001270019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269431Z",
+      "scraped_at": "2026-09-10T11:58:10.880558Z",
       "score": 85
     },
     {
@@ -1172,7 +1172,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001150003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269402Z",
+      "scraped_at": "2026-09-10T11:58:10.880534Z",
       "score": 85
     },
     {
@@ -1193,7 +1193,7 @@
       "doc_number": "BS",
       "parcel_id": "N0180532016",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269396Z",
+      "scraped_at": "2026-09-10T11:58:10.880530Z",
       "score": 85
     },
     {
@@ -1214,7 +1214,7 @@
       "doc_number": "DF",
       "parcel_id": "C0011004006",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269380Z",
+      "scraped_at": "2026-09-10T11:58:10.880517Z",
       "score": 85
     },
     {
@@ -1235,7 +1235,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080706034",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269371Z",
+      "scraped_at": "2026-09-10T11:58:10.880510Z",
       "score": 85
     },
     {
@@ -1256,7 +1256,7 @@
       "doc_number": "DF",
       "parcel_id": "C0080714017",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269361Z",
+      "scraped_at": "2026-09-10T11:58:10.880502Z",
       "score": 85
     },
     {
@@ -1277,7 +1277,7 @@
       "doc_number": "BS",
       "parcel_id": "W0190272012",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269350Z",
+      "scraped_at": "2026-09-10T11:58:10.880493Z",
       "score": 85
     },
     {
@@ -1298,7 +1298,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050776003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269304Z",
+      "scraped_at": "2026-09-10T11:58:10.880456Z",
       "score": 85
     },
     {
@@ -1319,7 +1319,7 @@
       "doc_number": "DF",
       "parcel_id": "E0120282004",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269292Z",
+      "scraped_at": "2026-09-10T11:58:10.880447Z",
       "score": 85
     },
     {
@@ -1340,7 +1340,7 @@
       "doc_number": "WD",
       "parcel_id": "N0001270019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269271Z",
+      "scraped_at": "2026-09-10T11:58:10.880436Z",
       "score": 85
     },
     {
@@ -1361,7 +1361,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070257007",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269238Z",
+      "scraped_at": "2026-09-10T11:58:10.880423Z",
       "score": 85
     },
     {
@@ -1382,7 +1382,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071631011",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269217Z",
+      "scraped_at": "2026-09-10T11:58:10.880405Z",
       "score": 85
     },
     {
@@ -1403,7 +1403,7 @@
       "doc_number": "DF",
       "parcel_id": "S0000190015",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269222Z",
+      "scraped_at": "2026-09-10T11:58:10.880410Z",
       "score": 85
     },
     {
@@ -1424,7 +1424,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071631007",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269195Z",
+      "scraped_at": "2026-09-10T11:58:10.880388Z",
       "score": 85
     },
     {
@@ -1445,7 +1445,7 @@
       "doc_number": "WD",
       "parcel_id": "N0000572034",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269206Z",
+      "scraped_at": "2026-09-10T11:58:10.880397Z",
       "score": 85
     },
     {
@@ -1466,7 +1466,7 @@
       "doc_number": "DF",
       "parcel_id": "W0000167002",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269181Z",
+      "scraped_at": "2026-09-10T11:58:10.880377Z",
       "score": 85
     },
     {
@@ -1487,7 +1487,7 @@
       "doc_number": "BS",
       "parcel_id": "W0190200005",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269176Z",
+      "scraped_at": "2026-09-10T11:58:10.880373Z",
       "score": 85
     },
     {
@@ -1508,7 +1508,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000244003",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269170Z",
+      "scraped_at": "2026-09-10T11:58:10.880369Z",
       "score": 85
     },
     {
@@ -1529,7 +1529,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080706015",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269153Z",
+      "scraped_at": "2026-09-10T11:58:10.880355Z",
       "score": 85
     },
     {
@@ -1550,7 +1550,7 @@
       "doc_number": "DF",
       "parcel_id": "S0071282009",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269147Z",
+      "scraped_at": "2026-09-10T11:58:10.880350Z",
       "score": 85
     },
     {
@@ -1571,7 +1571,7 @@
       "doc_number": "DF",
       "parcel_id": "C0080427054",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269137Z",
+      "scraped_at": "2026-09-10T11:58:10.880329Z",
       "score": 85
     },
     {
@@ -1592,7 +1592,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000102005",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269142Z",
+      "scraped_at": "2026-09-10T11:58:10.880333Z",
       "score": 85
     },
     {
@@ -1613,7 +1613,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000946022",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269126Z",
+      "scraped_at": "2026-09-10T11:58:10.880320Z",
       "score": 85
     },
     {
@@ -1634,7 +1634,7 @@
       "doc_number": "WD",
       "parcel_id": "E0120291017",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269118Z",
+      "scraped_at": "2026-09-10T11:58:10.880314Z",
       "score": 85
     },
     {
@@ -1655,7 +1655,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071133001",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269099Z",
+      "scraped_at": "2026-09-10T11:58:10.880299Z",
       "score": 85
     },
     {
@@ -1676,7 +1676,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050227015",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269077Z",
+      "scraped_at": "2026-09-10T11:58:10.880281Z",
       "score": 85
     },
     {
@@ -1697,7 +1697,7 @@
       "doc_number": "BS",
       "parcel_id": "S0060442011",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269060Z",
+      "scraped_at": "2026-09-10T11:58:10.880268Z",
       "score": 85
     },
     {
@@ -1718,7 +1718,7 @@
       "doc_number": "DF",
       "parcel_id": "C0080877018",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269016Z",
+      "scraped_at": "2026-09-10T11:58:10.880234Z",
       "score": 85
     },
     {
@@ -1739,7 +1739,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001260021",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.269005Z",
+      "scraped_at": "2026-09-10T11:58:10.880225Z",
       "score": 85
     },
     {
@@ -1760,7 +1760,7 @@
       "doc_number": "WD",
       "parcel_id": "S0071534004",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268989Z",
+      "scraped_at": "2026-09-10T11:58:10.880211Z",
       "score": 85
     },
     {
@@ -1781,7 +1781,7 @@
       "doc_number": "WD",
       "parcel_id": "S0071227013",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268974Z",
+      "scraped_at": "2026-09-10T11:58:10.880199Z",
       "score": 85
     },
     {
@@ -1802,7 +1802,7 @@
       "doc_number": "DF",
       "parcel_id": "S0071677013",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268960Z",
+      "scraped_at": "2026-09-10T11:58:10.880189Z",
       "score": 85
     },
     {
@@ -1823,7 +1823,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071230013",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268966Z",
+      "scraped_at": "2026-09-10T11:58:10.880193Z",
       "score": 85
     },
     {
@@ -1844,7 +1844,7 @@
       "doc_number": "DF",
       "parcel_id": "C0080722006",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268942Z",
+      "scraped_at": "2026-09-10T11:58:10.880175Z",
       "score": 85
     },
     {
@@ -1865,7 +1865,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001260021",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268955Z",
+      "scraped_at": "2026-09-10T11:58:10.880184Z",
       "score": 85
     },
     {
@@ -1886,7 +1886,7 @@
       "doc_number": "BS",
       "parcel_id": "E0100108005",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268937Z",
+      "scraped_at": "2026-09-10T11:58:10.880171Z",
       "score": 85
     },
     {
@@ -1907,7 +1907,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050727004",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268924Z",
+      "scraped_at": "2026-09-10T11:58:10.880161Z",
       "score": 85
     },
     {
@@ -1928,7 +1928,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000638017",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268931Z",
+      "scraped_at": "2026-09-10T11:58:10.880166Z",
       "score": 85
     },
     {
@@ -1949,7 +1949,7 @@
       "doc_number": "BS",
       "parcel_id": "W0001956015",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268915Z",
+      "scraped_at": "2026-09-10T11:58:10.880153Z",
       "score": 85
     },
     {
@@ -1970,7 +1970,7 @@
       "doc_number": "WD",
       "parcel_id": "W0001590019",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268888Z",
+      "scraped_at": "2026-09-10T11:58:10.880132Z",
       "score": 85
     },
     {
@@ -1991,7 +1991,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050401022",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268853Z",
+      "scraped_at": "2026-09-10T11:58:10.880104Z",
       "score": 85
     },
     {
@@ -2012,7 +2012,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000948031",
       "val_code": "Foreclosure, Forced Sale, etc.",
-      "scraped_at": "2026-09-09T12:03:28.268837Z",
+      "scraped_at": "2026-09-10T11:58:10.880090Z",
       "score": 85
     },
     {
@@ -2033,7 +2033,7 @@
       "doc_number": "6701/1495",
       "parcel_id": "787-758-3213",
       "val_code": "Office",
-      "scraped_at": "2026-09-09T12:03:35.476635Z",
+      "scraped_at": "2026-09-10T11:58:37.663850Z",
       "score": 77
     },
     {
@@ -2054,7 +2054,7 @@
       "doc_number": "6701/1799",
       "parcel_id": "823-726-9842",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476607Z",
+      "scraped_at": "2026-09-10T11:58:37.663831Z",
       "score": 77
     },
     {
@@ -2075,7 +2075,7 @@
       "doc_number": "6703/1810",
       "parcel_id": "754-733-7008",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476515Z",
+      "scraped_at": "2026-09-10T11:58:37.663713Z",
       "score": 77
     },
     {
@@ -2096,7 +2096,7 @@
       "doc_number": "6703/1328",
       "parcel_id": "780-758-0376",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476532Z",
+      "scraped_at": "2026-09-10T11:58:37.663735Z",
       "score": 77
     },
     {
@@ -2117,7 +2117,7 @@
       "doc_number": "6705/2037",
       "parcel_id": "792-752-1629",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476414Z",
+      "scraped_at": "2026-09-10T11:58:37.663629Z",
       "score": 77
     },
     {
@@ -2138,7 +2138,7 @@
       "doc_number": "6708/0999",
       "parcel_id": "830-727-8444",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.476254Z",
+      "scraped_at": "2026-09-10T11:58:37.663500Z",
       "score": 77
     },
     {
@@ -2159,7 +2159,7 @@
       "doc_number": "6709/1147",
       "parcel_id": "775-753-3663",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476151Z",
+      "scraped_at": "2026-09-10T11:58:37.663425Z",
       "score": 77
     },
     {
@@ -2180,7 +2180,7 @@
       "doc_number": "6710/1788",
       "parcel_id": "769-737-9328",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476053Z",
+      "scraped_at": "2026-09-10T11:58:37.663319Z",
       "score": 77
     },
     {
@@ -2201,7 +2201,7 @@
       "doc_number": "6711/1266",
       "parcel_id": "788-754-3078",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476037Z",
+      "scraped_at": "2026-09-10T11:58:37.663312Z",
       "score": 77
     },
     {
@@ -2222,7 +2222,7 @@
       "doc_number": "6713/1385",
       "parcel_id": "739-758-3373",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475838Z",
+      "scraped_at": "2026-09-10T11:58:37.663167Z",
       "score": 77
     },
     {
@@ -2243,7 +2243,7 @@
       "doc_number": "6714/0775",
       "parcel_id": "732-758-7688",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475828Z",
+      "scraped_at": "2026-09-10T11:58:37.663143Z",
       "score": 77
     },
     {
@@ -2264,7 +2264,7 @@
       "doc_number": "6716/0063",
       "parcel_id": "821-724-6746",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475727Z",
+      "scraped_at": "2026-09-10T11:58:37.663062Z",
       "score": 77
     },
     {
@@ -2285,7 +2285,7 @@
       "doc_number": "6719/1111",
       "parcel_id": "803-725-2000",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475481Z",
+      "scraped_at": "2026-09-10T11:58:37.662902Z",
       "score": 77
     },
     {
@@ -2306,7 +2306,7 @@
       "doc_number": "6720/2197",
       "parcel_id": "809-716-0923",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475387Z",
+      "scraped_at": "2026-09-10T11:58:37.662811Z",
       "score": 77
     },
     {
@@ -2327,7 +2327,7 @@
       "doc_number": "6723/0630",
       "parcel_id": "770-737-8851",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475228Z",
+      "scraped_at": "2026-09-10T11:58:37.662651Z",
       "score": 77
     },
     {
@@ -2348,28 +2348,7 @@
       "doc_number": "6723/2043",
       "parcel_id": "831-714-2586",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475188Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-95586",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2025-12-08",
-      "address": "2403 DUMBARTON RD",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23228",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 364400,
-      "sale_price": 210000,
-      "sale_ratio": 0.576,
-      "doc_number": "6729/1579",
-      "parcel_id": "780-744-0785",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474773Z",
+      "scraped_at": "2026-09-10T11:58:37.662630Z",
       "score": 77
     },
     {
@@ -2390,28 +2369,28 @@
       "doc_number": "6729/1086",
       "parcel_id": "815-714-1027",
       "val_code": "Vacant Comm B1-B3",
-      "scraped_at": "2026-09-09T12:03:35.474789Z",
+      "scraped_at": "2026-09-10T11:58:37.662291Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-80425",
+      "id": "henrico-cama-95586",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
       "recorded_date": "2025-12-08",
-      "address": "10541 GLENCOE RD",
-      "city": "GLEN ALLEN",
+      "address": "2403 DUMBARTON RD",
+      "city": "HENRICO",
       "state": "VA",
-      "zip": "23060",
+      "zip": "23228",
       "grantor": "",
       "grantee": "",
-      "assessed_value": 420700,
-      "sale_price": 235000,
-      "sale_ratio": 0.559,
-      "doc_number": "6729/1241",
-      "parcel_id": "766-766-3660",
+      "assessed_value": 364400,
+      "sale_price": 210000,
+      "sale_ratio": 0.576,
+      "doc_number": "6729/1579",
+      "parcel_id": "780-744-0785",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474795Z",
+      "scraped_at": "2026-09-10T11:58:37.662303Z",
       "score": 77
     },
     {
@@ -2432,7 +2411,7 @@
       "doc_number": "6730/2295",
       "parcel_id": "821-679-6440",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.474673Z",
+      "scraped_at": "2026-09-10T11:58:37.662239Z",
       "score": 77
     },
     {
@@ -2453,28 +2432,7 @@
       "doc_number": "6733/0571",
       "parcel_id": "736-776-8190",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474536Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-51580",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2025-12-19",
-      "address": "2305 ARRINGTON RD",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23294",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 371100,
-      "sale_price": 202500,
-      "sale_ratio": 0.546,
-      "doc_number": "6733/0867",
-      "parcel_id": "760-749-7482",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474460Z",
+      "scraped_at": "2026-09-10T11:58:37.662124Z",
       "score": 77
     },
     {
@@ -2495,7 +2453,28 @@
       "doc_number": "6733/1691",
       "parcel_id": "793-738-8796",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474507Z",
+      "scraped_at": "2026-09-10T11:58:37.662069Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-51580",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2025-12-19",
+      "address": "2305 ARRINGTON RD",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23294",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 371100,
+      "sale_price": 202500,
+      "sale_ratio": 0.546,
+      "doc_number": "6733/0867",
+      "parcel_id": "760-749-7482",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.662092Z",
       "score": 77
     },
     {
@@ -2516,7 +2495,7 @@
       "doc_number": "6734/2453",
       "parcel_id": "790-754-1300",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474383Z",
+      "scraped_at": "2026-09-10T11:58:37.661999Z",
       "score": 77
     },
     {
@@ -2537,7 +2516,7 @@
       "doc_number": "6735/2381",
       "parcel_id": "786-771-4485",
       "val_code": "Motel/Hotel",
-      "scraped_at": "2026-09-09T12:03:35.474307Z",
+      "scraped_at": "2026-09-10T11:58:37.661951Z",
       "score": 77
     },
     {
@@ -2558,7 +2537,7 @@
       "doc_number": "6737/1216",
       "parcel_id": "821-721-1477",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474187Z",
+      "scraped_at": "2026-09-10T11:58:37.661828Z",
       "score": 77
     },
     {
@@ -2579,7 +2558,7 @@
       "doc_number": "6737/0589",
       "parcel_id": "824-716-4850",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.474200Z",
+      "scraped_at": "2026-09-10T11:58:37.661840Z",
       "score": 77
     },
     {
@@ -2600,7 +2579,7 @@
       "doc_number": "6737/0585",
       "parcel_id": "824-716-5559",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.474207Z",
+      "scraped_at": "2026-09-10T11:58:37.661845Z",
       "score": 77
     },
     {
@@ -2621,7 +2600,7 @@
       "doc_number": "6739/0374",
       "parcel_id": "732-763-3895",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474098Z",
+      "scraped_at": "2026-09-10T11:58:37.661762Z",
       "score": 77
     },
     {
@@ -2642,7 +2621,7 @@
       "doc_number": "6739/0948",
       "parcel_id": "853-708-5485",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474067Z",
+      "scraped_at": "2026-09-10T11:58:37.661743Z",
       "score": 77
     },
     {
@@ -2663,7 +2642,7 @@
       "doc_number": "6739/2312",
       "parcel_id": "816-722-4144",
       "val_code": "Vacant < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.474043Z",
+      "scraped_at": "2026-09-10T11:58:37.661711Z",
       "score": 77
     },
     {
@@ -2684,7 +2663,7 @@
       "doc_number": "6740/1487",
       "parcel_id": "805-703-6654",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474016Z",
+      "scraped_at": "2026-09-10T11:58:37.661688Z",
       "score": 77
     },
     {
@@ -2705,7 +2684,7 @@
       "doc_number": "6742/0550",
       "parcel_id": "769-757-8802",
       "val_code": "Ind'l Flex Building",
-      "scraped_at": "2026-09-09T12:03:35.473897Z",
+      "scraped_at": "2026-09-10T11:58:37.661584Z",
       "score": 77
     },
     {
@@ -2726,7 +2705,7 @@
       "doc_number": "6747/1584",
       "parcel_id": "750-743-0459",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473555Z",
+      "scraped_at": "2026-09-10T11:58:37.661314Z",
       "score": 77
     },
     {
@@ -2747,7 +2726,7 @@
       "doc_number": "6748/2077",
       "parcel_id": "774-768-9158",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473476Z",
+      "scraped_at": "2026-09-10T11:58:37.661254Z",
       "score": 77
     },
     {
@@ -2768,7 +2747,7 @@
       "doc_number": "6749/1601",
       "parcel_id": "794-754-0778",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473432Z",
+      "scraped_at": "2026-09-10T11:58:37.661231Z",
       "score": 77
     },
     {
@@ -2789,7 +2768,7 @@
       "doc_number": "6752/2168",
       "parcel_id": "746-777-0642",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473224Z",
+      "scraped_at": "2026-09-10T11:58:37.661043Z",
       "score": 77
     },
     {
@@ -2810,7 +2789,7 @@
       "doc_number": "6754/0935",
       "parcel_id": "802-734-9749",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473132Z",
+      "scraped_at": "2026-09-10T11:58:37.660986Z",
       "score": 77
     },
     {
@@ -2831,7 +2810,7 @@
       "doc_number": "6755/1939",
       "parcel_id": "817-712-7074",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473048Z",
+      "scraped_at": "2026-09-10T11:58:37.660929Z",
       "score": 77
     },
     {
@@ -2852,7 +2831,7 @@
       "doc_number": "6756/1198",
       "parcel_id": "798-735-4251",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472991Z",
+      "scraped_at": "2026-09-10T11:58:37.660877Z",
       "score": 77
     },
     {
@@ -2873,7 +2852,7 @@
       "doc_number": "6756/1583",
       "parcel_id": "790-754-0436",
       "val_code": "Church & Synagogue",
-      "scraped_at": "2026-09-09T12:03:35.472936Z",
+      "scraped_at": "2026-09-10T11:58:37.660861Z",
       "score": 77
     },
     {
@@ -2894,7 +2873,7 @@
       "doc_number": "6757/0671",
       "parcel_id": "843-684-4497",
       "val_code": "Res - Imprv 20 - 100 Acres",
-      "scraped_at": "2026-09-09T12:03:35.472898Z",
+      "scraped_at": "2026-09-10T11:58:37.660817Z",
       "score": 77
     },
     {
@@ -2915,7 +2894,7 @@
       "doc_number": "6757/1158",
       "parcel_id": "756-770-8804",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472926Z",
+      "scraped_at": "2026-09-10T11:58:37.660825Z",
       "score": 77
     },
     {
@@ -2936,7 +2915,7 @@
       "doc_number": "6758/0691",
       "parcel_id": "754-756-4013",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472808Z",
+      "scraped_at": "2026-09-10T11:58:37.660762Z",
       "score": 77
     },
     {
@@ -2957,7 +2936,7 @@
       "doc_number": "6759/0541",
       "parcel_id": "731-753-1573",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.472759Z",
+      "scraped_at": "2026-09-10T11:58:37.660719Z",
       "score": 77
     },
     {
@@ -2978,7 +2957,7 @@
       "doc_number": "6762/0378",
       "parcel_id": "758-745-2856",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472575Z",
+      "scraped_at": "2026-09-10T11:58:37.660578Z",
       "score": 77
     },
     {
@@ -2999,7 +2978,7 @@
       "doc_number": "6762/0711",
       "parcel_id": "751-740-0556",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472592Z",
+      "scraped_at": "2026-09-10T11:58:37.660582Z",
       "score": 77
     },
     {
@@ -3020,7 +2999,7 @@
       "doc_number": "6764/0422",
       "parcel_id": "811-721-3611",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472458Z",
+      "scraped_at": "2026-09-10T11:58:37.660476Z",
       "score": 77
     },
     {
@@ -3041,7 +3020,7 @@
       "doc_number": "6765/0720",
       "parcel_id": "804-725-5179",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472369Z",
+      "scraped_at": "2026-09-10T11:58:37.660419Z",
       "score": 77
     },
     {
@@ -3062,7 +3041,7 @@
       "doc_number": "6765/2148",
       "parcel_id": "769-776-4262",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472333Z",
+      "scraped_at": "2026-09-10T11:58:37.660381Z",
       "score": 77
     },
     {
@@ -3083,7 +3062,7 @@
       "doc_number": "6766/0447",
       "parcel_id": "802-726-4105",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472279Z",
+      "scraped_at": "2026-09-10T11:58:37.660316Z",
       "score": 77
     },
     {
@@ -3104,7 +3083,7 @@
       "doc_number": "6766/0971",
       "parcel_id": "775-769-4857",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472249Z",
+      "scraped_at": "2026-09-10T11:58:37.660300Z",
       "score": 77
     },
     {
@@ -3125,7 +3104,7 @@
       "doc_number": "6769/0726",
       "parcel_id": "804-734-9948",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472093Z",
+      "scraped_at": "2026-09-10T11:58:37.660171Z",
       "score": 77
     },
     {
@@ -3146,7 +3125,7 @@
       "doc_number": "6771/2328",
       "parcel_id": "855-711-2818",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471876Z",
+      "scraped_at": "2026-09-10T11:58:37.659999Z",
       "score": 77
     },
     {
@@ -3167,28 +3146,7 @@
       "doc_number": "6774/1813",
       "parcel_id": "805-723-7677",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471699Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-107657",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-05-01",
-      "address": "5104 AMBERWOOD CIR",
-      "city": "GLEN ALLEN",
-      "state": "VA",
-      "zip": "23059",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 681600,
-      "sale_price": 125000,
-      "sale_ratio": 0.183,
-      "doc_number": "6775/2138",
-      "parcel_id": "741-766-7246",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471575Z",
+      "scraped_at": "2026-09-10T11:58:37.659846Z",
       "score": 77
     },
     {
@@ -3209,7 +3167,28 @@
       "doc_number": "6775/1124",
       "parcel_id": "811-682-4833",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471599Z",
+      "scraped_at": "2026-09-10T11:58:37.659759Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-107657",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-05-01",
+      "address": "5104 AMBERWOOD CIR",
+      "city": "GLEN ALLEN",
+      "state": "VA",
+      "zip": "23059",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 681600,
+      "sale_price": 125000,
+      "sale_ratio": 0.183,
+      "doc_number": "6775/2138",
+      "parcel_id": "741-766-7246",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.659766Z",
       "score": 77
     },
     {
@@ -3230,7 +3209,7 @@
       "doc_number": "6778/0144",
       "parcel_id": "799-727-4775",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.471334Z",
+      "scraped_at": "2026-09-10T11:58:37.659576Z",
       "score": 77
     },
     {
@@ -3251,7 +3230,7 @@
       "doc_number": "6777/2337",
       "parcel_id": "746-744-8654",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471370Z",
+      "scraped_at": "2026-09-10T11:58:37.659584Z",
       "score": 77
     },
     {
@@ -3272,7 +3251,7 @@
       "doc_number": "6778/1531",
       "parcel_id": "763-775-1536",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.471282Z",
+      "scraped_at": "2026-09-10T11:58:37.659527Z",
       "score": 77
     },
     {
@@ -3293,7 +3272,7 @@
       "doc_number": "6778/1331",
       "parcel_id": "823-725-4969",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471294Z",
+      "scraped_at": "2026-09-10T11:58:37.659532Z",
       "score": 77
     },
     {
@@ -3314,7 +3293,7 @@
       "doc_number": "6778/1164",
       "parcel_id": "773-765-6997",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471307Z",
+      "scraped_at": "2026-09-10T11:58:37.659541Z",
       "score": 77
     },
     {
@@ -3335,7 +3314,7 @@
       "doc_number": "6779/1806",
       "parcel_id": "782-772-2548",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471216Z",
+      "scraped_at": "2026-09-10T11:58:37.659469Z",
       "score": 77
     },
     {
@@ -3356,7 +3335,7 @@
       "doc_number": "6783/1274",
       "parcel_id": "823-725-1373",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.470908Z",
+      "scraped_at": "2026-09-10T11:58:37.659186Z",
       "score": 77
     },
     {
@@ -3377,7 +3356,7 @@
       "doc_number": "6785/0010",
       "parcel_id": "753-749-5573",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470809Z",
+      "scraped_at": "2026-09-10T11:58:37.659119Z",
       "score": 77
     },
     {
@@ -3398,7 +3377,7 @@
       "doc_number": "6785/0550",
       "parcel_id": "755-748-0202",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470764Z",
+      "scraped_at": "2026-09-10T11:58:37.659079Z",
       "score": 77
     },
     {
@@ -3419,7 +3398,28 @@
       "doc_number": "6786/0350",
       "parcel_id": "761-757-3746",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470680Z",
+      "scraped_at": "2026-09-10T11:58:37.659010Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-123583",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-01",
+      "address": "2020 DRIVER XING",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23223",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 455400,
+      "sale_price": 265000,
+      "sale_ratio": 0.582,
+      "doc_number": "6785/1816",
+      "parcel_id": "803-726-8822",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.659015Z",
       "score": 77
     },
     {
@@ -3440,7 +3440,7 @@
       "doc_number": "6786/2065",
       "parcel_id": "817-712-6983",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470623Z",
+      "scraped_at": "2026-09-10T11:58:37.658972Z",
       "score": 77
     },
     {
@@ -3461,11 +3461,11 @@
       "doc_number": "6787/1867",
       "parcel_id": "816-726-7573",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.470492Z",
+      "scraped_at": "2026-09-10T11:58:37.658883Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-8612",
+      "id": "henrico-cama-8647",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -3482,28 +3482,7 @@
       "doc_number": "6787/1277",
       "parcel_id": "730-766-3642",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.470525Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-77685",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-18",
-      "address": "9036 ARTHUR CT",
-      "city": "GLEN ALLEN",
-      "state": "VA",
-      "zip": "23060",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 396700,
-      "sale_price": 172443,
-      "sale_ratio": 0.435,
-      "doc_number": "6792/1535",
-      "parcel_id": "760-766-3423",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470105Z",
+      "scraped_at": "2026-09-10T11:58:37.658898Z",
       "score": 77
     },
     {
@@ -3524,7 +3503,7 @@
       "doc_number": "6792/0943",
       "parcel_id": "827-715-8410",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470136Z",
+      "scraped_at": "2026-09-10T11:58:37.658576Z",
       "score": 77
     },
     {
@@ -3545,7 +3524,28 @@
       "doc_number": "6792/1074",
       "parcel_id": "766-765-6396",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470160Z",
+      "scraped_at": "2026-09-10T11:58:37.658581Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-77685",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-18",
+      "address": "9036 ARTHUR CT",
+      "city": "GLEN ALLEN",
+      "state": "VA",
+      "zip": "23060",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 396700,
+      "sale_price": 172443,
+      "sale_ratio": 0.435,
+      "doc_number": "6792/1535",
+      "parcel_id": "760-766-3423",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.658596Z",
       "score": 77
     },
     {
@@ -3566,11 +3566,11 @@
       "doc_number": "6792/0809",
       "parcel_id": "837-715-4707",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470171Z",
+      "scraped_at": "2026-09-10T11:58:37.658603Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-9002",
+      "id": "henrico-cama-8960",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -3587,7 +3587,7 @@
       "doc_number": "6793/1000",
       "parcel_id": "784-748-3238",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.470060Z",
+      "scraped_at": "2026-09-10T11:58:37.658556Z",
       "score": 77
     },
     {
@@ -3608,91 +3608,7 @@
       "doc_number": "6793/1539",
       "parcel_id": "803-729-7360",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470014Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-3463",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "LA VON DR",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 8000,
-      "sale_price": 1800,
-      "sale_ratio": 0.225,
-      "doc_number": "6795/1788",
-      "parcel_id": "785-752-7714",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469784Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-7837",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "WISTAR RD",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23228",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 1800,
-      "sale_price": 725,
-      "sale_ratio": 0.403,
-      "doc_number": "6795/1804",
-      "parcel_id": "769-751-3104",
-      "val_code": "Vacant < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.469790Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-3500",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "WARWICK AVE",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 9600,
-      "sale_price": 1950,
-      "sale_ratio": 0.203,
-      "doc_number": "6795/1768",
-      "parcel_id": "787-751-5685",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469803Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-3494",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "WARWICK AVE",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 8000,
-      "sale_price": 1900,
-      "sale_ratio": 0.237,
-      "doc_number": "6795/1780",
-      "parcel_id": "787-751-5599",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469810Z",
+      "scraped_at": "2026-09-10T11:58:37.658494Z",
       "score": 77
     },
     {
@@ -3713,91 +3629,28 @@
       "doc_number": "6795/1796",
       "parcel_id": "769-765-5993",
       "val_code": "Common Area (Non-HOA)",
-      "scraped_at": "2026-09-09T12:03:35.469816Z",
+      "scraped_at": "2026-09-10T11:58:37.658303Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-92982",
+      "id": "henrico-cama-7837",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
       "recorded_date": "2026-06-29",
-      "address": "500 SIBLEY AVE",
+      "address": "WISTAR RD",
       "city": "HENRICO",
       "state": "VA",
-      "zip": "23227",
+      "zip": "23228",
       "grantor": "",
       "grantee": "",
-      "assessed_value": 10400,
-      "sale_price": 2400,
-      "sale_ratio": 0.231,
-      "doc_number": "6795/1750",
-      "parcel_id": "786-751-8891",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469822Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-92984",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "717 LAKESIDE BLVD",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 4000,
-      "sale_price": 1000,
-      "sale_ratio": 0.25,
-      "doc_number": "6795/1784",
-      "parcel_id": "785-751-9891",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469832Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-92988",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "5620 EDGEWOOD AVE",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 5100,
-      "sale_price": 1750,
-      "sale_ratio": 0.343,
-      "doc_number": "6795/1760",
-      "parcel_id": "786-751-8259",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469838Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-92992",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-29",
-      "address": "508 SIBLEY AVE",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23227",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 2400,
-      "sale_price": 1050,
-      "sale_ratio": 0.438,
-      "doc_number": "6795/1776",
-      "parcel_id": "786-751-7089",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469845Z",
+      "assessed_value": 1800,
+      "sale_price": 725,
+      "sale_ratio": 0.403,
+      "doc_number": "6795/1804",
+      "parcel_id": "769-751-3104",
+      "val_code": "Vacant < 5 Acres",
+      "scraped_at": "2026-09-10T11:58:37.658308Z",
       "score": 77
     },
     {
@@ -3818,7 +3671,154 @@
       "doc_number": "6795/1792",
       "parcel_id": "780-766-1478",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469853Z",
+      "scraped_at": "2026-09-10T11:58:37.658313Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-3463",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "LA VON DR",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 8000,
+      "sale_price": 1800,
+      "sale_ratio": 0.225,
+      "doc_number": "6795/1788",
+      "parcel_id": "785-752-7714",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658317Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-3500",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "WARWICK AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 9600,
+      "sale_price": 1950,
+      "sale_ratio": 0.203,
+      "doc_number": "6795/1768",
+      "parcel_id": "787-751-5685",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658323Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-3494",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "WARWICK AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 8000,
+      "sale_price": 1900,
+      "sale_ratio": 0.237,
+      "doc_number": "6795/1780",
+      "parcel_id": "787-751-5599",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658328Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-92982",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "500 SIBLEY AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 10400,
+      "sale_price": 2400,
+      "sale_ratio": 0.231,
+      "doc_number": "6795/1750",
+      "parcel_id": "786-751-8891",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658348Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-92984",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "717 LAKESIDE BLVD",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 4000,
+      "sale_price": 1000,
+      "sale_ratio": 0.25,
+      "doc_number": "6795/1784",
+      "parcel_id": "785-751-9891",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658353Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-92988",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "5620 EDGEWOOD AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 5100,
+      "sale_price": 1750,
+      "sale_ratio": 0.343,
+      "doc_number": "6795/1760",
+      "parcel_id": "786-751-8259",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658359Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-92992",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-29",
+      "address": "508 SIBLEY AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 2400,
+      "sale_price": 1050,
+      "sale_ratio": 0.438,
+      "doc_number": "6795/1776",
+      "parcel_id": "786-751-7089",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.658364Z",
       "score": 77
     },
     {
@@ -3839,7 +3839,7 @@
       "doc_number": "6798/1759",
       "parcel_id": "773-739-8403",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469465Z",
+      "scraped_at": "2026-09-10T11:58:37.658054Z",
       "score": 77
     },
     {
@@ -3860,7 +3860,7 @@
       "doc_number": "6799/2135",
       "parcel_id": "826-715-2655",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469322Z",
+      "scraped_at": "2026-09-10T11:58:37.657947Z",
       "score": 77
     },
     {
@@ -3881,7 +3881,7 @@
       "doc_number": "6800/2077",
       "parcel_id": "793-738-2736",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.469271Z",
+      "scraped_at": "2026-09-10T11:58:37.657898Z",
       "score": 77
     },
     {
@@ -3902,28 +3902,7 @@
       "doc_number": "6801/0881",
       "parcel_id": "802-735-4448",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469181Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-101946",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-07-16",
-      "address": "6404 GOLDENROD CT",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23231",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 304700,
-      "sale_price": 170000,
-      "sale_ratio": 0.558,
-      "doc_number": "6802/0702",
-      "parcel_id": "809-703-0558",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469125Z",
+      "scraped_at": "2026-09-10T11:58:37.657836Z",
       "score": 77
     },
     {
@@ -3944,28 +3923,28 @@
       "doc_number": "6802/0645",
       "parcel_id": "772-746-8751",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469135Z",
+      "scraped_at": "2026-09-10T11:58:37.657760Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-3468",
+      "id": "henrico-cama-101946",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-07-20",
-      "address": "SIBLEY AVE",
+      "recorded_date": "2026-07-16",
+      "address": "6404 GOLDENROD CT",
       "city": "HENRICO",
       "state": "VA",
-      "zip": "23227",
+      "zip": "23231",
       "grantor": "",
       "grantee": "",
-      "assessed_value": 4800,
-      "sale_price": 1100,
-      "sale_ratio": 0.229,
-      "doc_number": "6803/0706",
-      "parcel_id": "786-751-9779",
-      "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469000Z",
+      "assessed_value": 304700,
+      "sale_price": 170000,
+      "sale_ratio": 0.558,
+      "doc_number": "6802/0702",
+      "parcel_id": "809-703-0558",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.657782Z",
       "score": 77
     },
     {
@@ -3986,7 +3965,28 @@
       "doc_number": "6803/0735",
       "parcel_id": "787-751-3497",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.469023Z",
+      "scraped_at": "2026-09-10T11:58:37.657700Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-3468",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-07-20",
+      "address": "SIBLEY AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23227",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 4800,
+      "sale_price": 1100,
+      "sale_ratio": 0.229,
+      "doc_number": "6803/0706",
+      "parcel_id": "786-751-9779",
+      "val_code": "Vacant Residential",
+      "scraped_at": "2026-09-10T11:58:37.657707Z",
       "score": 77
     },
     {
@@ -4007,7 +4007,7 @@
       "doc_number": "6803/0619",
       "parcel_id": "824-724-4605",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469037Z",
+      "scraped_at": "2026-09-10T11:58:37.657721Z",
       "score": 77
     },
     {
@@ -4028,7 +4028,7 @@
       "doc_number": "6803/1519",
       "parcel_id": "800-734-0523",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468963Z",
+      "scraped_at": "2026-09-10T11:58:37.657661Z",
       "score": 77
     },
     {
@@ -4049,7 +4049,7 @@
       "doc_number": "6804/1592",
       "parcel_id": "828-721-1721",
       "val_code": "Vacant < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.468900Z",
+      "scraped_at": "2026-09-10T11:58:37.657561Z",
       "score": 77
     },
     {
@@ -4070,7 +4070,7 @@
       "doc_number": "6808/0339",
       "parcel_id": "811-693-8954",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.468587Z",
+      "scraped_at": "2026-09-10T11:58:37.657314Z",
       "score": 77
     },
     {
@@ -4091,7 +4091,7 @@
       "doc_number": "6807/2248",
       "parcel_id": "807-717-3707",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468601Z",
+      "scraped_at": "2026-09-10T11:58:37.657351Z",
       "score": 77
     },
     {
@@ -4112,28 +4112,7 @@
       "doc_number": "6808/1549",
       "parcel_id": "823-724-2092",
       "val_code": "Church & Synagogue",
-      "scraped_at": "2026-09-09T12:03:35.468565Z",
-      "score": 77
-    },
-    {
-      "id": "henrico-cama-107447",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-08-10",
-      "address": "7213 OAKMERE CT",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23231",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 390000,
-      "sale_price": 220000,
-      "sale_ratio": 0.564,
-      "doc_number": "6810/0530",
-      "parcel_id": "822-694-9169",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468387Z",
+      "scraped_at": "2026-09-10T11:58:37.657282Z",
       "score": 77
     },
     {
@@ -4154,7 +4133,28 @@
       "doc_number": "6810/0584",
       "parcel_id": "744-754-3043",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468420Z",
+      "scraped_at": "2026-09-10T11:58:37.657172Z",
+      "score": 77
+    },
+    {
+      "id": "henrico-cama-107447",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-08-10",
+      "address": "7213 OAKMERE CT",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23231",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 390000,
+      "sale_price": 220000,
+      "sale_ratio": 0.564,
+      "doc_number": "6810/0530",
+      "parcel_id": "822-694-9169",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.657184Z",
       "score": 77
     },
     {
@@ -4175,7 +4175,7 @@
       "doc_number": "6810/2117",
       "parcel_id": "742-746-6074",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468309Z",
+      "scraped_at": "2026-09-10T11:58:37.657120Z",
       "score": 77
     },
     {
@@ -4196,7 +4196,7 @@
       "doc_number": "6811/2412",
       "parcel_id": "824-718-9422",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468239Z",
+      "scraped_at": "2026-09-10T11:58:37.657053Z",
       "score": 77
     },
     {
@@ -4217,7 +4217,7 @@
       "doc_number": "6812/0945",
       "parcel_id": "781-745-5629",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468210Z",
+      "scraped_at": "2026-09-10T11:58:37.657014Z",
       "score": 77
     },
     {
@@ -4238,7 +4238,7 @@
       "doc_number": "6813/2439",
       "parcel_id": "784-763-8617",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468064Z",
+      "scraped_at": "2026-09-10T11:58:37.656901Z",
       "score": 77
     },
     {
@@ -4259,7 +4259,7 @@
       "doc_number": "6814/1645",
       "parcel_id": "802-726-4388",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467989Z",
+      "scraped_at": "2026-09-10T11:58:37.656854Z",
       "score": 77
     },
     {
@@ -4280,11 +4280,11 @@
       "doc_number": "6815/1786",
       "parcel_id": "807-716-7240",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467937Z",
+      "scraped_at": "2026-09-10T11:58:37.656816Z",
       "score": 77
     },
     {
-      "id": "henrico-cama-103650",
+      "id": "henrico-cama-103501",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -4301,7 +4301,7 @@
       "doc_number": "6817/1109",
       "parcel_id": "774-744-3490",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.467763Z",
+      "scraped_at": "2026-09-10T11:58:37.656704Z",
       "score": 77
     },
     {
@@ -4322,7 +4322,7 @@
       "doc_number": "6818/0578",
       "parcel_id": "801-730-2609",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467697Z",
+      "scraped_at": "2026-09-10T11:58:37.656611Z",
       "score": 77
     },
     {
@@ -4343,7 +4343,7 @@
       "doc_number": "6819/0175",
       "parcel_id": "817-680-8152",
       "val_code": "Vacant Residential",
-      "scraped_at": "2026-09-09T12:03:35.467587Z",
+      "scraped_at": "2026-09-10T11:58:37.656552Z",
       "score": 77
     },
     {
@@ -4364,7 +4364,7 @@
       "doc_number": "6702/1758",
       "parcel_id": "745-739-5232",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476576Z",
+      "scraped_at": "2026-09-10T11:58:37.663780Z",
       "score": 73
     },
     {
@@ -4385,7 +4385,7 @@
       "doc_number": "6707/1437",
       "parcel_id": "737-749-1240",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.476305Z",
+      "scraped_at": "2026-09-10T11:58:37.663531Z",
       "score": 73
     },
     {
@@ -4406,7 +4406,7 @@
       "doc_number": "6710/1315",
       "parcel_id": "808-704-1538",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476108Z",
+      "scraped_at": "2026-09-10T11:58:37.663379Z",
       "score": 73
     },
     {
@@ -4427,11 +4427,11 @@
       "doc_number": "6710/2148",
       "parcel_id": "820-705-8211",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.476081Z",
+      "scraped_at": "2026-09-10T11:58:37.663356Z",
       "score": 73
     },
     {
-      "id": "henrico-cama-4189",
+      "id": "henrico-cama-4103",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -4448,7 +4448,7 @@
       "doc_number": "6711/0625",
       "parcel_id": "747-746-3559",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.476016Z",
+      "scraped_at": "2026-09-10T11:58:37.663304Z",
       "score": 73
     },
     {
@@ -4469,7 +4469,7 @@
       "doc_number": "6713/0576",
       "parcel_id": "753-751-9079",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475896Z",
+      "scraped_at": "2026-09-10T11:58:37.663195Z",
       "score": 73
     },
     {
@@ -4490,7 +4490,7 @@
       "doc_number": "6726/0875",
       "parcel_id": "809-721-1027",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475036Z",
+      "scraped_at": "2026-09-10T11:58:37.662484Z",
       "score": 73
     },
     {
@@ -4511,7 +4511,7 @@
       "doc_number": "6733/2156",
       "parcel_id": "750-744-1163",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474481Z",
+      "scraped_at": "2026-09-10T11:58:37.662053Z",
       "score": 73
     },
     {
@@ -4532,7 +4532,7 @@
       "doc_number": "6735/0699",
       "parcel_id": "777-751-4839",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474356Z",
+      "scraped_at": "2026-09-10T11:58:37.661988Z",
       "score": 73
     },
     {
@@ -4553,7 +4553,7 @@
       "doc_number": "6735/0578",
       "parcel_id": "752-756-3770",
       "val_code": "Office - Medical",
-      "scraped_at": "2026-09-09T12:03:35.474396Z",
+      "scraped_at": "2026-09-10T11:58:37.662012Z",
       "score": 73
     },
     {
@@ -4574,7 +4574,7 @@
       "doc_number": "6737/0760",
       "parcel_id": "770-763-8374",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474231Z",
+      "scraped_at": "2026-09-10T11:58:37.661867Z",
       "score": 73
     },
     {
@@ -4595,7 +4595,7 @@
       "doc_number": "6739/1033",
       "parcel_id": "761-753-4548",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474079Z",
+      "scraped_at": "2026-09-10T11:58:37.661735Z",
       "score": 73
     },
     {
@@ -4616,7 +4616,7 @@
       "doc_number": "6741/1447",
       "parcel_id": "819-727-9658",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473945Z",
+      "scraped_at": "2026-09-10T11:58:37.661627Z",
       "score": 73
     },
     {
@@ -4637,7 +4637,7 @@
       "doc_number": "6743/1141",
       "parcel_id": "827-718-0215",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473785Z",
+      "scraped_at": "2026-09-10T11:58:37.661521Z",
       "score": 73
     },
     {
@@ -4658,7 +4658,7 @@
       "doc_number": "6743/1324",
       "parcel_id": "811-722-9127",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473802Z",
+      "scraped_at": "2026-09-10T11:58:37.661536Z",
       "score": 73
     },
     {
@@ -4679,7 +4679,7 @@
       "doc_number": "6744/0740",
       "parcel_id": "833-714-1609",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.473760Z",
+      "scraped_at": "2026-09-10T11:58:37.661495Z",
       "score": 73
     },
     {
@@ -4700,7 +4700,7 @@
       "doc_number": "6745/1864",
       "parcel_id": "781-758-5762",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473657Z",
+      "scraped_at": "2026-09-10T11:58:37.661419Z",
       "score": 73
     },
     {
@@ -4721,7 +4721,7 @@
       "doc_number": "6746/1145",
       "parcel_id": "797-713-2150",
       "val_code": "Marinas",
-      "scraped_at": "2026-09-09T12:03:35.473635Z",
+      "scraped_at": "2026-09-10T11:58:37.661373Z",
       "score": 73
     },
     {
@@ -4742,7 +4742,7 @@
       "doc_number": "6747/2321",
       "parcel_id": "802-730-4046",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473567Z",
+      "scraped_at": "2026-09-10T11:58:37.661326Z",
       "score": 73
     },
     {
@@ -4763,7 +4763,7 @@
       "doc_number": "6749/1662",
       "parcel_id": "773-758-3033",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473383Z",
+      "scraped_at": "2026-09-10T11:58:37.661209Z",
       "score": 73
     },
     {
@@ -4784,7 +4784,7 @@
       "doc_number": "6757/2019",
       "parcel_id": "774-753-8590",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472871Z",
+      "scraped_at": "2026-09-10T11:58:37.660797Z",
       "score": 73
     },
     {
@@ -4805,7 +4805,7 @@
       "doc_number": "6758/2144",
       "parcel_id": "823-704-0818",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.472822Z",
+      "scraped_at": "2026-09-10T11:58:37.660745Z",
       "score": 73
     },
     {
@@ -4826,7 +4826,7 @@
       "doc_number": "6763/0660",
       "parcel_id": "782-762-4628",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472530Z",
+      "scraped_at": "2026-09-10T11:58:37.660532Z",
       "score": 73
     },
     {
@@ -4847,7 +4847,7 @@
       "doc_number": "6767/0067",
       "parcel_id": "776-761-3798",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472233Z",
+      "scraped_at": "2026-09-10T11:58:37.660277Z",
       "score": 73
     },
     {
@@ -4868,7 +4868,7 @@
       "doc_number": "6770/0728",
       "parcel_id": "804-716-3648",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471998Z",
+      "scraped_at": "2026-09-10T11:58:37.660085Z",
       "score": 73
     },
     {
@@ -4889,11 +4889,11 @@
       "doc_number": "6774/0440",
       "parcel_id": "804-703-3245",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471734Z",
+      "scraped_at": "2026-09-10T11:58:37.659870Z",
       "score": 73
     },
     {
-      "id": "henrico-cama-2893",
+      "id": "henrico-cama-2725",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -4910,7 +4910,7 @@
       "doc_number": "6775/0658",
       "parcel_id": "781-756-5960",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.471630Z",
+      "scraped_at": "2026-09-10T11:58:37.659793Z",
       "score": 73
     },
     {
@@ -4931,7 +4931,7 @@
       "doc_number": "6775/1100",
       "parcel_id": "828-717-9748",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471548Z",
+      "scraped_at": "2026-09-10T11:58:37.659727Z",
       "score": 73
     },
     {
@@ -4952,28 +4952,7 @@
       "doc_number": "6777/1919",
       "parcel_id": "804-703-3269",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471385Z",
-      "score": 73
-    },
-    {
-      "id": "henrico-cama-64642",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-05-18",
-      "address": "1814 AERONCA AVE",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23228",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 287300,
-      "sale_price": 180000,
-      "sale_ratio": 0.627,
-      "doc_number": "6781/0825",
-      "parcel_id": "775-761-7785",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471098Z",
+      "scraped_at": "2026-09-10T11:58:37.659604Z",
       "score": 73
     },
     {
@@ -4994,7 +4973,28 @@
       "doc_number": "6781/0470",
       "parcel_id": "807-714-3209",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.471111Z",
+      "scraped_at": "2026-09-10T11:58:37.659372Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-64642",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-05-18",
+      "address": "1814 AERONCA AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23228",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 287300,
+      "sale_price": 180000,
+      "sale_ratio": 0.627,
+      "doc_number": "6781/0825",
+      "parcel_id": "775-761-7785",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.659403Z",
       "score": 73
     },
     {
@@ -5015,7 +5015,7 @@
       "doc_number": "6782/1403",
       "parcel_id": "828-722-7715",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.470992Z",
+      "scraped_at": "2026-09-10T11:58:37.659248Z",
       "score": 73
     },
     {
@@ -5036,7 +5036,7 @@
       "doc_number": "6785/0464",
       "parcel_id": "786-753-9643",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470754Z",
+      "scraped_at": "2026-09-10T11:58:37.659055Z",
       "score": 73
     },
     {
@@ -5057,7 +5057,7 @@
       "doc_number": "6786/0697",
       "parcel_id": "825-723-0093",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470658Z",
+      "scraped_at": "2026-09-10T11:58:37.659036Z",
       "score": 73
     },
     {
@@ -5078,7 +5078,7 @@
       "doc_number": "6786/1585",
       "parcel_id": "747-746-3559",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.470615Z",
+      "scraped_at": "2026-09-10T11:58:37.658954Z",
       "score": 73
     },
     {
@@ -5099,7 +5099,7 @@
       "doc_number": "6787/1999",
       "parcel_id": "777-749-5571",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470539Z",
+      "scraped_at": "2026-09-10T11:58:37.658893Z",
       "score": 73
     },
     {
@@ -5120,7 +5120,7 @@
       "doc_number": "6789/1286",
       "parcel_id": "774-773-7771",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470355Z",
+      "scraped_at": "2026-09-10T11:58:37.658757Z",
       "score": 73
     },
     {
@@ -5141,7 +5141,7 @@
       "doc_number": "6793/1078",
       "parcel_id": "771-775-5600",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.470085Z",
+      "scraped_at": "2026-09-10T11:58:37.658520Z",
       "score": 73
     },
     {
@@ -5162,7 +5162,7 @@
       "doc_number": "6794/0608",
       "parcel_id": "773-762-5881",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469945Z",
+      "scraped_at": "2026-09-10T11:58:37.658441Z",
       "score": 73
     },
     {
@@ -5183,49 +5183,7 @@
       "doc_number": "6794/0153",
       "parcel_id": "806-716-4957",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469965Z",
-      "score": 73
-    },
-    {
-      "id": "henrico-cama-20564",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-30",
-      "address": "1291 GRAPEVINE RD",
-      "city": "SANDSTON",
-      "state": "VA",
-      "zip": "23150",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 255000,
-      "sale_price": 175000,
-      "sale_ratio": 0.686,
-      "doc_number": "6795/2312",
-      "parcel_id": "837-724-6475",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469717Z",
-      "score": 73
-    },
-    {
-      "id": "henrico-cama-29683",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-06-30",
-      "address": "8414 SEDGEMOOR DR",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23228",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 336000,
-      "sale_price": 220000,
-      "sale_ratio": 0.655,
-      "doc_number": "6796/0749",
-      "parcel_id": "773-754-7537",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469734Z",
+      "scraped_at": "2026-09-10T11:58:37.658460Z",
       "score": 73
     },
     {
@@ -5246,28 +5204,49 @@
       "doc_number": "6795/2098",
       "parcel_id": "806-732-6982",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.469743Z",
+      "scraped_at": "2026-09-10T11:58:37.658210Z",
       "score": 73
     },
     {
-      "id": "henrico-cama-83453",
+      "id": "henrico-cama-29683",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-07-02",
-      "address": "9410 MIDVALE RD",
+      "recorded_date": "2026-06-30",
+      "address": "8414 SEDGEMOOR DR",
       "city": "HENRICO",
       "state": "VA",
-      "zip": "23229",
+      "zip": "23228",
       "grantor": "",
       "grantee": "",
-      "assessed_value": 479500,
-      "sale_price": 325000,
-      "sale_ratio": 0.678,
-      "doc_number": "6797/2078",
-      "parcel_id": "750-748-6277",
+      "assessed_value": 336000,
+      "sale_price": 220000,
+      "sale_ratio": 0.655,
+      "doc_number": "6796/0749",
+      "parcel_id": "773-754-7537",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469535Z",
+      "scraped_at": "2026-09-10T11:58:37.658222Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-20564",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-06-30",
+      "address": "1291 GRAPEVINE RD",
+      "city": "SANDSTON",
+      "state": "VA",
+      "zip": "23150",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 255000,
+      "sale_price": 175000,
+      "sale_ratio": 0.686,
+      "doc_number": "6795/2312",
+      "parcel_id": "837-724-6475",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.658273Z",
       "score": 73
     },
     {
@@ -5288,7 +5267,28 @@
       "doc_number": "6797/2074",
       "parcel_id": "756-761-9809",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.469581Z",
+      "scraped_at": "2026-09-10T11:58:37.658090Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-83453",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-07-02",
+      "address": "9410 MIDVALE RD",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23229",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 479500,
+      "sale_price": 325000,
+      "sale_ratio": 0.678,
+      "doc_number": "6797/2078",
+      "parcel_id": "750-748-6277",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.658105Z",
       "score": 73
     },
     {
@@ -5309,7 +5309,7 @@
       "doc_number": "6798/1903",
       "parcel_id": "805-733-2374",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469453Z",
+      "scraped_at": "2026-09-10T11:58:37.658038Z",
       "score": 73
     },
     {
@@ -5330,7 +5330,7 @@
       "doc_number": "6800/2430",
       "parcel_id": "737-745-8769",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469245Z",
+      "scraped_at": "2026-09-10T11:58:37.657873Z",
       "score": 73
     },
     {
@@ -5351,7 +5351,7 @@
       "doc_number": "6800/2057",
       "parcel_id": "828-694-2250",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469284Z",
+      "scraped_at": "2026-09-10T11:58:37.657886Z",
       "score": 73
     },
     {
@@ -5372,7 +5372,7 @@
       "doc_number": "6804/0338",
       "parcel_id": "793-755-2075",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468925Z",
+      "scraped_at": "2026-09-10T11:58:37.657620Z",
       "score": 73
     },
     {
@@ -5393,7 +5393,7 @@
       "doc_number": "6805/0504",
       "parcel_id": "827-715-6858",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468833Z",
+      "scraped_at": "2026-09-10T11:58:37.657533Z",
       "score": 73
     },
     {
@@ -5414,11 +5414,11 @@
       "doc_number": "6806/2104",
       "parcel_id": "817-712-4893",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468707Z",
+      "scraped_at": "2026-09-10T11:58:37.657428Z",
       "score": 73
     },
     {
-      "id": "henrico-cama-3941",
+      "id": "henrico-cama-4148",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -5435,7 +5435,7 @@
       "doc_number": "6807/2467",
       "parcel_id": "747-746-3559",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.468628Z",
+      "scraped_at": "2026-09-10T11:58:37.657322Z",
       "score": 73
     },
     {
@@ -5456,7 +5456,7 @@
       "doc_number": "6810/1428",
       "parcel_id": "812-722-5968",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468364Z",
+      "scraped_at": "2026-09-10T11:58:37.657155Z",
       "score": 73
     },
     {
@@ -5477,7 +5477,7 @@
       "doc_number": "6811/0390",
       "parcel_id": "771-760-0607",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468338Z",
+      "scraped_at": "2026-09-10T11:58:37.657136Z",
       "score": 73
     },
     {
@@ -5498,28 +5498,7 @@
       "doc_number": "6811/1570",
       "parcel_id": "742-734-3162",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468267Z",
-      "score": 73
-    },
-    {
-      "id": "henrico-cama-19800",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-08-13",
-      "address": "4264 CREIGHTON RD",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23223",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 231100,
-      "sale_price": 141000,
-      "sale_ratio": 0.61,
-      "doc_number": "6811/1626",
-      "parcel_id": "815-732-4892",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468276Z",
+      "scraped_at": "2026-09-10T11:58:37.657075Z",
       "score": 73
     },
     {
@@ -5540,28 +5519,28 @@
       "doc_number": "6811/1110",
       "parcel_id": "754-745-7687",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468293Z",
+      "scraped_at": "2026-09-10T11:58:37.657085Z",
       "score": 73
     },
     {
-      "id": "henrico-cama-85612",
+      "id": "henrico-cama-19800",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-08-18",
-      "address": "8 N QUINCE AVE",
+      "recorded_date": "2026-08-13",
+      "address": "4264 CREIGHTON RD",
       "city": "HENRICO",
       "state": "VA",
-      "zip": "23075",
+      "zip": "23223",
       "grantor": "",
       "grantee": "",
-      "assessed_value": 235900,
-      "sale_price": 150000,
-      "sale_ratio": 0.636,
-      "doc_number": "6813/0127",
-      "parcel_id": "824-722-6474",
+      "assessed_value": 231100,
+      "sale_price": 141000,
+      "sale_ratio": 0.61,
+      "doc_number": "6811/1626",
+      "parcel_id": "815-732-4892",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468133Z",
+      "scraped_at": "2026-09-10T11:58:37.657091Z",
       "score": 73
     },
     {
@@ -5582,7 +5561,7 @@
       "doc_number": "6812/2093",
       "parcel_id": "821-723-4114",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468149Z",
+      "scraped_at": "2026-09-10T11:58:37.656984Z",
       "score": 73
     },
     {
@@ -5603,7 +5582,28 @@
       "doc_number": "6812/1703",
       "parcel_id": "795-742-1048",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468161Z",
+      "scraped_at": "2026-09-10T11:58:37.656990Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-85612",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-08-18",
+      "address": "8 N QUINCE AVE",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23075",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 235900,
+      "sale_price": 150000,
+      "sale_ratio": 0.636,
+      "doc_number": "6813/0127",
+      "parcel_id": "824-722-6474",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.656998Z",
       "score": 73
     },
     {
@@ -5624,7 +5624,28 @@
       "doc_number": "6814/0325",
       "parcel_id": "822-723-2812",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468025Z",
+      "scraped_at": "2026-09-10T11:58:37.656890Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-46068",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-08-24",
+      "address": "7000 ELKO RD",
+      "city": "SANDSTON",
+      "state": "VA",
+      "zip": "23150",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 297400,
+      "sale_price": 205000,
+      "sale_ratio": 0.689,
+      "doc_number": "6814/1226",
+      "parcel_id": "856-697-7389",
+      "val_code": "Res - Imprv < 5 Acres",
+      "scraped_at": "2026-09-10T11:58:37.656872Z",
       "score": 73
     },
     {
@@ -5645,28 +5666,7 @@
       "doc_number": "6816/0457",
       "parcel_id": "804-730-9070",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467873Z",
-      "score": 73
-    },
-    {
-      "id": "henrico-cama-24656",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-08-28",
-      "address": "9713 WENDHURST DR",
-      "city": "GLEN ALLEN",
-      "state": "VA",
-      "zip": "23060",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 409500,
-      "sale_price": 260000,
-      "sale_ratio": 0.635,
-      "doc_number": "6816/1919",
-      "parcel_id": "755-767-3131",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467810Z",
+      "scraped_at": "2026-09-10T11:58:37.656772Z",
       "score": 73
     },
     {
@@ -5687,7 +5687,28 @@
       "doc_number": "6816/1429",
       "parcel_id": "809-715-5316",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467852Z",
+      "scraped_at": "2026-09-10T11:58:37.656721Z",
+      "score": 73
+    },
+    {
+      "id": "henrico-cama-24656",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-08-28",
+      "address": "9713 WENDHURST DR",
+      "city": "GLEN ALLEN",
+      "state": "VA",
+      "zip": "23060",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 409500,
+      "sale_price": 260000,
+      "sale_ratio": 0.635,
+      "doc_number": "6816/1919",
+      "parcel_id": "755-767-3131",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.656731Z",
       "score": 73
     },
     {
@@ -5708,7 +5729,7 @@
       "doc_number": "6817/2293",
       "parcel_id": "805-703-0339",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467718Z",
+      "scraped_at": "2026-09-10T11:58:37.656659Z",
       "score": 73
     },
     {
@@ -5729,7 +5750,7 @@
       "doc_number": "6818/0625",
       "parcel_id": "826-719-1787",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467686Z",
+      "scraped_at": "2026-09-10T11:58:37.656606Z",
       "score": 73
     },
     {
@@ -5750,7 +5771,7 @@
       "doc_number": "6818/1543",
       "parcel_id": "814-727-1032",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467651Z",
+      "scraped_at": "2026-09-10T11:58:37.656589Z",
       "score": 73
     },
     {
@@ -5771,11 +5792,11 @@
       "doc_number": "6701/1962",
       "parcel_id": "819-715-5449",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.476621Z",
+      "scraped_at": "2026-09-10T11:58:37.663823Z",
       "score": 69
     },
     {
-      "id": "henrico-cama-2489",
+      "id": "henrico-cama-2441",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -5792,7 +5813,7 @@
       "doc_number": "6710/1903",
       "parcel_id": "764-756-2095",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.476073Z",
+      "scraped_at": "2026-09-10T11:58:37.663328Z",
       "score": 69
     },
     {
@@ -5813,7 +5834,7 @@
       "doc_number": "6711/2201",
       "parcel_id": "751-734-8268",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475995Z",
+      "scraped_at": "2026-09-10T11:58:37.663272Z",
       "score": 69
     },
     {
@@ -5834,11 +5855,11 @@
       "doc_number": "6717/2355",
       "parcel_id": "773-776-8299",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475598Z",
+      "scraped_at": "2026-09-10T11:58:37.662979Z",
       "score": 69
     },
     {
-      "id": "henrico-cama-264",
+      "id": "henrico-cama-306",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -5855,7 +5876,7 @@
       "doc_number": "6721/1095",
       "parcel_id": "739-779-8146",
       "val_code": "Condominium",
-      "scraped_at": "2026-09-09T12:03:35.475352Z",
+      "scraped_at": "2026-09-10T11:58:37.662771Z",
       "score": 69
     },
     {
@@ -5876,7 +5897,7 @@
       "doc_number": "6722/0533",
       "parcel_id": "847-719-0632",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475286Z",
+      "scraped_at": "2026-09-10T11:58:37.662714Z",
       "score": 69
     },
     {
@@ -5897,7 +5918,7 @@
       "doc_number": "6723/0416",
       "parcel_id": "857-712-3785",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.475249Z",
+      "scraped_at": "2026-09-10T11:58:37.662702Z",
       "score": 69
     },
     {
@@ -5918,7 +5939,7 @@
       "doc_number": "6725/0256",
       "parcel_id": "760-743-7156",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.475103Z",
+      "scraped_at": "2026-09-10T11:58:37.662577Z",
       "score": 69
     },
     {
@@ -5939,7 +5960,7 @@
       "doc_number": "6733/2144",
       "parcel_id": "823-725-0292",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.474513Z",
+      "scraped_at": "2026-09-10T11:58:37.662077Z",
       "score": 69
     },
     {
@@ -5960,7 +5981,7 @@
       "doc_number": "6741/0350",
       "parcel_id": "824-716-3393",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473958Z",
+      "scraped_at": "2026-09-10T11:58:37.661644Z",
       "score": 69
     },
     {
@@ -5981,7 +6002,7 @@
       "doc_number": "6751/0818",
       "parcel_id": "818-716-1543",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473296Z",
+      "scraped_at": "2026-09-10T11:58:37.661118Z",
       "score": 69
     },
     {
@@ -6002,28 +6023,7 @@
       "doc_number": "6756/0350",
       "parcel_id": "805-723-5843",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.473007Z",
-      "score": 69
-    },
-    {
-      "id": "henrico-cama-122872",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-03-17",
-      "address": "251 WHITESIDE RD",
-      "city": "SANDSTON",
-      "state": "VA",
-      "zip": "23150",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 280800,
-      "sale_price": 200555,
-      "sale_ratio": 0.714,
-      "doc_number": "6759/2114",
-      "parcel_id": "834-712-1682",
-      "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.472738Z",
+      "scraped_at": "2026-09-10T11:58:37.660900Z",
       "score": 69
     },
     {
@@ -6044,7 +6044,7 @@
       "doc_number": "6762/0787",
       "parcel_id": "808-717-3532",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.472584Z",
+      "scraped_at": "2026-09-10T11:58:37.660568Z",
       "score": 69
     },
     {
@@ -6065,7 +6065,7 @@
       "doc_number": "6764/0654",
       "parcel_id": "832-700-5439",
       "val_code": "Vacant 10 - 20 Acres",
-      "scraped_at": "2026-09-09T12:03:35.472429Z",
+      "scraped_at": "2026-09-10T11:58:37.660464Z",
       "score": 69
     },
     {
@@ -6086,7 +6086,7 @@
       "doc_number": "6766/0423",
       "parcel_id": "828-722-0250",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472299Z",
+      "scraped_at": "2026-09-10T11:58:37.660331Z",
       "score": 69
     },
     {
@@ -6107,11 +6107,11 @@
       "doc_number": "6768/0793",
       "parcel_id": "806-711-0898",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472167Z",
+      "scraped_at": "2026-09-10T11:58:37.660232Z",
       "score": 69
     },
     {
-      "id": "henrico-cama-122947",
+      "id": "henrico-cama-122948",
       "source": "Henrico CAMA",
       "jurisdiction": "Henrico County",
       "doc_type": "Henrico Distressed Sale",
@@ -6128,7 +6128,7 @@
       "doc_number": "6768/0958",
       "parcel_id": "834-712-2087",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.472150Z",
+      "scraped_at": "2026-09-10T11:58:37.660224Z",
       "score": 69
     },
     {
@@ -6149,7 +6149,7 @@
       "doc_number": "6769/1602",
       "parcel_id": "826-724-1234",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472010Z",
+      "scraped_at": "2026-09-10T11:58:37.660108Z",
       "score": 69
     },
     {
@@ -6170,7 +6170,7 @@
       "doc_number": "6769/2174",
       "parcel_id": "762-744-3062",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.472018Z",
+      "scraped_at": "2026-09-10T11:58:37.660119Z",
       "score": 69
     },
     {
@@ -6191,7 +6191,7 @@
       "doc_number": "6774/0878",
       "parcel_id": "801-729-1179",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.471663Z",
+      "scraped_at": "2026-09-10T11:58:37.659831Z",
       "score": 69
     },
     {
@@ -6212,7 +6212,7 @@
       "doc_number": "6777/0359",
       "parcel_id": "834-712-2284",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.471453Z",
+      "scraped_at": "2026-09-10T11:58:37.659665Z",
       "score": 69
     },
     {
@@ -6233,7 +6233,7 @@
       "doc_number": "6782/1633",
       "parcel_id": "817-725-2483",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470982Z",
+      "scraped_at": "2026-09-10T11:58:37.659265Z",
       "score": 69
     },
     {
@@ -6254,7 +6254,7 @@
       "doc_number": "6785/0241",
       "parcel_id": "823-725-0112",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470786Z",
+      "scraped_at": "2026-09-10T11:58:37.659134Z",
       "score": 69
     },
     {
@@ -6275,7 +6275,7 @@
       "doc_number": "6787/1725",
       "parcel_id": "824-724-8602",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470510Z",
+      "scraped_at": "2026-09-10T11:58:37.658873Z",
       "score": 69
     },
     {
@@ -6296,7 +6296,7 @@
       "doc_number": "6789/1867",
       "parcel_id": "740-754-8943",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470365Z",
+      "scraped_at": "2026-09-10T11:58:37.658771Z",
       "score": 69
     },
     {
@@ -6317,7 +6317,7 @@
       "doc_number": "6790/0282",
       "parcel_id": "834-712-2172",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.470316Z",
+      "scraped_at": "2026-09-10T11:58:37.658717Z",
       "score": 69
     },
     {
@@ -6338,28 +6338,7 @@
       "doc_number": "6793/1987",
       "parcel_id": "790-756-7496",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.470001Z",
-      "score": 69
-    },
-    {
-      "id": "henrico-cama-61030",
-      "source": "Henrico CAMA",
-      "jurisdiction": "Henrico County",
-      "doc_type": "Henrico Distressed Sale",
-      "recorded_date": "2026-07-01",
-      "address": "2594 BARNESWAY LN",
-      "city": "HENRICO",
-      "state": "VA",
-      "zip": "23231",
-      "grantor": "",
-      "grantee": "",
-      "assessed_value": 240000,
-      "sale_price": 175000,
-      "sale_ratio": 0.729,
-      "doc_number": "6797/0544",
-      "parcel_id": "816-698-0231",
-      "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469640Z",
+      "scraped_at": "2026-09-10T11:58:37.658487Z",
       "score": 69
     },
     {
@@ -6380,7 +6359,28 @@
       "doc_number": "6797/0136",
       "parcel_id": "829-685-8122",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.469655Z",
+      "scraped_at": "2026-09-10T11:58:37.658153Z",
+      "score": 69
+    },
+    {
+      "id": "henrico-cama-61030",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-07-01",
+      "address": "2594 BARNESWAY LN",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23231",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 240000,
+      "sale_price": 175000,
+      "sale_ratio": 0.729,
+      "doc_number": "6797/0544",
+      "parcel_id": "816-698-0231",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.658169Z",
       "score": 69
     },
     {
@@ -6401,7 +6401,7 @@
       "doc_number": "6798/0775",
       "parcel_id": "771-750-7818",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469511Z",
+      "scraped_at": "2026-09-10T11:58:37.658076Z",
       "score": 69
     },
     {
@@ -6422,7 +6422,7 @@
       "doc_number": "6799/1863",
       "parcel_id": "751-740-2642",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469336Z",
+      "scraped_at": "2026-09-10T11:58:37.657937Z",
       "score": 69
     },
     {
@@ -6443,7 +6443,7 @@
       "doc_number": "6801/0181",
       "parcel_id": "824-724-8353",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469194Z",
+      "scraped_at": "2026-09-10T11:58:37.657844Z",
       "score": 69
     },
     {
@@ -6464,7 +6464,7 @@
       "doc_number": "6802/1029",
       "parcel_id": "818-722-2687",
       "val_code": "Townhouse",
-      "scraped_at": "2026-09-09T12:03:35.469113Z",
+      "scraped_at": "2026-09-10T11:58:37.657793Z",
       "score": 69
     },
     {
@@ -6485,7 +6485,7 @@
       "doc_number": "6802/2359",
       "parcel_id": "819-727-4561",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.469013Z",
+      "scraped_at": "2026-09-10T11:58:37.657693Z",
       "score": 69
     },
     {
@@ -6506,7 +6506,7 @@
       "doc_number": "6805/0595",
       "parcel_id": "786-752-1433",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468817Z",
+      "scraped_at": "2026-09-10T11:58:37.657545Z",
       "score": 69
     },
     {
@@ -6527,7 +6527,7 @@
       "doc_number": "6809/1988",
       "parcel_id": "800-732-3778",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468459Z",
+      "scraped_at": "2026-09-10T11:58:37.657217Z",
       "score": 69
     },
     {
@@ -6548,7 +6548,7 @@
       "doc_number": "6811/1201",
       "parcel_id": "803-735-3827",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.468300Z",
+      "scraped_at": "2026-09-10T11:58:37.657100Z",
       "score": 69
     },
     {
@@ -6569,7 +6569,7 @@
       "doc_number": "6815/1641",
       "parcel_id": "817-712-2272",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467947Z",
+      "scraped_at": "2026-09-10T11:58:37.656804Z",
       "score": 69
     },
     {
@@ -6590,7 +6590,7 @@
       "doc_number": "6816/0670",
       "parcel_id": "782-758-0820",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467903Z",
+      "scraped_at": "2026-09-10T11:58:37.656762Z",
       "score": 69
     },
     {
@@ -6611,7 +6611,7 @@
       "doc_number": "6816/1053",
       "parcel_id": "801-738-2515",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467839Z",
+      "scraped_at": "2026-09-10T11:58:37.656744Z",
       "score": 69
     },
     {
@@ -6632,7 +6632,28 @@
       "doc_number": "6818/0327",
       "parcel_id": "824-722-6253",
       "val_code": "Res - Subd (1 Fam)",
-      "scraped_at": "2026-09-09T12:03:35.467679Z",
+      "scraped_at": "2026-09-10T11:58:37.656616Z",
+      "score": 69
+    },
+    {
+      "id": "henrico-cama-63869",
+      "source": "Henrico CAMA",
+      "jurisdiction": "Henrico County",
+      "doc_type": "Henrico Distressed Sale",
+      "recorded_date": "2026-09-08",
+      "address": "3319 GAULDING LN",
+      "city": "HENRICO",
+      "state": "VA",
+      "zip": "23223",
+      "grantor": "",
+      "grantee": "",
+      "assessed_value": 203200,
+      "sale_price": 150000,
+      "sale_ratio": 0.738,
+      "doc_number": "6819/1557",
+      "parcel_id": "803-732-0565",
+      "val_code": "Res - Subd (1 Fam)",
+      "scraped_at": "2026-09-10T11:58:37.656484Z",
       "score": 69
     },
     {
@@ -6653,7 +6674,7 @@
       "doc_number": "6819/0907",
       "parcel_id": "734-770-9310",
       "val_code": "Res - Imprv < 5 Acres",
-      "scraped_at": "2026-09-09T12:03:35.467547Z",
+      "scraped_at": "2026-09-10T11:58:37.656502Z",
       "score": 69
     },
     {
@@ -6674,7 +6695,7 @@
       "doc_number": "6751/1520",
       "parcel_id": "827-723-9441",
       "val_code": "Vacant Multi Fam R5-R6",
-      "scraped_at": "2026-09-09T12:03:35.473287Z",
+      "scraped_at": "2026-09-10T11:58:37.661134Z",
       "score": 65
     },
     {
@@ -6695,7 +6716,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090423022",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378029Z",
+      "scraped_at": "2026-09-10T11:58:11.058556Z",
       "score": 62
     },
     {
@@ -6716,7 +6737,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070222016",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378002Z",
+      "scraped_at": "2026-09-10T11:58:11.058534Z",
       "score": 62
     },
     {
@@ -6737,7 +6758,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000552021",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377982Z",
+      "scraped_at": "2026-09-10T11:58:11.058519Z",
       "score": 62
     },
     {
@@ -6758,7 +6779,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080593030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377971Z",
+      "scraped_at": "2026-09-10T11:58:11.058510Z",
       "score": 62
     },
     {
@@ -6779,7 +6800,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000800017B",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377966Z",
+      "scraped_at": "2026-09-10T11:58:11.058506Z",
       "score": 62
     },
     {
@@ -6800,7 +6821,7 @@
       "doc_number": "WD",
       "parcel_id": "C0090622036",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377940Z",
+      "scraped_at": "2026-09-10T11:58:11.058486Z",
       "score": 62
     },
     {
@@ -6821,7 +6842,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070141018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377895Z",
+      "scraped_at": "2026-09-10T11:58:11.058451Z",
       "score": 62
     },
     {
@@ -6842,7 +6863,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060336004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377879Z",
+      "scraped_at": "2026-09-10T11:58:11.058438Z",
       "score": 62
     },
     {
@@ -6863,7 +6884,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002281013",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377858Z",
+      "scraped_at": "2026-09-10T11:58:11.058423Z",
       "score": 62
     },
     {
@@ -6884,7 +6905,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080375004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377817Z",
+      "scraped_at": "2026-09-10T11:58:11.058390Z",
       "score": 62
     },
     {
@@ -6905,7 +6926,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090423020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377792Z",
+      "scraped_at": "2026-09-10T11:58:11.058370Z",
       "score": 62
     },
     {
@@ -6926,7 +6947,7 @@
       "doc_number": "WD",
       "parcel_id": "C0080252024",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377787Z",
+      "scraped_at": "2026-09-10T11:58:11.058366Z",
       "score": 62
     },
     {
@@ -6947,7 +6968,7 @@
       "doc_number": "BS",
       "parcel_id": "C0081101017",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377766Z",
+      "scraped_at": "2026-09-10T11:58:11.058349Z",
       "score": 62
     },
     {
@@ -6968,7 +6989,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000552017",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377771Z",
+      "scraped_at": "2026-09-10T11:58:11.058353Z",
       "score": 62
     },
     {
@@ -6989,7 +7010,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070400050",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377760Z",
+      "scraped_at": "2026-09-10T11:58:11.058333Z",
       "score": 62
     },
     {
@@ -7010,7 +7031,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090588018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377721Z",
+      "scraped_at": "2026-09-10T11:58:11.058302Z",
       "score": 62
     },
     {
@@ -7031,7 +7052,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000490004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377710Z",
+      "scraped_at": "2026-09-10T11:58:11.058293Z",
       "score": 62
     },
     {
@@ -7052,7 +7073,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060659044",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377699Z",
+      "scraped_at": "2026-09-10T11:58:11.058284Z",
       "score": 62
     },
     {
@@ -7073,7 +7094,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070382020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377688Z",
+      "scraped_at": "2026-09-10T11:58:11.058275Z",
       "score": 62
     },
     {
@@ -7094,7 +7115,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080986025",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377567Z",
+      "scraped_at": "2026-09-10T11:58:11.058181Z",
       "score": 62
     },
     {
@@ -7115,7 +7136,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002601007",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377572Z",
+      "scraped_at": "2026-09-10T11:58:11.058186Z",
       "score": 62
     },
     {
@@ -7136,7 +7157,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080708030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377523Z",
+      "scraped_at": "2026-09-10T11:58:11.058146Z",
       "score": 62
     },
     {
@@ -7157,7 +7178,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090526012",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377517Z",
+      "scraped_at": "2026-09-10T11:58:11.058142Z",
       "score": 62
     },
     {
@@ -7178,7 +7199,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060571018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377458Z",
+      "scraped_at": "2026-09-10T11:58:11.058106Z",
       "score": 62
     },
     {
@@ -7199,7 +7220,7 @@
       "doc_number": "WD",
       "parcel_id": "C0090713014",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377452Z",
+      "scraped_at": "2026-09-10T11:58:11.058101Z",
       "score": 62
     },
     {
@@ -7220,7 +7241,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090646002",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377429Z",
+      "scraped_at": "2026-09-10T11:58:11.058084Z",
       "score": 62
     },
     {
@@ -7241,7 +7262,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070409008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377434Z",
+      "scraped_at": "2026-09-10T11:58:11.058088Z",
       "score": 62
     },
     {
@@ -7262,7 +7283,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090950038",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377395Z",
+      "scraped_at": "2026-09-10T11:58:11.058056Z",
       "score": 62
     },
     {
@@ -7283,7 +7304,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090606014",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377361Z",
+      "scraped_at": "2026-09-10T11:58:11.058029Z",
       "score": 62
     },
     {
@@ -7304,7 +7325,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090606014",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377291Z",
+      "scraped_at": "2026-09-10T11:58:11.057975Z",
       "score": 62
     },
     {
@@ -7325,7 +7346,7 @@
       "doc_number": "WD",
       "parcel_id": "C0090423030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377960Z",
+      "scraped_at": "2026-09-10T11:58:11.058501Z",
       "score": 58
     },
     {
@@ -7346,7 +7367,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070256010",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377935Z",
+      "scraped_at": "2026-09-10T11:58:11.058482Z",
       "score": 58
     },
     {
@@ -7367,7 +7388,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060092008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377915Z",
+      "scraped_at": "2026-09-10T11:58:11.058466Z",
       "score": 58
     },
     {
@@ -7388,7 +7409,7 @@
       "doc_number": "WD",
       "parcel_id": "C0070348018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377867Z",
+      "scraped_at": "2026-09-10T11:58:11.058429Z",
       "score": 58
     },
     {
@@ -7409,7 +7430,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002281012",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377812Z",
+      "scraped_at": "2026-09-10T11:58:11.058386Z",
       "score": 58
     },
     {
@@ -7430,7 +7451,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080424146",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377755Z",
+      "scraped_at": "2026-09-10T11:58:11.058328Z",
       "score": 58
     },
     {
@@ -7451,7 +7472,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080820030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377738Z",
+      "scraped_at": "2026-09-10T11:58:11.058317Z",
       "score": 58
     },
     {
@@ -7472,7 +7493,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000645006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377732Z",
+      "scraped_at": "2026-09-10T11:58:11.058310Z",
       "score": 58
     },
     {
@@ -7493,7 +7514,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080510018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377662Z",
+      "scraped_at": "2026-09-10T11:58:11.058256Z",
       "score": 58
     },
     {
@@ -7514,7 +7535,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090595010",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377657Z",
+      "scraped_at": "2026-09-10T11:58:11.058252Z",
       "score": 58
     },
     {
@@ -7535,7 +7556,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060505038",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377636Z",
+      "scraped_at": "2026-09-10T11:58:11.058236Z",
       "score": 58
     },
     {
@@ -7556,7 +7577,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070469009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377594Z",
+      "scraped_at": "2026-09-10T11:58:11.058203Z",
       "score": 58
     },
     {
@@ -7577,7 +7598,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080393022",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377583Z",
+      "scraped_at": "2026-09-10T11:58:11.058194Z",
       "score": 58
     },
     {
@@ -7598,7 +7619,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070436008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377550Z",
+      "scraped_at": "2026-09-10T11:58:11.058169Z",
       "score": 58
     },
     {
@@ -7619,7 +7640,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070128003",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377486Z",
+      "scraped_at": "2026-09-10T11:58:11.058128Z",
       "score": 58
     },
     {
@@ -7640,7 +7661,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090148048",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377469Z",
+      "scraped_at": "2026-09-10T11:58:11.058115Z",
       "score": 58
     },
     {
@@ -7661,7 +7682,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060531006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377440Z",
+      "scraped_at": "2026-09-10T11:58:11.058093Z",
       "score": 58
     },
     {
@@ -7682,7 +7703,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080337002",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377406Z",
+      "scraped_at": "2026-09-10T11:58:11.058066Z",
       "score": 58
     },
     {
@@ -7703,7 +7724,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000338017",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377401Z",
+      "scraped_at": "2026-09-10T11:58:11.058061Z",
       "score": 58
     },
     {
@@ -7724,7 +7745,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080875002",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377367Z",
+      "scraped_at": "2026-09-10T11:58:11.058034Z",
       "score": 58
     },
     {
@@ -7745,7 +7766,7 @@
       "doc_number": "",
       "parcel_id": "S0080418001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589110Z",
+      "scraped_at": "2026-09-10T11:58:11.281486Z",
       "score": 55
     },
     {
@@ -7766,7 +7787,7 @@
       "doc_number": "",
       "parcel_id": "E0001767009",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589126Z",
+      "scraped_at": "2026-09-10T11:58:11.281499Z",
       "score": 55
     },
     {
@@ -7787,7 +7808,7 @@
       "doc_number": "",
       "parcel_id": "E0001057001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589130Z",
+      "scraped_at": "2026-09-10T11:58:11.281502Z",
       "score": 55
     },
     {
@@ -7808,7 +7829,7 @@
       "doc_number": "",
       "parcel_id": "E0001057002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589132Z",
+      "scraped_at": "2026-09-10T11:58:11.281504Z",
       "score": 55
     },
     {
@@ -7829,7 +7850,7 @@
       "doc_number": "",
       "parcel_id": "E0001057003",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589134Z",
+      "scraped_at": "2026-09-10T11:58:11.281506Z",
       "score": 55
     },
     {
@@ -7850,7 +7871,7 @@
       "doc_number": "",
       "parcel_id": "E0001057004",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589137Z",
+      "scraped_at": "2026-09-10T11:58:11.281508Z",
       "score": 55
     },
     {
@@ -7871,7 +7892,7 @@
       "doc_number": "",
       "parcel_id": "E0001057005",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589139Z",
+      "scraped_at": "2026-09-10T11:58:11.281510Z",
       "score": 55
     },
     {
@@ -7892,7 +7913,7 @@
       "doc_number": "",
       "parcel_id": "E0001057006",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589144Z",
+      "scraped_at": "2026-09-10T11:58:11.281514Z",
       "score": 55
     },
     {
@@ -7913,7 +7934,7 @@
       "doc_number": "",
       "parcel_id": "E0001057007",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589148Z",
+      "scraped_at": "2026-09-10T11:58:11.281517Z",
       "score": 55
     },
     {
@@ -7934,7 +7955,7 @@
       "doc_number": "",
       "parcel_id": "E0001057008",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589151Z",
+      "scraped_at": "2026-09-10T11:58:11.281519Z",
       "score": 55
     },
     {
@@ -7955,7 +7976,7 @@
       "doc_number": "",
       "parcel_id": "E0001057009",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589153Z",
+      "scraped_at": "2026-09-10T11:58:11.281521Z",
       "score": 55
     },
     {
@@ -7976,7 +7997,7 @@
       "doc_number": "",
       "parcel_id": "E0001058001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589155Z",
+      "scraped_at": "2026-09-10T11:58:11.281522Z",
       "score": 55
     },
     {
@@ -7997,7 +8018,7 @@
       "doc_number": "",
       "parcel_id": "E0001058002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589157Z",
+      "scraped_at": "2026-09-10T11:58:11.281524Z",
       "score": 55
     },
     {
@@ -8018,7 +8039,7 @@
       "doc_number": "",
       "parcel_id": "E0001058003",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589159Z",
+      "scraped_at": "2026-09-10T11:58:11.281526Z",
       "score": 55
     },
     {
@@ -8039,7 +8060,7 @@
       "doc_number": "",
       "parcel_id": "E0001058004",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589162Z",
+      "scraped_at": "2026-09-10T11:58:11.281528Z",
       "score": 55
     },
     {
@@ -8060,7 +8081,7 @@
       "doc_number": "",
       "parcel_id": "E0001058005",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589164Z",
+      "scraped_at": "2026-09-10T11:58:11.281529Z",
       "score": 55
     },
     {
@@ -8081,7 +8102,7 @@
       "doc_number": "",
       "parcel_id": "E0001058006",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589165Z",
+      "scraped_at": "2026-09-10T11:58:11.281531Z",
       "score": 55
     },
     {
@@ -8102,7 +8123,7 @@
       "doc_number": "",
       "parcel_id": "E0001058007",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589168Z",
+      "scraped_at": "2026-09-10T11:58:11.281532Z",
       "score": 55
     },
     {
@@ -8123,7 +8144,7 @@
       "doc_number": "",
       "parcel_id": "E0000160013",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589170Z",
+      "scraped_at": "2026-09-10T11:58:11.281534Z",
       "score": 55
     },
     {
@@ -8144,7 +8165,7 @@
       "doc_number": "",
       "parcel_id": "W0000025001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589172Z",
+      "scraped_at": "2026-09-10T11:58:11.281536Z",
       "score": 55
     },
     {
@@ -8165,7 +8186,7 @@
       "doc_number": "",
       "parcel_id": "S0000863001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589174Z",
+      "scraped_at": "2026-09-10T11:58:11.281538Z",
       "score": 55
     },
     {
@@ -8186,7 +8207,7 @@
       "doc_number": "",
       "parcel_id": "W0000008001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589176Z",
+      "scraped_at": "2026-09-10T11:58:11.281539Z",
       "score": 55
     },
     {
@@ -8207,7 +8228,7 @@
       "doc_number": "",
       "parcel_id": "W0000008008",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589178Z",
+      "scraped_at": "2026-09-10T11:58:11.281541Z",
       "score": 55
     },
     {
@@ -8228,7 +8249,7 @@
       "doc_number": "",
       "parcel_id": "W0000008009",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589180Z",
+      "scraped_at": "2026-09-10T11:58:11.281543Z",
       "score": 55
     },
     {
@@ -8249,7 +8270,7 @@
       "doc_number": "",
       "parcel_id": "W0000008010",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589182Z",
+      "scraped_at": "2026-09-10T11:58:11.281545Z",
       "score": 55
     },
     {
@@ -8270,7 +8291,7 @@
       "doc_number": "",
       "parcel_id": "N0000005001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589184Z",
+      "scraped_at": "2026-09-10T11:58:11.281546Z",
       "score": 55
     },
     {
@@ -8291,7 +8312,7 @@
       "doc_number": "",
       "parcel_id": "W0000127012",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589186Z",
+      "scraped_at": "2026-09-10T11:58:11.281548Z",
       "score": 55
     },
     {
@@ -8312,7 +8333,7 @@
       "doc_number": "",
       "parcel_id": "W0000127018",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589188Z",
+      "scraped_at": "2026-09-10T11:58:11.281550Z",
       "score": 55
     },
     {
@@ -8333,7 +8354,7 @@
       "doc_number": "",
       "parcel_id": "W0000127011",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589191Z",
+      "scraped_at": "2026-09-10T11:58:11.281551Z",
       "score": 55
     },
     {
@@ -8354,7 +8375,7 @@
       "doc_number": "",
       "parcel_id": "W0000127014",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589193Z",
+      "scraped_at": "2026-09-10T11:58:11.281553Z",
       "score": 55
     },
     {
@@ -8375,7 +8396,7 @@
       "doc_number": "",
       "parcel_id": "W0000127015",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589195Z",
+      "scraped_at": "2026-09-10T11:58:11.281555Z",
       "score": 55
     },
     {
@@ -8396,7 +8417,7 @@
       "doc_number": "",
       "parcel_id": "W0000127013",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589197Z",
+      "scraped_at": "2026-09-10T11:58:11.281557Z",
       "score": 55
     },
     {
@@ -8417,7 +8438,7 @@
       "doc_number": "",
       "parcel_id": "W0000127023",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589200Z",
+      "scraped_at": "2026-09-10T11:58:11.281558Z",
       "score": 55
     },
     {
@@ -8438,7 +8459,7 @@
       "doc_number": "",
       "parcel_id": "W0000127024",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589202Z",
+      "scraped_at": "2026-09-10T11:58:11.281560Z",
       "score": 55
     },
     {
@@ -8459,7 +8480,7 @@
       "doc_number": "",
       "parcel_id": "W0000127022",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589204Z",
+      "scraped_at": "2026-09-10T11:58:11.281562Z",
       "score": 55
     },
     {
@@ -8480,7 +8501,7 @@
       "doc_number": "",
       "parcel_id": "E0000738009",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589206Z",
+      "scraped_at": "2026-09-10T11:58:11.281564Z",
       "score": 55
     },
     {
@@ -8501,7 +8522,7 @@
       "doc_number": "",
       "parcel_id": "E0000642002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589208Z",
+      "scraped_at": "2026-09-10T11:58:11.281565Z",
       "score": 55
     },
     {
@@ -8522,7 +8543,7 @@
       "doc_number": "",
       "parcel_id": "E0000738013",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589210Z",
+      "scraped_at": "2026-09-10T11:58:11.281567Z",
       "score": 55
     },
     {
@@ -8543,7 +8564,7 @@
       "doc_number": "",
       "parcel_id": "N0000009001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589212Z",
+      "scraped_at": "2026-09-10T11:58:11.281569Z",
       "score": 55
     },
     {
@@ -8564,7 +8585,7 @@
       "doc_number": "",
       "parcel_id": "N0000009002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589214Z",
+      "scraped_at": "2026-09-10T11:58:11.281570Z",
       "score": 55
     },
     {
@@ -8585,7 +8606,7 @@
       "doc_number": "",
       "parcel_id": "N0000469003",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589217Z",
+      "scraped_at": "2026-09-10T11:58:11.281572Z",
       "score": 55
     },
     {
@@ -8606,7 +8627,7 @@
       "doc_number": "",
       "parcel_id": "N0001955017",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589219Z",
+      "scraped_at": "2026-09-10T11:58:11.281574Z",
       "score": 55
     },
     {
@@ -8627,7 +8648,7 @@
       "doc_number": "",
       "parcel_id": "S0071016003",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589221Z",
+      "scraped_at": "2026-09-10T11:58:11.281576Z",
       "score": 55
     },
     {
@@ -8648,7 +8669,7 @@
       "doc_number": "",
       "parcel_id": "S0071016002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589223Z",
+      "scraped_at": "2026-09-10T11:58:11.281577Z",
       "score": 55
     },
     {
@@ -8669,7 +8690,7 @@
       "doc_number": "",
       "parcel_id": "S0071016008",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589225Z",
+      "scraped_at": "2026-09-10T11:58:11.281579Z",
       "score": 55
     },
     {
@@ -8690,7 +8711,7 @@
       "doc_number": "",
       "parcel_id": "S0071016006",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589228Z",
+      "scraped_at": "2026-09-10T11:58:11.281581Z",
       "score": 55
     },
     {
@@ -8711,7 +8732,7 @@
       "doc_number": "",
       "parcel_id": "N0000257023",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589230Z",
+      "scraped_at": "2026-09-10T11:58:11.281583Z",
       "score": 55
     },
     {
@@ -8732,7 +8753,7 @@
       "doc_number": "",
       "parcel_id": "N0000256001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589232Z",
+      "scraped_at": "2026-09-10T11:58:11.281584Z",
       "score": 55
     },
     {
@@ -8753,7 +8774,7 @@
       "doc_number": "",
       "parcel_id": "N0000258001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589235Z",
+      "scraped_at": "2026-09-10T11:58:11.281586Z",
       "score": 55
     },
     {
@@ -8774,7 +8795,7 @@
       "doc_number": "",
       "parcel_id": "N0000226001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589253Z",
+      "scraped_at": "2026-09-10T11:58:11.281605Z",
       "score": 55
     },
     {
@@ -8795,7 +8816,7 @@
       "doc_number": "",
       "parcel_id": "N0000225001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589256Z",
+      "scraped_at": "2026-09-10T11:58:11.281607Z",
       "score": 55
     },
     {
@@ -8816,7 +8837,7 @@
       "doc_number": "",
       "parcel_id": "C0010682044",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589258Z",
+      "scraped_at": "2026-09-10T11:58:11.281608Z",
       "score": 55
     },
     {
@@ -8837,7 +8858,7 @@
       "doc_number": "",
       "parcel_id": "C0060659036",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589260Z",
+      "scraped_at": "2026-09-10T11:58:11.281610Z",
       "score": 55
     },
     {
@@ -8858,7 +8879,7 @@
       "doc_number": "",
       "parcel_id": "C0080939027",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589262Z",
+      "scraped_at": "2026-09-10T11:58:11.281611Z",
       "score": 55
     },
     {
@@ -8879,7 +8900,7 @@
       "doc_number": "",
       "parcel_id": "C0080939028",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589264Z",
+      "scraped_at": "2026-09-10T11:58:11.281613Z",
       "score": 55
     },
     {
@@ -8900,7 +8921,7 @@
       "doc_number": "",
       "parcel_id": "C0080939051",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589266Z",
+      "scraped_at": "2026-09-10T11:58:11.281615Z",
       "score": 55
     },
     {
@@ -8921,7 +8942,7 @@
       "doc_number": "",
       "parcel_id": "C0081101001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589268Z",
+      "scraped_at": "2026-09-10T11:58:11.281616Z",
       "score": 55
     },
     {
@@ -8942,7 +8963,7 @@
       "doc_number": "",
       "parcel_id": "C0090800030",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589270Z",
+      "scraped_at": "2026-09-10T11:58:11.281618Z",
       "score": 55
     },
     {
@@ -8963,7 +8984,7 @@
       "doc_number": "",
       "parcel_id": "E0000054001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589272Z",
+      "scraped_at": "2026-09-10T11:58:11.281620Z",
       "score": 55
     },
     {
@@ -8984,7 +9005,7 @@
       "doc_number": "",
       "parcel_id": "E0000830004",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589277Z",
+      "scraped_at": "2026-09-10T11:58:11.281624Z",
       "score": 55
     },
     {
@@ -9005,7 +9026,7 @@
       "doc_number": "",
       "parcel_id": "E0000830010",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589280Z",
+      "scraped_at": "2026-09-10T11:58:11.281626Z",
       "score": 55
     },
     {
@@ -9026,7 +9047,7 @@
       "doc_number": "",
       "parcel_id": "E0000830022",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589284Z",
+      "scraped_at": "2026-09-10T11:58:11.281629Z",
       "score": 55
     },
     {
@@ -9047,7 +9068,7 @@
       "doc_number": "",
       "parcel_id": "E0001551015",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589287Z",
+      "scraped_at": "2026-09-10T11:58:11.281631Z",
       "score": 55
     },
     {
@@ -9068,7 +9089,7 @@
       "doc_number": "",
       "parcel_id": "E0110163003",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589289Z",
+      "scraped_at": "2026-09-10T11:58:11.281633Z",
       "score": 55
     },
     {
@@ -9089,7 +9110,7 @@
       "doc_number": "",
       "parcel_id": "E0120265020",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589291Z",
+      "scraped_at": "2026-09-10T11:58:11.281634Z",
       "score": 55
     },
     {
@@ -9110,7 +9131,7 @@
       "doc_number": "",
       "parcel_id": "E0120295007",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589293Z",
+      "scraped_at": "2026-09-10T11:58:11.281636Z",
       "score": 55
     },
     {
@@ -9131,7 +9152,7 @@
       "doc_number": "",
       "parcel_id": "E0120401015",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589295Z",
+      "scraped_at": "2026-09-10T11:58:11.281638Z",
       "score": 55
     },
     {
@@ -9152,7 +9173,7 @@
       "doc_number": "",
       "parcel_id": "E0120427001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589297Z",
+      "scraped_at": "2026-09-10T11:58:11.281639Z",
       "score": 55
     },
     {
@@ -9173,7 +9194,7 @@
       "doc_number": "",
       "parcel_id": "N0000031001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589300Z",
+      "scraped_at": "2026-09-10T11:58:11.281641Z",
       "score": 55
     },
     {
@@ -9194,7 +9215,7 @@
       "doc_number": "",
       "parcel_id": "N0000543006",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589305Z",
+      "scraped_at": "2026-09-10T11:58:11.281645Z",
       "score": 55
     },
     {
@@ -9215,7 +9236,7 @@
       "doc_number": "",
       "parcel_id": "N0000922004",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589307Z",
+      "scraped_at": "2026-09-10T11:58:11.281647Z",
       "score": 55
     },
     {
@@ -9236,7 +9257,7 @@
       "doc_number": "",
       "parcel_id": "N0001550002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589309Z",
+      "scraped_at": "2026-09-10T11:58:11.281649Z",
       "score": 55
     },
     {
@@ -9257,7 +9278,7 @@
       "doc_number": "",
       "parcel_id": "N0160205019",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589311Z",
+      "scraped_at": "2026-09-10T11:58:11.281650Z",
       "score": 55
     },
     {
@@ -9278,7 +9299,7 @@
       "doc_number": "",
       "parcel_id": "S0001479011",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589313Z",
+      "scraped_at": "2026-09-10T11:58:11.281652Z",
       "score": 55
     },
     {
@@ -9299,7 +9320,7 @@
       "doc_number": "",
       "parcel_id": "S0080668011",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589315Z",
+      "scraped_at": "2026-09-10T11:58:11.281654Z",
       "score": 55
     },
     {
@@ -9320,7 +9341,7 @@
       "doc_number": "",
       "parcel_id": "S0080668014",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589317Z",
+      "scraped_at": "2026-09-10T11:58:11.281655Z",
       "score": 55
     },
     {
@@ -9341,7 +9362,7 @@
       "doc_number": "",
       "parcel_id": "W0000334002",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589319Z",
+      "scraped_at": "2026-09-10T11:58:11.281657Z",
       "score": 55
     },
     {
@@ -9362,7 +9383,7 @@
       "doc_number": "",
       "parcel_id": "W0000431012",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589322Z",
+      "scraped_at": "2026-09-10T11:58:11.281659Z",
       "score": 55
     },
     {
@@ -9383,7 +9404,7 @@
       "doc_number": "",
       "parcel_id": "W0200110020",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589324Z",
+      "scraped_at": "2026-09-10T11:58:11.281661Z",
       "score": 55
     },
     {
@@ -9404,7 +9425,7 @@
       "doc_number": "",
       "parcel_id": "N0001512001",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589327Z",
+      "scraped_at": "2026-09-10T11:58:11.281663Z",
       "score": 55
     },
     {
@@ -9425,7 +9446,7 @@
       "doc_number": "",
       "parcel_id": "N0001510009",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589329Z",
+      "scraped_at": "2026-09-10T11:58:11.281665Z",
       "score": 55
     },
     {
@@ -9446,7 +9467,7 @@
       "doc_number": "",
       "parcel_id": "N0001510020",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589331Z",
+      "scraped_at": "2026-09-10T11:58:11.281667Z",
       "score": 55
     },
     {
@@ -9467,7 +9488,7 @@
       "doc_number": "",
       "parcel_id": "N0001510011",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589333Z",
+      "scraped_at": "2026-09-10T11:58:11.281668Z",
       "score": 55
     },
     {
@@ -9488,7 +9509,7 @@
       "doc_number": "",
       "parcel_id": "N0001510012",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589338Z",
+      "scraped_at": "2026-09-10T11:58:11.281672Z",
       "score": 55
     },
     {
@@ -9509,7 +9530,7 @@
       "doc_number": "",
       "parcel_id": "N0001510013",
       "val_code": "Surplus",
-      "scraped_at": "2026-09-09T12:03:28.589340Z",
+      "scraped_at": "2026-09-10T11:58:11.281674Z",
       "score": 55
     },
     {
@@ -9530,7 +9551,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070409010",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378040Z",
+      "scraped_at": "2026-09-10T11:58:11.058564Z",
       "score": 54
     },
     {
@@ -9551,7 +9572,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000400009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378015Z",
+      "scraped_at": "2026-09-10T11:58:11.058545Z",
       "score": 54
     },
     {
@@ -9572,7 +9593,7 @@
       "doc_number": "WD",
       "parcel_id": "E0000552021B",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377991Z",
+      "scraped_at": "2026-09-10T11:58:11.058525Z",
       "score": 54
     },
     {
@@ -9593,7 +9614,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080339020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377955Z",
+      "scraped_at": "2026-09-10T11:58:11.058497Z",
       "score": 54
     },
     {
@@ -9614,7 +9635,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060472020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377946Z",
+      "scraped_at": "2026-09-10T11:58:11.058490Z",
       "score": 54
     },
     {
@@ -9635,7 +9656,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070140040",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377920Z",
+      "scraped_at": "2026-09-10T11:58:11.058471Z",
       "score": 54
     },
     {
@@ -9656,7 +9677,7 @@
       "doc_number": "WD",
       "parcel_id": "E0000552017B",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377906Z",
+      "scraped_at": "2026-09-10T11:58:11.058462Z",
       "score": 54
     },
     {
@@ -9677,7 +9698,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090897006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377901Z",
+      "scraped_at": "2026-09-10T11:58:11.058455Z",
       "score": 54
     },
     {
@@ -9698,7 +9719,7 @@
       "doc_number": "WD",
       "parcel_id": "N0001821026",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377668Z",
+      "scraped_at": "2026-09-10T11:58:11.058260Z",
       "score": 54
     },
     {
@@ -9719,7 +9740,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090199048",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377630Z",
+      "scraped_at": "2026-09-10T11:58:11.058231Z",
       "score": 54
     },
     {
@@ -9740,7 +9761,7 @@
       "doc_number": "WD",
       "parcel_id": "W0000700015",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377556Z",
+      "scraped_at": "2026-09-10T11:58:11.058173Z",
       "score": 54
     },
     {
@@ -9761,7 +9782,7 @@
       "doc_number": "WD",
       "parcel_id": "C0060763006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377539Z",
+      "scraped_at": "2026-09-10T11:58:11.058160Z",
       "score": 54
     },
     {
@@ -9782,7 +9803,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090743008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377492Z",
+      "scraped_at": "2026-09-10T11:58:11.058133Z",
       "score": 54
     },
     {
@@ -9803,7 +9824,7 @@
       "doc_number": "WD",
       "parcel_id": "S0000236031",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377475Z",
+      "scraped_at": "2026-09-10T11:58:11.058120Z",
       "score": 54
     },
     {
@@ -9824,7 +9845,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090350048",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377412Z",
+      "scraped_at": "2026-09-10T11:58:11.058071Z",
       "score": 54
     },
     {
@@ -9845,7 +9866,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090715018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377384Z",
+      "scraped_at": "2026-09-10T11:58:11.058047Z",
       "score": 54
     },
     {
@@ -9866,7 +9887,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070166040",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377373Z",
+      "scraped_at": "2026-09-10T11:58:11.058038Z",
       "score": 54
     },
     {
@@ -9887,7 +9908,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060263004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377355Z",
+      "scraped_at": "2026-09-10T11:58:11.058025Z",
       "score": 54
     },
     {
@@ -9908,7 +9929,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001786009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377349Z",
+      "scraped_at": "2026-09-10T11:58:11.058020Z",
       "score": 54
     },
     {
@@ -9929,7 +9950,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070255002",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377331Z",
+      "scraped_at": "2026-09-10T11:58:11.058007Z",
       "score": 54
     },
     {
@@ -9950,7 +9971,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090844044",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377314Z",
+      "scraped_at": "2026-09-10T11:58:11.057993Z",
       "score": 54
     },
     {
@@ -9971,7 +9992,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060488020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377284Z",
+      "scraped_at": "2026-09-10T11:58:11.057970Z",
       "score": 54
     },
     {
@@ -9992,7 +10013,7 @@
       "doc_number": "BS",
       "parcel_id": "C0081053064",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378035Z",
+      "scraped_at": "2026-09-10T11:58:11.058560Z",
       "score": 50
     },
     {
@@ -10013,7 +10034,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070406071",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378024Z",
+      "scraped_at": "2026-09-10T11:58:11.058551Z",
       "score": 50
     },
     {
@@ -10034,7 +10055,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000387030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.378010Z",
+      "scraped_at": "2026-09-10T11:58:11.058541Z",
       "score": 50
     },
     {
@@ -10055,7 +10076,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080885030",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377996Z",
+      "scraped_at": "2026-09-10T11:58:11.058530Z",
       "score": 50
     },
     {
@@ -10076,7 +10097,7 @@
       "doc_number": "BS",
       "parcel_id": "C0081053071",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377977Z",
+      "scraped_at": "2026-09-10T11:58:11.058515Z",
       "score": 50
     },
     {
@@ -10097,7 +10118,7 @@
       "doc_number": "BS",
       "parcel_id": "S0001223004B",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377929Z",
+      "scraped_at": "2026-09-10T11:58:11.058477Z",
       "score": 50
     },
     {
@@ -10118,7 +10139,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000879033",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377885Z",
+      "scraped_at": "2026-09-10T11:58:11.058443Z",
       "score": 50
     },
     {
@@ -10139,7 +10160,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000879022",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377890Z",
+      "scraped_at": "2026-09-10T11:58:11.058447Z",
       "score": 50
     },
     {
@@ -10160,7 +10181,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071178006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377872Z",
+      "scraped_at": "2026-09-10T11:58:11.058434Z",
       "score": 50
     },
     {
@@ -10181,7 +10202,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120286027",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377826Z",
+      "scraped_at": "2026-09-10T11:58:11.058397Z",
       "score": 50
     },
     {
@@ -10202,7 +10223,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002281011",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377832Z",
+      "scraped_at": "2026-09-10T11:58:11.058402Z",
       "score": 50
     },
     {
@@ -10223,7 +10244,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120313006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377837Z",
+      "scraped_at": "2026-09-10T11:58:11.058406Z",
       "score": 50
     },
     {
@@ -10244,7 +10265,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120286031",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377843Z",
+      "scraped_at": "2026-09-10T11:58:11.058410Z",
       "score": 50
     },
     {
@@ -10265,7 +10286,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120286025",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377848Z",
+      "scraped_at": "2026-09-10T11:58:11.058414Z",
       "score": 50
     },
     {
@@ -10286,7 +10307,7 @@
       "doc_number": "BS",
       "parcel_id": "E0120286024",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377853Z",
+      "scraped_at": "2026-09-10T11:58:11.058419Z",
       "score": 50
     },
     {
@@ -10307,7 +10328,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060403022",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377806Z",
+      "scraped_at": "2026-09-10T11:58:11.058381Z",
       "score": 50
     },
     {
@@ -10328,7 +10349,7 @@
       "doc_number": "BS",
       "parcel_id": "C0070165028",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377798Z",
+      "scraped_at": "2026-09-10T11:58:11.058375Z",
       "score": 50
     },
     {
@@ -10349,7 +10370,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080451009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377776Z",
+      "scraped_at": "2026-09-10T11:58:11.058358Z",
       "score": 50
     },
     {
@@ -10370,7 +10391,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000992010",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377782Z",
+      "scraped_at": "2026-09-10T11:58:11.058362Z",
       "score": 50
     },
     {
@@ -10391,7 +10412,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060726034",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377749Z",
+      "scraped_at": "2026-09-10T11:58:11.058324Z",
       "score": 50
     },
     {
@@ -10412,7 +10433,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000153009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377727Z",
+      "scraped_at": "2026-09-10T11:58:11.058306Z",
       "score": 50
     },
     {
@@ -10433,7 +10454,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000615025",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377716Z",
+      "scraped_at": "2026-09-10T11:58:11.058297Z",
       "score": 50
     },
     {
@@ -10454,7 +10475,7 @@
       "doc_number": "WD",
       "parcel_id": "C0060351018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377705Z",
+      "scraped_at": "2026-09-10T11:58:11.058289Z",
       "score": 50
     },
     {
@@ -10475,7 +10496,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000120008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377694Z",
+      "scraped_at": "2026-09-10T11:58:11.058280Z",
       "score": 50
     },
     {
@@ -10496,7 +10517,7 @@
       "doc_number": "BS",
       "parcel_id": "S0002452011",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377679Z",
+      "scraped_at": "2026-09-10T11:58:11.058269Z",
       "score": 50
     },
     {
@@ -10517,7 +10538,7 @@
       "doc_number": "BS",
       "parcel_id": "S0053315011",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377674Z",
+      "scraped_at": "2026-09-10T11:58:11.058265Z",
       "score": 50
     },
     {
@@ -10538,7 +10559,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080309083",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377643Z",
+      "scraped_at": "2026-09-10T11:58:11.058243Z",
       "score": 50
     },
     {
@@ -10559,7 +10580,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080176008",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377651Z",
+      "scraped_at": "2026-09-10T11:58:11.058247Z",
       "score": 50
     },
     {
@@ -10580,7 +10601,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050553042",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377624Z",
+      "scraped_at": "2026-09-10T11:58:11.058226Z",
       "score": 50
     },
     {
@@ -10601,7 +10622,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060508018",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377615Z",
+      "scraped_at": "2026-09-10T11:58:11.058220Z",
       "score": 50
     },
     {
@@ -10622,7 +10643,7 @@
       "doc_number": "BS",
       "parcel_id": "S0001711014",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377610Z",
+      "scraped_at": "2026-09-10T11:58:11.058215Z",
       "score": 50
     },
     {
@@ -10643,7 +10664,7 @@
       "doc_number": "BS",
       "parcel_id": "C0081053068",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377599Z",
+      "scraped_at": "2026-09-10T11:58:11.058207Z",
       "score": 50
     },
     {
@@ -10664,7 +10685,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000632001",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377605Z",
+      "scraped_at": "2026-09-10T11:58:11.058211Z",
       "score": 50
     },
     {
@@ -10685,7 +10706,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000181013",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377588Z",
+      "scraped_at": "2026-09-10T11:58:11.058198Z",
       "score": 50
     },
     {
@@ -10706,7 +10727,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071634019",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377578Z",
+      "scraped_at": "2026-09-10T11:58:11.058190Z",
       "score": 50
     },
     {
@@ -10727,7 +10748,7 @@
       "doc_number": "BS",
       "parcel_id": "S0000703004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377561Z",
+      "scraped_at": "2026-09-10T11:58:11.058177Z",
       "score": 50
     },
     {
@@ -10748,7 +10769,7 @@
       "doc_number": "BS",
       "parcel_id": "S0080745025",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377545Z",
+      "scraped_at": "2026-09-10T11:58:11.058164Z",
       "score": 50
     },
     {
@@ -10769,7 +10790,7 @@
       "doc_number": "WD",
       "parcel_id": "C0060727044",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377534Z",
+      "scraped_at": "2026-09-10T11:58:11.058156Z",
       "score": 50
     },
     {
@@ -10790,7 +10811,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080454006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377529Z",
+      "scraped_at": "2026-09-10T11:58:11.058151Z",
       "score": 50
     },
     {
@@ -10811,7 +10832,7 @@
       "doc_number": "BS",
       "parcel_id": "C0060505038",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377512Z",
+      "scraped_at": "2026-09-10T11:58:11.058137Z",
       "score": 50
     },
     {
@@ -10832,7 +10853,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080694011",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377481Z",
+      "scraped_at": "2026-09-10T11:58:11.058124Z",
       "score": 50
     },
     {
@@ -10853,7 +10874,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080986005",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377464Z",
+      "scraped_at": "2026-09-10T11:58:11.058110Z",
       "score": 50
     },
     {
@@ -10874,7 +10895,7 @@
       "doc_number": "WD",
       "parcel_id": "S0080745019",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377446Z",
+      "scraped_at": "2026-09-10T11:58:11.058097Z",
       "score": 50
     },
     {
@@ -10895,7 +10916,7 @@
       "doc_number": "BS",
       "parcel_id": "S0071282007",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377417Z",
+      "scraped_at": "2026-09-10T11:58:11.058075Z",
       "score": 50
     },
     {
@@ -10916,7 +10937,7 @@
       "doc_number": "WD",
       "parcel_id": "E0000948003",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377423Z",
+      "scraped_at": "2026-09-10T11:58:11.058079Z",
       "score": 50
     },
     {
@@ -10937,7 +10958,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050685052",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377389Z",
+      "scraped_at": "2026-09-10T11:58:11.058052Z",
       "score": 50
     },
     {
@@ -10958,7 +10979,7 @@
       "doc_number": "WD",
       "parcel_id": "S0002280009",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377379Z",
+      "scraped_at": "2026-09-10T11:58:11.058043Z",
       "score": 50
     },
     {
@@ -10979,7 +11000,7 @@
       "doc_number": "BS",
       "parcel_id": "N0001040001",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377337Z",
+      "scraped_at": "2026-09-10T11:58:11.058011Z",
       "score": 50
     },
     {
@@ -11000,7 +11021,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080670006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377343Z",
+      "scraped_at": "2026-09-10T11:58:11.058015Z",
       "score": 50
     },
     {
@@ -11021,7 +11042,7 @@
       "doc_number": "BS",
       "parcel_id": "W0000510022B",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377326Z",
+      "scraped_at": "2026-09-10T11:58:11.058003Z",
       "score": 50
     },
     {
@@ -11042,7 +11063,7 @@
       "doc_number": "BS",
       "parcel_id": "C0050227004",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377320Z",
+      "scraped_at": "2026-09-10T11:58:11.057998Z",
       "score": 50
     },
     {
@@ -11063,7 +11084,7 @@
       "doc_number": "BS",
       "parcel_id": "E0000258020",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377309Z",
+      "scraped_at": "2026-09-10T11:58:11.057989Z",
       "score": 50
     },
     {
@@ -11084,7 +11105,7 @@
       "doc_number": "BS",
       "parcel_id": "C0080833006",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377303Z",
+      "scraped_at": "2026-09-10T11:58:11.057985Z",
       "score": 50
     },
     {
@@ -11105,7 +11126,7 @@
       "doc_number": "BS",
       "parcel_id": "N0000352001",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377297Z",
+      "scraped_at": "2026-09-10T11:58:11.057980Z",
       "score": 50
     },
     {
@@ -11126,7 +11147,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090175010",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377259Z",
+      "scraped_at": "2026-09-10T11:58:11.057951Z",
       "score": 50
     },
     {
@@ -11147,7 +11168,7 @@
       "doc_number": "BS",
       "parcel_id": "C0090175012",
       "val_code": "Special Financing/Terms, etc.",
-      "scraped_at": "2026-09-09T12:03:28.377275Z",
+      "scraped_at": "2026-09-10T11:58:11.057964Z",
       "score": 50
     }
   ]
